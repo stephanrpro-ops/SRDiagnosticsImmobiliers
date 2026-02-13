@@ -11,9 +11,16 @@
     h1{margin:0 0 10px;font-size:34px}
     a{color:#8fd3ff}
     .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .form-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
     label{display:block;margin:10px 0 6px}
-    input,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid #22304f;background:#0b1220;color:#e8eefc}
+    input,textarea,select{width:100%;padding:10px;border-radius:10px;border:1px solid #22304f;background:#0b1220;color:#e8eefc}
     button{padding:12px 14px;border-radius:10px;border:0;background:#2aa9ff;color:#00111f;font-weight:700;cursor:pointer}
+    .check-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px 16px;margin-top:8px}
+    .check-grid label{display:flex;gap:8px;align-items:center;margin:0}
+    .check-grid input{width:auto;padding:0}
+    .result{margin-top:14px;padding:14px;border-radius:12px;background:#0d172d;border:1px solid #29426f}
+    .result ul{margin:8px 0 0 20px}
+    .note{font-size:.95rem;opacity:.9}
     footer{padding:24px 18px;opacity:.8;max-width:980px;margin:auto}
   </style>
 </head>
@@ -45,21 +52,69 @@
     </div>
 
     <div class="card">
-      <h2>Demande de devis</h2>
-      <!-- Formulaire Netlify (ça marche tout seul si le site est sur Netlify) -->
-      <form name="devis" method="POST" data-netlify="true">
+      <h2>Commande / devis en ligne</h2>
+      <p class="note">Renseignez les informations du bien pour obtenir les diagnostics recommandés automatiquement, puis envoyez votre demande.</p>
+
+      <form name="devis" method="POST" data-netlify="true" id="devis-form">
         <input type="hidden" name="form-name" value="devis" />
-        <label>Nom</label>
-        <input name="nom" required />
-        <label>Email</label>
-        <input name="email" type="email" required />
-        <label>Téléphone</label>
-        <input name="telephone" />
-        <label>Message</label>
-        <textarea name="message" rows="5" placeholder="Type de bien, ville, vente/location, diagnostics souhaités…"></textarea>
-        <div style="margin-top:12px;">
-          <button type="submit">Envoyer</button>
+        <div class="form-grid">
+          <div>
+            <label for="nom">Nom</label>
+            <input id="nom" name="nom" required />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required />
+          </div>
+          <div>
+            <label for="telephone">Téléphone</label>
+            <input id="telephone" name="telephone" />
+          </div>
+          <div>
+            <label for="type-projet">Type de projet</label>
+            <select id="type-projet" name="type_projet" required>
+              <option value="">Sélectionner</option>
+              <option value="vente">Vente</option>
+              <option value="location">Location</option>
+            </select>
+          </div>
+          <div>
+            <label for="annee-construction">Année de construction</label>
+            <input id="annee-construction" name="annee_construction" type="number" min="1700" max="2100" placeholder="Ex: 1984" required />
+          </div>
         </div>
+
+        <h3>Installations</h3>
+        <div class="form-grid">
+          <div>
+            <label for="age-gaz">Installation gaz (âge en années)</label>
+            <input id="age-gaz" name="age_gaz" type="number" min="0" placeholder="0 si aucune" />
+          </div>
+          <div>
+            <label for="age-elec">Installation électrique (âge en années)</label>
+            <input id="age-elec" name="age_elec" type="number" min="0" placeholder="0 si récente" />
+          </div>
+        </div>
+
+        <h3>Diagnostics déjà disponibles et encore valides</h3>
+        <div class="check-grid">
+          <label><input type="checkbox" name="diag_valide" value="dpe" /> DPE valide</label>
+          <label><input type="checkbox" name="diag_valide" value="amiante" /> Amiante valide</label>
+          <label><input type="checkbox" name="diag_valide" value="plomb" /> Plomb valide</label>
+          <label><input type="checkbox" name="diag_valide" value="gaz" /> Gaz valide</label>
+          <label><input type="checkbox" name="diag_valide" value="electricite" /> Électricité valide</label>
+          <label><input type="checkbox" name="diag_valide" value="erp" /> ERP valide</label>
+        </div>
+
+        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+          <button type="button" id="calculer-devis">Calculer mes diagnostics</button>
+          <button type="submit">Envoyer la demande</button>
+        </div>
+
+        <div class="result" id="resultat-devis" aria-live="polite" hidden></div>
+
+        <label for="message">Message complémentaire</label>
+        <textarea id="message" name="message" rows="5" placeholder="Type de bien, ville, surface, disponibilités…"></textarea>
       </form>
     </div>
   </main>
@@ -67,5 +122,76 @@
   <footer>
     © SR Diagnostics Immobiliers — Mentions légales à compléter
   </footer>
+
+  <script>
+    const mapLabels = {
+      dpe: 'DPE',
+      amiante: 'Amiante',
+      plomb: 'Plomb (CREP)',
+      gaz: 'Gaz',
+      electricite: 'Électricité',
+      erp: 'ERP'
+    };
+
+    function getDiagnosticsRecommandes() {
+      const annee = Number(document.getElementById('annee-construction').value);
+      const ageGaz = Number(document.getElementById('age-gaz').value || 0);
+      const ageElec = Number(document.getElementById('age-elec').value || 0);
+
+      const obligatoires = new Set(['dpe', 'erp']);
+
+      if (!Number.isNaN(annee) && annee < 1949) {
+        obligatoires.add('plomb');
+      }
+
+      if (!Number.isNaN(annee) && annee < 1997) {
+        obligatoires.add('amiante');
+      }
+
+      if (ageGaz > 15) {
+        obligatoires.add('gaz');
+      }
+
+      if (ageElec > 15) {
+        obligatoires.add('electricite');
+      }
+
+      const dejaValides = new Set(
+        [...document.querySelectorAll('input[name="diag_valide"]:checked')].map((input) => input.value)
+      );
+
+      const aRealiser = [...obligatoires].filter((diag) => !dejaValides.has(diag));
+
+      return { obligatoires: [...obligatoires], dejaValides: [...dejaValides], aRealiser };
+    }
+
+    document.getElementById('calculer-devis').addEventListener('click', () => {
+      const result = document.getElementById('resultat-devis');
+      const message = document.getElementById('message');
+      const { obligatoires, dejaValides, aRealiser } = getDiagnosticsRecommandes();
+
+      const listeAR = aRealiser.length
+        ? `<ul>${aRealiser.map((diag) => `<li>${mapLabels[diag]}</li>`).join('')}</ul>`
+        : '<p>Tous les diagnostics obligatoires semblent déjà disponibles et valides.</p>';
+
+      const listeDV = dejaValides.length
+        ? `<p><strong>Déjà valides :</strong> ${dejaValides.map((diag) => mapLabels[diag]).join(', ')}</p>`
+        : '<p><strong>Déjà valides :</strong> aucun déclaré.</p>';
+
+      result.innerHTML = `
+        <p><strong>Diagnostics potentiellement obligatoires :</strong> ${obligatoires.map((diag) => mapLabels[diag]).join(', ')}</p>
+        ${listeDV}
+        <p><strong>À prévoir pour votre devis :</strong></p>
+        ${listeAR}
+        <p class="note">Vérification finale selon le bien, la transaction et la réglementation en vigueur.</p>
+      `;
+      result.hidden = false;
+
+      const resume = `\n\nPré-sélection automatique:\n- Obligatoires potentiels: ${obligatoires.map((diag) => mapLabels[diag]).join(', ')}\n- Déjà valides: ${dejaValides.length ? dejaValides.map((diag) => mapLabels[diag]).join(', ') : 'Aucun'}\n- À réaliser: ${aRealiser.length ? aRealiser.map((diag) => mapLabels[diag]).join(', ') : 'Aucun'}\n`;
+      if (!message.value.includes('Pré-sélection automatique:')) {
+        message.value = `${message.value.trim()}${resume}`.trim();
+      }
+    });
+  </script>
 </body>
 </html>
