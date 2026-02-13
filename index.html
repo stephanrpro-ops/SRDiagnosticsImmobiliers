@@ -15,12 +15,10 @@
     label{display:block;margin:10px 0 6px}
     input,textarea,select{width:100%;padding:10px;border-radius:10px;border:1px solid #22304f;background:#0b1220;color:#e8eefc}
     button{padding:12px 14px;border-radius:10px;border:0;background:#2aa9ff;color:#00111f;font-weight:700;cursor:pointer}
-    .check-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px 16px;margin-top:8px}
-    .check-grid label{display:flex;gap:8px;align-items:center;margin:0}
-    .check-grid input{width:auto;padding:0}
     .result{margin-top:14px;padding:14px;border-radius:12px;background:#0d172d;border:1px solid #29426f}
     .result ul{margin:8px 0 0 20px}
     .note{font-size:.95rem;opacity:.9}
+    .diag-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
     footer{padding:24px 18px;opacity:.8;max-width:980px;margin:auto}
   </style>
 </head>
@@ -53,10 +51,11 @@
 
     <div class="card">
       <h2>Commande / devis en ligne</h2>
-      <p class="note">Renseignez les informations du bien pour obtenir les diagnostics recommandés automatiquement, puis envoyez votre demande.</p>
+      <p class="note">Le calcul ci-dessous est indicatif. Validation finale après étude de votre bien.</p>
 
       <form name="devis" method="POST" data-netlify="true" id="devis-form">
         <input type="hidden" name="form-name" value="devis" />
+
         <div class="form-grid">
           <div>
             <label for="nom">Nom</label>
@@ -79,8 +78,8 @@
             </select>
           </div>
           <div>
-            <label for="annee-construction">Année de construction</label>
-            <input id="annee-construction" name="annee_construction" type="number" min="1700" max="2100" placeholder="Ex: 1984" required />
+            <label for="date-construction">Date de construction</label>
+            <input id="date-construction" name="date_construction" type="date" required />
           </div>
         </div>
 
@@ -96,14 +95,57 @@
           </div>
         </div>
 
-        <h3>Diagnostics déjà disponibles et encore valides</h3>
-        <div class="check-grid">
-          <label><input type="checkbox" name="diag_valide" value="dpe" /> DPE valide</label>
-          <label><input type="checkbox" name="diag_valide" value="amiante" /> Amiante valide</label>
-          <label><input type="checkbox" name="diag_valide" value="plomb" /> Plomb valide</label>
-          <label><input type="checkbox" name="diag_valide" value="gaz" /> Gaz valide</label>
-          <label><input type="checkbox" name="diag_valide" value="electricite" /> Électricité valide</label>
-          <label><input type="checkbox" name="diag_valide" value="erp" /> ERP valide</label>
+        <h3>Diagnostics déjà faits</h3>
+        <p class="note">Pour chaque diagnostic, indiquez s’il est absent, présent mais expiré, ou encore valide.</p>
+        <div class="diag-grid">
+          <div>
+            <label for="etat-dpe">DPE</label>
+            <select id="etat-dpe" name="etat_dpe">
+              <option value="absent">Absent</option>
+              <option value="expire">Présent mais non valide</option>
+              <option value="valide">Présent et valide</option>
+            </select>
+          </div>
+          <div>
+            <label for="etat-amiante">Amiante</label>
+            <select id="etat-amiante" name="etat_amiante">
+              <option value="absent">Absent</option>
+              <option value="expire">Présent mais non valide</option>
+              <option value="valide">Présent et valide</option>
+            </select>
+          </div>
+          <div>
+            <label for="etat-plomb">Plomb (CREP)</label>
+            <select id="etat-plomb" name="etat_plomb">
+              <option value="absent">Absent</option>
+              <option value="expire">Présent mais non valide</option>
+              <option value="valide">Présent et valide</option>
+            </select>
+          </div>
+          <div>
+            <label for="etat-gaz">Gaz</label>
+            <select id="etat-gaz" name="etat_gaz">
+              <option value="absent">Absent</option>
+              <option value="expire">Présent mais non valide</option>
+              <option value="valide">Présent et valide</option>
+            </select>
+          </div>
+          <div>
+            <label for="etat-electricite">Électricité</label>
+            <select id="etat-electricite" name="etat_electricite">
+              <option value="absent">Absent</option>
+              <option value="expire">Présent mais non valide</option>
+              <option value="valide">Présent et valide</option>
+            </select>
+          </div>
+          <div>
+            <label for="etat-erp">ERP</label>
+            <select id="etat-erp" name="etat_erp">
+              <option value="absent">Absent</option>
+              <option value="expire">Présent mais non valide</option>
+              <option value="valide">Présent et valide</option>
+            </select>
+          </div>
         </div>
 
         <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
@@ -133,18 +175,25 @@
       erp: 'ERP'
     };
 
+    function getEtatDiagnostic(diag) {
+      return document.getElementById(`etat-${diag}`).value;
+    }
+
     function getDiagnosticsRecommandes() {
-      const annee = Number(document.getElementById('annee-construction').value);
+      const dateConstruction = document.getElementById('date-construction').value;
       const ageGaz = Number(document.getElementById('age-gaz').value || 0);
       const ageElec = Number(document.getElementById('age-elec').value || 0);
+      const cutoffPlomb = new Date('1949-01-01');
+      const cutoffAmiante = new Date('1997-07-01');
 
       const obligatoires = new Set(['dpe', 'erp']);
+      const dateObj = dateConstruction ? new Date(`${dateConstruction}T00:00:00`) : null;
 
-      if (!Number.isNaN(annee) && annee < 1949) {
+      if (dateObj && dateObj < cutoffPlomb) {
         obligatoires.add('plomb');
       }
 
-      if (!Number.isNaN(annee) && annee < 1997) {
+      if (dateObj && dateObj < cutoffAmiante) {
         obligatoires.add('amiante');
       }
 
@@ -156,13 +205,10 @@
         obligatoires.add('electricite');
       }
 
-      const dejaValides = new Set(
-        [...document.querySelectorAll('input[name="diag_valide"]:checked')].map((input) => input.value)
-      );
+      const dejaValides = [...obligatoires].filter((diag) => getEtatDiagnostic(diag) === 'valide');
+      const aRealiser = [...obligatoires].filter((diag) => getEtatDiagnostic(diag) !== 'valide');
 
-      const aRealiser = [...obligatoires].filter((diag) => !dejaValides.has(diag));
-
-      return { obligatoires: [...obligatoires], dejaValides: [...dejaValides], aRealiser };
+      return { obligatoires: [...obligatoires], dejaValides, aRealiser };
     }
 
     document.getElementById('calculer-devis').addEventListener('click', () => {
@@ -183,7 +229,7 @@
         ${listeDV}
         <p><strong>À prévoir pour votre devis :</strong></p>
         ${listeAR}
-        <p class="note">Vérification finale selon le bien, la transaction et la réglementation en vigueur.</p>
+        <p class="note">Règles appliquées : plomb si construction avant 1949, amiante si construction avant le 01/07/1997, gaz/électricité si installation de plus de 15 ans.</p>
       `;
       result.hidden = false;
 
