@@ -11,9 +11,14 @@
     h1{margin:0 0 10px;font-size:34px}
     a{color:#8fd3ff}
     .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    .form-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
     label{display:block;margin:10px 0 6px}
-    input,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid #22304f;background:#0b1220;color:#e8eefc}
+    input,textarea,select{width:100%;padding:10px;border-radius:10px;border:1px solid #22304f;background:#0b1220;color:#e8eefc}
     button{padding:12px 14px;border-radius:10px;border:0;background:#2aa9ff;color:#00111f;font-weight:700;cursor:pointer}
+    .result{margin-top:14px;padding:14px;border-radius:12px;background:#0d172d;border:1px solid #29426f}
+    .result ul{margin:8px 0 0 20px}
+    .note{font-size:.95rem;opacity:.9}
+    .diag-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
     footer{padding:24px 18px;opacity:.8;max-width:980px;margin:auto}
   </style>
 </head>
@@ -45,21 +50,113 @@
     </div>
 
     <div class="card">
-      <h2>Demande de devis</h2>
-      <!-- Formulaire Netlify (ça marche tout seul si le site est sur Netlify) -->
-      <form name="devis" method="POST" data-netlify="true">
+      <h2>Commande / devis en ligne</h2>
+      <p class="note">Le calcul ci-dessous est indicatif. Validation finale après étude de votre bien.</p>
+
+      <form name="devis" method="POST" data-netlify="true" id="devis-form">
         <input type="hidden" name="form-name" value="devis" />
-        <label>Nom</label>
-        <input name="nom" required />
-        <label>Email</label>
-        <input name="email" type="email" required />
-        <label>Téléphone</label>
-        <input name="telephone" />
-        <label>Message</label>
-        <textarea name="message" rows="5" placeholder="Type de bien, ville, vente/location, diagnostics souhaités…"></textarea>
-        <div style="margin-top:12px;">
-          <button type="submit">Envoyer</button>
+
+        <div class="form-grid">
+          <div>
+            <label for="nom">Nom</label>
+            <input id="nom" name="nom" required />
+          </div>
+          <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" required />
+          </div>
+          <div>
+            <label for="telephone">Téléphone</label>
+            <input id="telephone" name="telephone" />
+          </div>
+          <div>
+            <label for="type-projet">Type de projet</label>
+            <select id="type-projet" name="type_projet" required>
+              <option value="">Sélectionner</option>
+              <option value="vente">Vente</option>
+              <option value="location">Location</option>
+            </select>
+          </div>
+          <div>
+            <label for="date-construction">Date de construction</label>
+            <input id="date-construction" name="date_construction" type="date" required />
+          </div>
         </div>
+
+        <h3>Installations</h3>
+        <div class="form-grid">
+          <div>
+            <label for="age-gaz">Installation gaz (âge en années)</label>
+            <input id="age-gaz" name="age_gaz" type="number" min="0" placeholder="0 si aucune" />
+          </div>
+          <div>
+            <label for="age-elec">Installation électrique (âge en années)</label>
+            <input id="age-elec" name="age_elec" type="number" min="0" placeholder="0 si récente" />
+          </div>
+        </div>
+
+        <h3>Diagnostics déjà faits</h3>
+        <p class="note">Pour chaque diagnostic, indiquez s’il est absent, présent mais expiré, ou encore valide.</p>
+        <div class="diag-grid">
+          <div>
+            <label for="etat-dpe">DPE</label>
+            <select id="etat-dpe" name="etat_dpe">
+              <option value="absent">Absent</option>
+              <option value="expire">Présent mais non valide</option>
+              <option value="valide">Présent et valide</option>
+            </select>
+          </div>
+          <div>
+            <label for="etat-amiante">Amiante</label>
+            <select id="etat-amiante" name="etat_amiante">
+              <option value="absent">Absent</option>
+              <option value="expire">Présent mais non valide</option>
+              <option value="valide">Présent et valide</option>
+            </select>
+          </div>
+          <div>
+            <label for="etat-plomb">Plomb (CREP)</label>
+            <select id="etat-plomb" name="etat_plomb">
+              <option value="absent">Absent</option>
+              <option value="expire">Présent mais non valide</option>
+              <option value="valide">Présent et valide</option>
+            </select>
+          </div>
+          <div>
+            <label for="etat-gaz">Gaz</label>
+            <select id="etat-gaz" name="etat_gaz">
+              <option value="absent">Absent</option>
+              <option value="expire">Présent mais non valide</option>
+              <option value="valide">Présent et valide</option>
+            </select>
+          </div>
+          <div>
+            <label for="etat-electricite">Électricité</label>
+            <select id="etat-electricite" name="etat_electricite">
+              <option value="absent">Absent</option>
+              <option value="expire">Présent mais non valide</option>
+              <option value="valide">Présent et valide</option>
+            </select>
+          </div>
+          <div>
+            <label for="etat-erp">ERP</label>
+            <select id="etat-erp" name="etat_erp">
+              <option value="absent">Absent</option>
+              <option value="expire">Présent mais non valide</option>
+              <option value="valide">Présent et valide</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+          <button type="button" id="calculer-devis">Calculer mes diagnostics</button>
+          <button type="submit">Envoyer la demande</button>
+        </div>
+
+        <div class="result" id="resultat-devis" aria-live="polite" hidden></div>
+
+        <label for="message">Message complémentaire</label>
+        <textarea id="message" name="message" rows="5" placeholder="Type de bien, ville, surface, disponibilités…"></textarea>
       </form>
     </div>
   </main>
@@ -67,5 +164,80 @@
   <footer>
     © SR Diagnostics Immobiliers — Mentions légales à compléter
   </footer>
+
+  <script>
+    const mapLabels = {
+      dpe: 'DPE',
+      amiante: 'Amiante',
+      plomb: 'Plomb (CREP)',
+      gaz: 'Gaz',
+      electricite: 'Électricité',
+      erp: 'ERP'
+    };
+
+    function getEtatDiagnostic(diag) {
+      return document.getElementById(`etat-${diag}`).value;
+    }
+
+    function getDiagnosticsRecommandes() {
+      const dateConstruction = document.getElementById('date-construction').value;
+      const ageGaz = Number(document.getElementById('age-gaz').value || 0);
+      const ageElec = Number(document.getElementById('age-elec').value || 0);
+      const cutoffPlomb = new Date('1949-01-01');
+      const cutoffAmiante = new Date('1997-07-01');
+
+      const obligatoires = new Set(['dpe', 'erp']);
+      const dateObj = dateConstruction ? new Date(`${dateConstruction}T00:00:00`) : null;
+
+      if (dateObj && dateObj < cutoffPlomb) {
+        obligatoires.add('plomb');
+      }
+
+      if (dateObj && dateObj < cutoffAmiante) {
+        obligatoires.add('amiante');
+      }
+
+      if (ageGaz > 15) {
+        obligatoires.add('gaz');
+      }
+
+      if (ageElec > 15) {
+        obligatoires.add('electricite');
+      }
+
+      const dejaValides = [...obligatoires].filter((diag) => getEtatDiagnostic(diag) === 'valide');
+      const aRealiser = [...obligatoires].filter((diag) => getEtatDiagnostic(diag) !== 'valide');
+
+      return { obligatoires: [...obligatoires], dejaValides, aRealiser };
+    }
+
+    document.getElementById('calculer-devis').addEventListener('click', () => {
+      const result = document.getElementById('resultat-devis');
+      const message = document.getElementById('message');
+      const { obligatoires, dejaValides, aRealiser } = getDiagnosticsRecommandes();
+
+      const listeAR = aRealiser.length
+        ? `<ul>${aRealiser.map((diag) => `<li>${mapLabels[diag]}</li>`).join('')}</ul>`
+        : '<p>Tous les diagnostics obligatoires semblent déjà disponibles et valides.</p>';
+
+      const listeDV = dejaValides.length
+        ? `<p><strong>Déjà valides :</strong> ${dejaValides.map((diag) => mapLabels[diag]).join(', ')}</p>`
+        : '<p><strong>Déjà valides :</strong> aucun déclaré.</p>';
+
+      result.innerHTML = `
+        <p><strong>Diagnostics potentiellement obligatoires :</strong> ${obligatoires.map((diag) => mapLabels[diag]).join(', ')}</p>
+        ${listeDV}
+        <p><strong>À prévoir pour votre devis :</strong></p>
+        ${listeAR}
+        <p class="note">Règles appliquées : plomb si construction avant 1949, amiante si construction avant le 01/07/1997, gaz/électricité si installation de plus de 15 ans.</p>
+      `;
+      result.hidden = false;
+
+      const resume = `\n\nPré-sélection automatique:\n- Obligatoires potentiels: ${obligatoires.map((diag) => mapLabels[diag]).join(', ')}\n- Déjà valides: ${dejaValides.length ? dejaValides.map((diag) => mapLabels[diag]).join(', ') : 'Aucun'}\n- À réaliser: ${aRealiser.length ? aRealiser.map((diag) => mapLabels[diag]).join(', ') : 'Aucun'}\n`;
+      if (!message.value.includes('Pré-sélection automatique:')) {
+        message.value = `${message.value.trim()}${resume}`.trim();
+      }
+    });
+  </script>
 </body>
 </html>
