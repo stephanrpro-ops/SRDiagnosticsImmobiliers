@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Actualités | SR Diagnostics Immobiliers</title>
+  <style>
+    body{font-family:system-ui,Arial;margin:0;line-height:1.5;background:#f4f8ff;color:#0f2744}
+    header,main,footer{max-width:980px;margin:auto;padding:18px}
+    .card{background:#fff;border:1px solid #d4e3fb;border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 4px 18px rgba(32,74,135,.08)}
+    a{color:#1565c0}.muted{opacity:.8}.news-item{padding:12px 0;border-bottom:1px solid #e4eeff}
+    .news-item:last-child{border-bottom:0}
+    nav{margin-top:12px;display:flex;gap:12px;flex-wrap:wrap}
+    nav a{padding:8px 12px;border-radius:10px;background:#e8f1ff;text-decoration:none}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Actualités diagnostics immobiliers</h1>
+    <p class="muted">Mise à jour automatique depuis des flux d’actualités générales et immobilières.</p>
+    <nav>
+      <a href="index.html">Accueil & devis</a>
+      <a href="actualites.html">Actualités</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Dernières actualités</h2>
+      <p id="last-update" class="muted">Chargement…</p>
+      <div id="news-list"></div>
+    </section>
+  </main>
+
+  <footer class="muted">© SR Diagnostics Immobiliers</footer>
+
+  <script>
+    async function loadNews() {
+      const response = await fetch('data/actualites.json', { cache: 'no-store' });
+      const data = await response.json();
+      const lastUpdate = document.getElementById('last-update');
+      const list = document.getElementById('news-list');
+      const date = new Date(data.updated_at);
+      lastUpdate.textContent = `Dernière mise à jour : ${date.toLocaleString('fr-FR')}`;
+
+      list.innerHTML = data.items.map((item) => `
+        <article class="news-item">
+          <h3><a href="${item.link}" target="_blank" rel="noopener">${item.title}</a></h3>
+          <p class="muted">${item.source} • ${item.published}</p>
+          <p>${item.summary || ''}</p>
+        </article>
+      `).join('');
+    }
+
+    loadNews().catch(() => {
+      document.getElementById('last-update').textContent = 'Impossible de charger les actualités pour le moment.';
+    });
+  </script>
+</body>
+</html>

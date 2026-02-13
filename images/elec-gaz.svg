@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#0f1c35"/>
-  <circle cx="260" cy="250" r="140" fill="#13264a" stroke="#2aa9ff" stroke-width="8"/>
-  <circle cx="540" cy="250" r="140" fill="#13264a" stroke="#2aa9ff" stroke-width="8"/>
-  <polygon points="250,170 315,170 270,245 330,245 220,360 255,270 205,270" fill="#ffc542"/>
-  <path d="M510 175 h60 a40 40 0 0 1 0 80 h-20 v70 h-40 v-70 h-20 a40 40 0 1 1 0-80 h20" fill="#8fd3ff"/>
-  <text x="170" y="460" font-size="40" font-family="Arial" fill="#e8eefc">Diagnostics électricité & gaz</text>
-</svg>

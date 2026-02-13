@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
-  <rect width="800" height="500" fill="#0f1c35"/>
-  <polygon points="400,80 700,420 100,420" fill="#13264a" stroke="#ffcd57" stroke-width="10"/>
-  <text x="305" y="300" font-size="110" font-family="Arial" fill="#ffcd57">!</text>
-  <text x="165" y="460" font-size="42" font-family="Arial" fill="#e8eefc">Repérage amiante</text>
-</svg>
