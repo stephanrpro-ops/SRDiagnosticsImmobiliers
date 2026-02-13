@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+  <rect width="800" height="500" fill="#0f1c35"/>
+  <text x="60" y="90" font-size="52" fill="#8fd3ff" font-family="Arial">DPE</text>
+  <rect x="70" y="130" width="660" height="300" rx="20" fill="#13264a" stroke="#2aa9ff"/>
+  <g font-family="Arial" font-size="28" fill="#e8eefc">
+    <text x="110" y="205">A</text><rect x="150" y="180" width="420" height="18" fill="#1fbf73"/>
+    <text x="110" y="245">C</text><rect x="150" y="220" width="360" height="18" fill="#7ddc5d"/>
+    <text x="110" y="285">E</text><rect x="150" y="260" width="260" height="18" fill="#ffc542"/>
+    <text x="110" y="325">G</text><rect x="150" y="300" width="160" height="18" fill="#ff6b4a"/>
+  </g>
+</svg>
