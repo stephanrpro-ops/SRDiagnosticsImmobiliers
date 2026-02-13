@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>SR Diagnostics Immobiliers</title>
+  <style>
+    body{font-family:system-ui,Arial;margin:0;line-height:1.5;background:#0b1220;color:#e8eefc}
+    header{padding:48px 18px;max-width:980px;margin:auto}
+    .card{background:#121a2c;border:1px solid #22304f;border-radius:14px;padding:18px;margin:12px 0}
+    h1{margin:0 0 10px;font-size:34px}
+    a{color:#8fd3ff}
+    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+    label{display:block;margin:10px 0 6px}
+    input,textarea{width:100%;padding:10px;border-radius:10px;border:1px solid #22304f;background:#0b1220;color:#e8eefc}
+    button{padding:12px 14px;border-radius:10px;border:0;background:#2aa9ff;color:#00111f;font-weight:700;cursor:pointer}
+    footer{padding:24px 18px;opacity:.8;max-width:980px;margin:auto}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>SR Diagnostics Immobiliers</h1>
+    <p>Diagnostics immobiliers pour vente & location — DPE, amiante, plomb, électricité, gaz, ERP…</p>
+    <p><strong>Contact :</strong> <a href="tel:+33XXXXXXXXX">+33 XX XX XX XX XX</a> • <a href="mailto:contact@srd...">contact@srd...</a></p>
+  </header>
+
+  <main style="max-width:980px;margin:auto;padding:0 18px 40px;">
+    <div class="grid">
+      <div class="card">
+        <h2>Prestations</h2>
+        <ul>
+          <li>DPE</li>
+          <li>Amiante (avec / sans mention)</li>
+          <li>Plomb (CREP)</li>
+          <li>Électricité</li>
+          <li>Gaz</li>
+          <li>ERP</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h2>Zone d’intervention</h2>
+        <p>Lens – Douai – Arras – Béthune (à ajuster).</p>
+        <p>RDV rapides • Rapport clair • Conseils pédagogiques</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Demande de devis</h2>
+      <!-- Formulaire Netlify (ça marche tout seul si le site est sur Netlify) -->
+      <form name="devis" method="POST" data-netlify="true">
+        <input type="hidden" name="form-name" value="devis" />
+        <label>Nom</label>
+        <input name="nom" required />
+        <label>Email</label>
+        <input name="email" type="email" required />
+        <label>Téléphone</label>
+        <input name="telephone" />
+        <label>Message</label>
+        <textarea name="message" rows="5" placeholder="Type de bien, ville, vente/location, diagnostics souhaités…"></textarea>
+        <div style="margin-top:12px;">
+          <button type="submit">Envoyer</button>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    © SR Diagnostics Immobiliers — Mentions légales à compléter
+  </footer>
+</body>
+</html>
