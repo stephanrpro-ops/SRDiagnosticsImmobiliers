@@ -1,0 +1,1 @@
+export default function Page() { return <main className="container-page"><h1 className="text-3xl font-bold text-ralBlue">Mentions légales</h1><p>SIRET : [A RENSEIGNER] · Assurance RC Pro : [A RENSEIGNER] · Médiateur : [A RENSEIGNER].</p></main>; }
