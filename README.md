@@ -21,10 +21,9 @@ Le favicon est un fichier texte SVG : `app/icon.svg`.
   - `formatPriceEUR(value)`
 - UI responsive : `src/components/PricingGrid.tsx`
 - Intégration :
-  - `/tarifs` (page complète: `app/tarifs/page.tsx`)
-  - `/` (extrait “Packs à partir de…")
+  - `/tarifs` (page complète)
+  - `/` (extrait)
   - `/devis` (rappel)
-  - fichier demandé aussi créé : `src/app/tarifs/page.tsx`
 
 ## Démarrage
 ```bash
