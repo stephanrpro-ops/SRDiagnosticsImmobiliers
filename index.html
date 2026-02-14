@@ -5,23 +5,36 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>SR Diagnostics Immobiliers</title>
   <style>
-    body{font-family:system-ui,Arial;margin:0;line-height:1.5;background:#f4f8ff;color:#0f2744}
+    body{font-family:Georgia,"Times New Roman",serif;margin:0;line-height:1.5;background:#eef2f7;color:#102a46}
     header{padding:42px 18px;max-width:980px;margin:auto}
-    .card{background:#fff;border:1px solid #d4e3fb;border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 4px 18px rgba(32,74,135,.08)}
+    .card{background:#fff;border:1px solid #c7d5ea;border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 4px 18px rgba(32,74,135,.08)}
     h1{margin:0 0 10px;font-size:34px}
-    a{color:#1565c0}
+    a{color:#0b4f90}
     nav{margin:16px 0 0;display:flex;gap:12px;flex-wrap:wrap}
-    nav a{padding:8px 12px;border-radius:10px;background:#e8f1ff;text-decoration:none}
+    nav a{padding:8px 12px;border-radius:10px;background:#dde8f7;text-decoration:none}
     .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
     .form-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
     .diag-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
     label{display:block;margin:10px 0 6px}
-    input,textarea,select{width:100%;padding:10px;border-radius:10px;border:1px solid #b9d1f3;background:#fff;color:#0f2744}
-    button{padding:12px 14px;border-radius:10px;border:0;background:#1c7df0;color:#fff;font-weight:700;cursor:pointer}
-    .result{margin-top:14px;padding:14px;border-radius:12px;background:#eff6ff;border:1px solid #b7d2fb}
+    input,textarea,select{width:100%;padding:10px;border-radius:10px;border:1px solid #a8bfdf;background:#fff;color:#0f2744}
+    button{padding:12px 14px;border-radius:10px;border:0;background:#0b4f90;color:#fff;font-weight:700;cursor:pointer}
+    .result{margin-top:14px;padding:14px;border-radius:12px;background:#edf3fb;border:1px solid #b7cbe7}
     .result ul{margin:8px 0 0 20px}
     .note{font-size:.95rem;opacity:.9}
     .hidden{display:none}
+    .pricing{margin-top:20px}
+    .pricing h2,.pricing h3{color:#004b8d;text-align:center;margin:0}
+    .pricing .subtitle{text-align:center;margin:6px 0 16px;font-size:1.1rem}
+    .pricing .intro{text-align:center;font-size:1.05rem;margin-bottom:16px}
+    .packs{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;background:#d9dee7;border-radius:6px;padding:18px}
+    .pack-item{padding:14px;background:#d9dee7;color:#004b8d;font-weight:700;font-size:1.1rem}
+    .pack-item strong{display:block;font-size:2rem;line-height:1.2;margin-top:6px}
+    .unitaires-title{color:#004b8d;font-size:2rem;margin:20px 0 10px}
+    table{width:100%;border-collapse:collapse;background:#fff}
+    th,td{border:2px solid #a5b9d8;padding:8px 10px}
+    th{background:#00508f;color:#fff;text-align:left}
+    td:last-child,th:last-child{text-align:center;font-weight:700;color:#004b8d}
+    .pricing-notes{font-size:.95rem;margin-top:12px}
     footer{padding:24px 18px;opacity:.8;max-width:980px;margin:auto}
   </style>
 </head>
@@ -54,6 +67,47 @@
         <p>Lens – Douai – Arras – Béthune (à ajuster).</p>
         <p>RDV rapides • Rapport clair • Conseils pédagogiques</p>
       </div>
+    </div>
+
+    <div class="card">
+      <section class="pricing" aria-labelledby="grille-tarifaire">
+        <h2 id="grille-tarifaire">GRILLE TARIFAIRE</h2>
+        <h3>Tarifs TTC</h3>
+        <p class="intro">Tarifs dégressifs en fonction du nombre de diagnostics programmés lors d’une même intervention.</p>
+
+        <div class="packs">
+          <div class="pack-item">Pack 1 diagnostic <strong>150 €</strong></div>
+          <div class="pack-item">Pack 2 diagnostics <strong>230 €</strong></div>
+          <div class="pack-item">Pack 3 diagnostics <strong>300 €</strong></div>
+          <div class="pack-item">Pack 4 diagnostics <strong>360 €</strong></div>
+          <div class="pack-item">Pack 5 diagnostics <strong>420 €</strong></div>
+          <div class="pack-item">Pack 6 diagnostics <strong>470 €</strong></div>
+        </div>
+
+        <h3 class="unitaires-title">Tarifs unitaires</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Prestation</th>
+              <th>Tarif</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Repérage amiante</td><td>100 €</td></tr>
+            <tr><td>CREP (Plomb)</td><td>100 €</td></tr>
+            <tr><td>Gaz</td><td>90 €</td></tr>
+            <tr><td>Électricité</td><td>90 €</td></tr>
+            <tr><td>Mesurage surface habitable</td><td>80 €</td></tr>
+            <tr><td>État parasitaire</td><td>80 €</td></tr>
+            <tr><td>Forfait prélèvement</td><td>60 €*</td></tr>
+            <tr><td>ERP (État des risques et pollution)</td><td>25 €</td></tr>
+            <tr><td>À partir de 200 m²</td><td>Sur devis**</td></tr>
+          </tbody>
+        </table>
+
+        <p class="pricing-notes">* Des prélèvements peuvent aussi être effectués dans le cadre du diagnostic amiante et plomb, au prix unitaire de 60 € TTC.<br>
+        ** Les biens dont la surface excède 200 m² devront faire l’objet d’un devis personnalisé.</p>
+      </section>
     </div>
 
     <div class="card">
