@@ -1,5 +1,3 @@
 [build]
   publish = "."
   command = "echo 'static site - no build'"
-
-# IMPORTANT: pas de redirects, pas de headers, pas de plugins.

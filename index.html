@@ -1,72 +1,43 @@
-<script>
-  const mapLabels = {
-    dpe: 'DPE',
-    amiante: 'Amiante',
-    plomb: 'Plomb (CREP)',
-    gaz: 'Gaz',
-    electricite: 'Électricité',
-    erp: 'ERP (État des risques)',
-    termites: 'État parasitaire (termites)'
-  };
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Actualités — SR Diagnostics Immobiliers</title>
+  <style>
+    body{font-family:system-ui,Arial;margin:0;line-height:1.6;background:#f4f8ff;color:#0f2744}
+    header,main,footer{max-width:980px;margin:auto;padding:18px}
+    .card{background:#fff;border:1px solid #d4e3fb;border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 4px 18px rgba(32,74,135,.08)}
+    a{color:#1565c0}
+    nav{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+    nav a{padding:8px 12px;border-radius:10px;background:#e8f1ff;text-decoration:none}
+    .muted{opacity:.85}
+    h1{margin:0 0 6px}
+    h2{margin:0 0 10px}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Actualités</h1>
+    <nav>
+      <a href="index.html">Accueil & devis</a>
+      <a href="actualites.html">Actualités</a>
+    </nav>
+    <p class="muted">Veille réglementaire et infos diagnostics (liens sources uniquement).</p>
+  </header>
 
-  function val(id){ return (document.getElementById(id)?.value || '').trim(); }
-  function checked(id){ return !!document.getElementById(id)?.checked; }
+  <main>
+    <section class="card" aria-labelledby="sources">
+      <h2 id="sources">Sources</h2>
+      <ul>
+        <li><a href="https://www.quotidiag.fr/" target="_blank" rel="noopener">Quotidiag</a></li>
+        <li><a href="https://www.diagnostiqueur-immobilier.fr/offres-abonnements/veille-reglementaire/" target="_blank" rel="noopener">Diagnostiqueur-immobilier.fr — Veille</a></li>
+        <li><a href="https://infodiag.fr/mon-attestation-veille-reglementaire/" target="_blank" rel="noopener">Infodiag — Veille</a></li>
+      </ul>
+      <p class="muted">Note : cette page reste volontairement simple. Les articles restent sur leurs sites d’origine.</p>
+    </section>
+  </main>
 
-  function getDiagnosticsRecommandes() {
-    const year = Number(val('annee-construction'));
-    const surface = Number(val('surface'));
-    const hasGaz = val('has-gaz') === 'oui';
-    const hasElec = val('has-elec') === 'oui';
-    const dpeDeja = val('dpe-deja') === 'oui';
-    const termitesZone = checked('termite-zone');
-
-    const billed = new Set();
-    billed.add('erp');
-    if (!dpeDeja) billed.add('dpe');
-    if (year && year < 1949) billed.add('plomb');
-    if (year && year < 1997) billed.add('amiante');
-    if (hasGaz) billed.add('gaz');
-    if (hasElec) billed.add('electricite');
-    if (termitesZone) billed.add('termites');
-
-    const list = [...billed];
-    const surDevis = (surface && surface > 200) || list.length === 0 || list.length > 6;
-    return { list, surDevis, surface };
-  }
-
-  function computeAndRender() {
-    const result = document.getElementById('resultat-devis');
-    const hiddenDiag = document.getElementById('diagnostics-a-prevoir');
-    const hiddenSurDevis = document.getElementById('sur-devis');
-    const message = document.getElementById('message');
-
-    const { list, surDevis, surface } = getDiagnosticsRecommandes();
-
-    hiddenDiag.value = list.map(d => mapLabels[d]).join(', ') || 'Aucun';
-    hiddenSurDevis.value = surDevis ? 'oui' : 'non';
-
-    const htmlList = list.length
-      ? `<ul>${list.map(d => `<li>${mapLabels[d]}</li>`).join('')}</ul>`
-      : `<p>Aucun diagnostic n’a été sélectionné. Nous vous recontactons pour établir un devis.</p>`;
-
-    result.innerHTML = `
-      <p><strong>Diagnostics à prévoir :</strong></p>
-      ${htmlList}
-      <p><strong>Surface :</strong> ${Number.isFinite(surface) ? surface + ' m²' : '—'}</p>
-      <p><strong>Statut :</strong> ${surDevis ? 'Sur devis (nous vous recontactons)' : 'Pack calculable (confirmé après échange)'}</p>
-      <p class="note">Règles : plomb avant 1949 • amiante avant 1997 • ERP inclus • gaz/élec selon présence • termites selon vérification. Sur devis si &gt;200 m², 0 diag, ou &gt;6 diags.</p>
-    `;
-    result.hidden = false;
-
-    const resume =
-      `Pré-sélection automatique :\n` +
-      `- Diagnostics : ${hiddenDiag.value}\n` +
-      `- Sur devis : ${hiddenSurDevis.value}\n`;
-
-    message.value = message.value.replace(/\n?Pré-sélection automatique:[\s\S]*$/m, '').trim();
-    message.value = `${message.value}\n\n${resume}`.trim();
-  }
-
-  document.getElementById('calculer-devis').addEventListener('click', computeAndRender);
-  document.getElementById('devis-form').addEventListener('submit', computeAndRender);
-</script>
+  <footer class="muted">© SR Diagnostics Immobiliers</footer>
+</body>
+</html>
