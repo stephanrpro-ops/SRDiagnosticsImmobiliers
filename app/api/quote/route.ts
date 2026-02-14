@@ -1,42 +1,44 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { checkRateLimit, verifyTurnstile } from '@/lib/security';
-import { getSupabaseServiceClient } from '@/lib/supabase-server';
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Actualités — SR Diagnostics Immobiliers</title>
+  <style>
+    body{font-family:system-ui,Arial;margin:0;line-height:1.6;background:#f4f8ff;color:#0f2744}
+    header,main,footer{max-width:980px;margin:auto;padding:18px}
+    .card{background:#fff;border:1px solid #d4e3fb;border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 4px 18px rgba(32,74,135,.08)}
+    a{color:#1565c0}
+    nav{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
+    nav a{padding:8px 12px;border-radius:10px;background:#e8f1ff;text-decoration:none}
+    .muted{opacity:.85}
+    h1{margin:0 0 6px}
+    h2{margin:0 0 10px}
+  </style>
+</head>
 
-export async function POST(req: NextRequest) {
-  const ip = req.headers.get('x-forwarded-for') ?? 'unknown';
-  if (!checkRateLimit(`quote:${ip}`)) {
-    return NextResponse.json({ ok: false, message: 'Trop de requêtes.' }, { status: 429 });
-  }
+<body>
+  <header>
+    <h1>Actualités</h1>
+    <nav>
+      <a href="index.html">Accueil & devis</a>
+      <a href="actualites.html">Actualités</a>
+    </nav>
+    <p class="muted">Veille réglementaire et infos diagnostics (liens sources uniquement).</p>
+  </header>
 
-  const body = await req.json();
-  if (body.hp) return NextResponse.json({ ok: true });
+  <main>
+    <section class="card" aria-labelledby="sources">
+      <h2 id="sources">Sources</h2>
+      <ul>
+        <li><a href="https://www.quotidiag.fr/" target="_blank" rel="noopener">Quotidiag</a></li>
+        <li><a href="https://www.diagnostiqueur-immobilier.fr/offres-abonnements/veille-reglementaire/" target="_blank" rel="noopener">Diagnostiqueur-immobilier.fr — Veille</a></li>
+        <li><a href="https://infodiag.fr/mon-attestation-veille-reglementaire/" target="_blank" rel="noopener">Infodiag — Veille</a></li>
+      </ul>
+      <p class="muted">Note : les articles restent sur leurs sites d’origine.</p>
+    </section>
+  </main>
 
-  const turnstileOk = await verifyTurnstile(body.turnstileToken);
-  if (!turnstileOk) {
-    return NextResponse.json({ ok: false, message: 'Vérification anti-spam échouée.' }, { status: 400 });
-  }
-
-  const supabase = getSupabaseServiceClient();
-
-  if (supabase) {
-    const { error } = await supabase.from('quotes_requests').insert({
-      data_json: body.data ?? {},
-      status: 'new'
-    });
-
-    if (error) {
-      return NextResponse.json({ ok: false, message: 'Erreur DB.' }, { status: 500 });
-    }
-  }
-
-  console.info('quote_request_received', {
-    ip,
-    hasDb: Boolean(supabase),
-    data: body.data,
-    result: body.result,
-    consent_json: body.consent_json,
-    contact: body.contact
-  });
-
-  return NextResponse.json({ ok: true });
-}
+  <footer class="muted">© SR Diagnostics Immobiliers</footer>
+</body>
+</html>
