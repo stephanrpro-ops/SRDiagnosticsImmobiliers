@@ -1,30 +1,68 @@
-# SR Diagnostics Immobiliers — MVP Next.js / Netlify
+# SR Diagnostics Immobiliers — Site public + Intranet (MVP)
 
-MVP professionnel (français) prêt à déployer sur Netlify.
+Plateforme full-stack en **Next.js App Router + TypeScript** pour SR Diagnostics Immobiliers.
 
 ## Stack
-- Next.js 14 (App Router) + TypeScript
-- Tailwind CSS + composants style shadcn/ui (`Button`, `Card`, `Badge`)
-- Supabase (DB/Auth/Storage)
-- Netlify (`@netlify/plugin-nextjs`)
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS + composants UI réutilisables
+- Supabase (DB, Auth, Storage)
 - ESLint + Prettier
+- Déploiement recommandé: **Vercel**
+- Déploiement alternatif: **Netlify** (plugin Next.js)
 
-## Contrainte binaire
-Ce dépôt n’ajoute **aucun fichier binaire** applicatif (pas de PNG/JPG/PDF/ICO/WOFF).  
-Le logo est un composant React SVG inline : `components/brand/logo.tsx`.
+## Branding
+- Nom: **SR Diagnostics Immobiliers**
+- Gérant: **Raspado Stephan**
+- Slogan: **« Bâtir votre confiance dans les règles de l’art »**
+- Adresse: **328 boulevard Fosse 2, 62320 Rouvroy, France**
+- Contact: **07 67 07 67 61** · **stephanr.pro@gmail.com**
+- Couleurs: RAL 5005 / 9016 / 9005
 
-## Grille tarifaire codée
-- Données et helpers : `src/lib/pricing.ts`
-  - `getPackPrice(count)`
-  - `isOver200m2(surface)`
-  - `formatPriceEUR(value)`
-- UI responsive : `src/components/PricingGrid.tsx`
-- Intégration :
-  - `/tarifs` (page complète)
-  - `/` (extrait)
-  - `/devis` (rappel)
+## Pages publiques
+- `/` Accueil
+- `/prestations`
+- Détails: `/prestations/dpe`, `/amiante`, `/plomb`, `/electricite`, `/gaz`, `/termites`, `/erp`, `/ppt`, `/dtg`
+- `/devis` Wizard multi-étapes (A→E) + moteur packs JSON
+- `/actualites` veille RSS (liens sources + résumés originaux)
+- `/valeurs`, `/contact`
+- `/mentions-legales`, `/confidentialite`, `/cgv`
 
-## Démarrage
+## Intranet (MVP)
+- `/login`
+- `/dashboard`
+- `/client`
+- `/admin`
+- `/admin/veille`
+
+> Les écrans intranet sont prêts côté UI/flux MVP. Le branchement complet des contrôles d’accès Supabase Auth se fait avec vos clés en production.
+
+## Moteur de packs (configurable)
+- Fichier: `config/packs.json`
+- Utilisé par `lib/packs.ts`
+- Règles configurables sur: transaction, année, gaz, électricité, copropriété, termites.
+- Sans grille tarifaire fournie: affichage **sur devis**.
+
+## Veille RSS (sans scraping)
+- Endpoint serveur: `GET /api/veille/fetch`
+- Source des items: tables `news_sources` / `news_items`
+- Stockage limité à: `title`, `url`, `published_at`, `source`, `tags`, `summary`.
+- Pas de stockage du contenu intégral externe.
+
+## Base de données Supabase
+- Schéma SQL complet: `supabase/schema.sql`
+- Tables: users, clients, properties, quotes_requests, missions, documents, invoices, reminders, news_sources, news_items, content_blocks
+- RLS inclus:
+  - admin = accès complet
+  - client = accès à ses missions/documents/factures
+
+## Storage Supabase (documents)
+- Bucket privé recommandé: `documents`
+- Convention de chemin:
+  - `clients/{client_id}/properties/{property_id}/missions/{mission_id}/{document_id}.pdf`
+- Validation stricte: PDF only + limite taille (à imposer côté API upload)
+
+## Démarrage local
 ```bash
 npm install
 cp .env.example .env.local
@@ -34,55 +72,30 @@ npm run dev
 ## Variables d’environnement
 Voir `.env.example`.
 
-### Obligatoires
+Principales:
 - `SUPABASE_URL`
 - `SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
-
-### Optionnelles
-- `RESEND_API_KEY` (ou SMTP)
-- `TWILIO_ACCOUNT_SID`, `TWILIO_AUTH_TOKEN`, `TWILIO_FROM_NUMBER`
-- `TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`
-- `GOOGLE_APPOINTMENT_URL`, `NEXT_PUBLIC_GOOGLE_APPOINTMENT_URL`
-- `STRIPE_PAYMENT_LINK_PREFIX`
 - `NEXT_PUBLIC_SITE_URL`
 
-## Pages
-- `/`, `/prestations` + sous-pages, `/copro`, `/devis`, `/tarifs`, `/actualites`, `/contact`, `/valeurs`
-- `/mentions-legales`, `/confidentialite`, `/cgv`
-- `/espace-client`, `/admin`
+## Déploiement Vercel (recommandé)
+1. Importer le repo dans Vercel.
+2. Ajouter les variables d’environnement.
+3. Déployer (framework auto-détecté Next.js).
+4. Configurer Supabase URL/keys + policies RLS.
 
-## Devis (règles MVP)
-- ERP auto-inclus
-- Amiante si année < 1997
-- Plomb si année < 1949
-- DPE exclu si déjà valide
-- Électricité/Gaz selon présence installation
-- Termites si confirmation utilisateur
-- Surface > 200 m² => **sur devis**
-- Packs 1→6 : 150 / 230 / 300 / 360 / 420 / 470
+## Déploiement Netlify (option)
+- `netlify.toml` fourni pour Next.js plugin.
+- Ajouter les mêmes variables d’environnement.
 
-## Anti-spam
-- Honeypot
-- Rate limiting IP (mémoire)
-- Turnstile auto-activé si clé secrète configurée
+## RGPD / conformité
+- Consentement requis sur formulaire devis.
+- Minimisation des données collectées.
+- Mention explicite: “Résumé généré automatiquement” sur la veille.
+- Textes juridiques en mode placeholder à valider juridiquement.
 
-## Supabase
-- Schéma SQL: `supabase/schema.sql`
-- Bucket privé recommandé: `documents`
-- Structure stockage:
-  `/clients/{client_id}/properties/{property_id}/missions/{mission_id}/{document_id}.pdf`
-
-## Netlify
-1. Connecter le repo
-2. Build command: `npm run build`
-3. Ajouter les env vars
-4. `netlify.toml` active le plugin Next.js
-5. (option) cron Netlify pour import RSS veille
-
-## TODO production
-- Auth admin Supabase + ACL/RLS complètes
-- PDF viewer pdf.js + watermark “IMPAYÉ” par mission
-- Envoi mails (Resend/SMTP) + SMS Twilio branchés
-- CRUD admin complets (clients, missions, docs, factures, tokens)
-- Import RSS / workflow brouillon-publication
+## Seed admin (placeholder)
+- Dans `supabase/schema.sql`:
+  - email: `admin@example.com`
+  - rôle: `admin`
+- Remplacer en production.
