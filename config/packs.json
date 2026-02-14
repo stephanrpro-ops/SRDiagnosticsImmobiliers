@@ -1,0 +1,47 @@
+{
+  "packs": [
+    {
+      "id": "pack-essentiel-location",
+      "name": "Pack Location – Essentiel",
+      "when": { "transaction": ["location"] },
+      "includes": ["dpe", "electricite", "gaz", "erp"],
+      "price": { "mode": "sur_devis", "amount": 0 },
+      "description": "Recommandé pour les mises en location avec installations à contrôler."
+    },
+    {
+      "id": "pack-vente-complet",
+      "name": "Pack Vente – Complet",
+      "when": { "transaction": ["vente"] },
+      "includes": ["dpe", "amiante", "plomb", "gaz", "electricite", "erp", "termites"],
+      "price": { "mode": "sur_devis", "amount": 0 },
+      "description": "Parcours complet pour sécuriser une vente selon l'ancienneté et les équipements."
+    },
+    {
+      "id": "pack-gaz-elec",
+      "name": "Pack Gaz + Électricité",
+      "when": { "has_gas": true, "has_electricity": true },
+      "includes": ["gaz", "electricite", "erp"],
+      "price": { "mode": "sur_devis", "amount": 0 },
+      "description": "Focus sécurité des installations techniques."
+    },
+    {
+      "id": "pack-copro",
+      "name": "Pack Copropriété – Orientation",
+      "when": { "is_copro": true },
+      "includes": ["dpe", "erp", "ppt", "dtg"],
+      "price": { "mode": "sur_devis", "amount": 0 },
+      "description": "Pré-orientation copropriété avec prestations complémentaires sur étude."
+    }
+  ],
+  "rules": [
+    { "if": { "year_built": { "lt": 1949 } }, "suggest_add": ["plomb"], "reason": "Bien antérieur à 1949" },
+    { "if": { "year_built": { "lt": 1997 } }, "suggest_add": ["amiante"], "reason": "Bien antérieur à 1997" },
+    { "if": { "has_gas": true }, "suggest_add": ["gaz"], "reason": "Installation gaz présente" },
+    { "if": { "has_electricity": true }, "suggest_add": ["electricite"], "reason": "Installation électrique présente" },
+    { "if": { "transaction": ["vente", "location"] }, "suggest_add": ["erp"], "reason": "ERP conseillé systématiquement" }
+  ],
+  "defaults": {
+    "fallback_pack": "pack-vente-complet",
+    "unknown_choice_message": "Vous avez répondu “Je ne sais pas” sur certains points : nous recommandons un pack de sécurité à valider avec un diagnostiqueur."
+  }
+}
