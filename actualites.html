@@ -3,36 +3,39 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Actualités | SR Diagnostics Immobiliers</title>
+  <title>Actualités — SR Diagnostics Immobiliers</title>
   <style>
     body{font-family:system-ui,Arial;margin:0;line-height:1.6;background:#f4f8ff;color:#0f2744}
     header,main,footer{max-width:980px;margin:auto;padding:18px}
     .card{background:#fff;border:1px solid #d4e3fb;border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 4px 18px rgba(32,74,135,.08)}
     a{color:#1565c0}
-    .muted{opacity:.85}
-    nav{display:flex;gap:10px;flex-wrap:wrap}
+    nav{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
     nav a{padding:8px 12px;border-radius:10px;background:#e8f1ff;text-decoration:none}
+    .muted{opacity:.85}
+    h1{margin:0 0 6px}
+    h2{margin:0 0 10px}
   </style>
 </head>
+
 <body>
   <header>
-    <h1>Actualités diagnostics immobiliers</h1>
+    <h1>Actualités</h1>
     <nav>
       <a href="index.html">Accueil & devis</a>
       <a href="actualites.html">Actualités</a>
     </nav>
-    <p class="muted">Veille réglementaire et informations diagnostics (liens sources uniquement).</p>
+    <p class="muted">Veille réglementaire et infos diagnostics (liens sources uniquement).</p>
   </header>
 
   <main>
-    <section class="card">
-      <h2>Sources</h2>
+    <section class="card" aria-labelledby="sources">
+      <h2 id="sources">Sources</h2>
       <ul>
         <li><a href="https://www.quotidiag.fr/" target="_blank" rel="noopener">Quotidiag</a></li>
         <li><a href="https://www.diagnostiqueur-immobilier.fr/offres-abonnements/veille-reglementaire/" target="_blank" rel="noopener">Diagnostiqueur-immobilier.fr — Veille</a></li>
         <li><a href="https://infodiag.fr/mon-attestation-veille-reglementaire/" target="_blank" rel="noopener">Infodiag — Veille</a></li>
       </ul>
-      <p>Note : cette page est volontairement simple. Les articles restent sur leurs sites d’origine.</p>
+      <p class="muted">Note : cette page reste volontairement simple. Les articles restent sur leurs sites d’origine.</p>
     </section>
   </main>
 
