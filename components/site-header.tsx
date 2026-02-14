@@ -1,10 +1,8 @@
 import Link from 'next/link';
-import { Logo } from '@/src/components/Logo';
 
 const nav = [
   ['Accueil', '/'],
   ['Prestations', '/prestations'],
-  ['Tarifs', '/tarifs'],
   ['Devis', '/devis'],
   ['Actualités', '/actualites'],
   ['Contact', '/contact'],
@@ -15,12 +13,9 @@ export function SiteHeader() {
   return (
     <header className="border-b border-ralBlue/20 bg-white">
       <div className="container-page flex flex-wrap items-center justify-between gap-3 py-4">
-        <div className="flex items-center gap-3">
-          <Logo className="h-11 w-11" />
-          <div>
-            <p className="text-2xl font-bold text-ralBlue">SR Diagnostics Immobiliers</p>
-            <p className="text-sm text-slate-600">Bâtir votre confiance dans les règles de l’art</p>
-          </div>
+        <div>
+          <p className="text-2xl font-bold text-ralBlue">SR Diagnostics Immobiliers</p>
+          <p className="text-sm text-slate-600">Bâtir votre confiance dans les règles de l’art</p>
         </div>
         <nav className="flex flex-wrap gap-3 text-sm font-medium">
           {nav.map(([label, href]) => (

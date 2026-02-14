@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import { PricingGrid } from '@/src/components/PricingGrid';
 
 export default function HomePage() {
   return (
@@ -20,14 +19,13 @@ export default function HomePage() {
       </section>
 
       <section className="rounded-xl border border-ralBlue/20 bg-white p-5">
-        <h2 className="text-2xl font-bold text-ralBlue">Tarifs</h2>
-        <p className="mt-2 text-slate-700">Packs à partir de 150 € TTC (DPE seul = Pack 1). Surface &gt; 200 m² : sur devis.</p>
-        <div className="mt-4">
-          <PricingGrid compact />
-          <Link href="/tarifs" className="mt-3 inline-block text-sm font-semibold text-ralBlue underline">
-            Voir la grille tarifaire complète
-          </Link>
-        </div>
+        <h2 className="text-2xl font-bold text-ralBlue">Prestations</h2>
+        <p className="mt-2 text-slate-700">
+          Diagnostics obligatoires pour vente/location selon votre bien et son année de construction.
+        </p>
+        <Link href="/prestations" className="mt-3 inline-block text-sm font-semibold text-ralBlue underline">
+          Voir toutes les prestations
+        </Link>
       </section>
 
       <section className="grid gap-4 md:grid-cols-2">
