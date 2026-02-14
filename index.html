@@ -1,270 +1,72 @@
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SR Diagnostics Immobiliers</title>
-  <meta name="description" content="Diagnostics immobiliers pour vente & location : DPE, amiante, plomb, électricité, gaz, ERP, termites. Arras, Lens, Hénin, Beaumont, Douai, Béthune." />
-  <style>
-    :root{
-      --blue:#1c7df0;
-      --blue-ink:#0f2744;
-      --bg:#f4f8ff;
-      --card:#ffffff;
-      --border:#d4e3fb;
-      --chip:#e8f1ff;
-    }
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;line-height:1.55;background:var(--bg);color:var(--blue-ink)}
-    header{padding:42px 18px;max-width:980px;margin:auto}
-    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 4px 18px rgba(32,74,135,.08)}
-    h1{margin:0 0 10px;font-size:34px;letter-spacing:-.3px}
-    h2{margin:0 0 10px}
-    a{color:#1565c0}
-    nav{margin:16px 0 0;display:flex;gap:10px;flex-wrap:wrap}
-    nav a{padding:8px 12px;border-radius:10px;background:var(--chip);text-decoration:none}
-    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-    .form-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-    label{display:block;margin:10px 0 6px;font-weight:600}
-    input,textarea,select{width:100%;padding:10px;border-radius:10px;border:1px solid #b9d1f3;background:#fff;color:var(--blue-ink)}
-    button{padding:12px 14px;border-radius:10px;border:0;background:var(--blue);color:#fff;font-weight:800;cursor:pointer}
-    button.secondary{background:#0f2744}
-    .result{margin-top:14px;padding:14px;border-radius:12px;background:#eff6ff;border:1px solid #b7d2fb}
-    .result ul{margin:8px 0 0 20px}
-    .note{font-size:.95rem;opacity:.9}
-    .hidden{display:none}
-    .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:#eaf2ff;border:1px solid #cfe2ff;font-weight:700}
-    footer{padding:24px 18px;opacity:.85;max-width:980px;margin:auto}
-    .muted{opacity:.85}
-    .hr{height:1px;background:#dbe8ff;margin:14px 0}
-  </style>
-</head>
+<script>
+  const mapLabels = {
+    dpe: 'DPE',
+    amiante: 'Amiante',
+    plomb: 'Plomb (CREP)',
+    gaz: 'Gaz',
+    electricite: 'Électricité',
+    erp: 'ERP (État des risques)',
+    termites: 'État parasitaire (termites)'
+  };
 
-<body>
-  <header>
-    <h1>SR Diagnostics Immobiliers</h1>
-    <p class="muted">Diagnostics immobiliers pour vente & location — DPE, amiante, plomb, électricité, gaz, ERP, termites.</p>
+  function val(id){ return (document.getElementById(id)?.value || '').trim(); }
+  function checked(id){ return !!document.getElementById(id)?.checked; }
 
-    <p class="muted">
-      <span class="pill">📞 <a href="tel:+33767076761">07 67 07 67 61</a></span>
-      &nbsp;
-      <span class="pill">✉️ <a href="mailto:stephanr.pro@gmail.com">stephanr.pro@gmail.com</a></span>
-      &nbsp;
-      <span class="pill">🕒 Lun–Dim 8h–20h</span>
-    </p>
+  function getDiagnosticsRecommandes() {
+    const year = Number(val('annee-construction'));
+    const surface = Number(val('surface'));
+    const hasGaz = val('has-gaz') === 'oui';
+    const hasElec = val('has-elec') === 'oui';
+    const dpeDeja = val('dpe-deja') === 'oui';
+    const termitesZone = checked('termite-zone');
 
-    <nav>
-      <a href="index.html">Accueil & devis</a>
-      <a href="actualites.html">Actualités</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
+    const billed = new Set();
+    billed.add('erp');
+    if (!dpeDeja) billed.add('dpe');
+    if (year && year < 1949) billed.add('plomb');
+    if (year && year < 1997) billed.add('amiante');
+    if (hasGaz) billed.add('gaz');
+    if (hasElec) billed.add('electricite');
+    if (termitesZone) billed.add('termites');
 
-  <main style="max-width:980px;margin:auto;padding:0 18px 40px;">
-    <div class="grid">
-      <div class="card">
-        <h2>Prestations</h2>
-        <ul>
-          <li>DPE</li>
-          <li>Amiante</li>
-          <li>Plomb (CREP)</li>
-          <li>Électricité</li>
-          <li>Gaz</li>
-          <li>ERP</li>
-          <li>Termites (état parasitaire)</li>
-        </ul>
-        <p class="note">Copropriété : PPT / DTG sur devis (formulaire de contact).</p>
-      </div>
+    const list = [...billed];
+    const surDevis = (surface && surface > 200) || list.length === 0 || list.length > 6;
+    return { list, surDevis, surface };
+  }
 
-      <div class="card">
-        <h2>Zone d’intervention</h2>
-        <p>Arras • Lens • Hénin • Beaumont • Douai • Béthune (rayon 50 km)</p>
-        <div class="hr"></div>
-        <p class="note">Valeurs : confiance • transparence • honnêteté • efficacité • engagement</p>
-      </div>
-    </div>
+  function computeAndRender() {
+    const result = document.getElementById('resultat-devis');
+    const hiddenDiag = document.getElementById('diagnostics-a-prevoir');
+    const hiddenSurDevis = document.getElementById('sur-devis');
+    const message = document.getElementById('message');
 
-    <div class="card">
-      <h2>Devis en ligne</h2>
-      <p class="note">
-        Sélection indicative basée sur l’année du bien et vos réponses. Validation finale après échange.
-        <br>ERP est inclus par défaut.
-      </p>
+    const { list, surDevis, surface } = getDiagnosticsRecommandes();
 
-      <form name="devis" method="POST" action="/merci.html" data-netlify="true" netlify-honeypot="bot-field" id="devis-form">
-        <input type="hidden" name="form-name" value="devis" />
-        <p class="hidden"><label>Ne pas remplir ce champ: <input name="bot-field" /></label></p>
+    hiddenDiag.value = list.map(d => mapLabels[d]).join(', ') || 'Aucun';
+    hiddenSurDevis.value = surDevis ? 'oui' : 'non';
 
-        <input type="hidden" name="diagnostics_a_prevoir" id="diagnostics-a-prevoir" />
-        <input type="hidden" name="sur_devis" id="sur-devis" value="non" />
+    const htmlList = list.length
+      ? `<ul>${list.map(d => `<li>${mapLabels[d]}</li>`).join('')}</ul>`
+      : `<p>Aucun diagnostic n’a été sélectionné. Nous vous recontactons pour établir un devis.</p>`;
 
-        <div class="form-grid">
-          <div><label for="nom">Nom</label><input id="nom" name="nom" required /></div>
-          <div><label for="email">Email</label><input id="email" name="email" type="email" required /></div>
-          <div><label for="telephone">Téléphone</label><input id="telephone" name="telephone" /></div>
+    result.innerHTML = `
+      <p><strong>Diagnostics à prévoir :</strong></p>
+      ${htmlList}
+      <p><strong>Surface :</strong> ${Number.isFinite(surface) ? surface + ' m²' : '—'}</p>
+      <p><strong>Statut :</strong> ${surDevis ? 'Sur devis (nous vous recontactons)' : 'Pack calculable (confirmé après échange)'}</p>
+      <p class="note">Règles : plomb avant 1949 • amiante avant 1997 • ERP inclus • gaz/élec selon présence • termites selon vérification. Sur devis si &gt;200 m², 0 diag, ou &gt;6 diags.</p>
+    `;
+    result.hidden = false;
 
-          <div>
-            <label for="type-projet">Type de projet</label>
-            <select id="type-projet" name="type_projet" required>
-              <option value="">Sélectionner</option>
-              <option value="vente">Vente</option>
-              <option value="location">Location</option>
-            </select>
-          </div>
+    const resume =
+      `Pré-sélection automatique :\n` +
+      `- Diagnostics : ${hiddenDiag.value}\n` +
+      `- Sur devis : ${hiddenSurDevis.value}\n`;
 
-          <div>
-            <label for="type-bien">Type de bien</label>
-            <select id="type-bien" name="type_bien" required>
-              <option value="">Sélectionner</option>
-              <option value="maison">Maison</option>
-              <option value="appartement">Appartement</option>
-              <option value="immeuble">Immeuble</option>
-              <option value="local_pro">Local professionnel</option>
-            </select>
-          </div>
+    message.value = message.value.replace(/\n?Pré-sélection automatique:[\s\S]*$/m, '').trim();
+    message.value = `${message.value}\n\n${resume}`.trim();
+  }
 
-          <div>
-            <label for="annee-construction">Année de construction / permis</label>
-            <input id="annee-construction" name="annee_construction" type="number" min="1600" max="2100" placeholder="Ex : 1930" required />
-          </div>
-
-          <div>
-            <label for="surface">Surface (m²)</label>
-            <input id="surface" name="surface" type="number" min="1" placeholder="Ex : 85" required />
-            <p class="note">Au-delà de 200 m² : sur devis.</p>
-          </div>
-        </div>
-
-        <h3>Options</h3>
-        <div class="form-grid">
-          <div>
-            <label for="has-gaz">Installation de gaz fixe</label>
-            <select id="has-gaz" name="installation_gaz_fixe" required>
-              <option value="">Sélectionner</option>
-              <option value="oui">Oui</option>
-              <option value="non">Non</option>
-            </select>
-          </div>
-          <div>
-            <label for="has-elec">Installation électrique</label>
-            <select id="has-elec" name="installation_electrique" required>
-              <option value="">Sélectionner</option>
-              <option value="oui">Oui</option>
-              <option value="non">Non</option>
-            </select>
-          </div>
-          <div>
-            <label for="dpe-deja">J’ai déjà un DPE valide</label>
-            <select id="dpe-deja" name="dpe_deja_valide" required>
-              <option value="">Sélectionner</option>
-              <option value="oui">Oui</option>
-              <option value="non">Non</option>
-            </select>
-          </div>
-        </div>
-
-        <h3>Termites (auto-check indicatif)</h3>
-        <p class="note">Vérification indicative : la référence officielle reste l’arrêté préfectoral / mairie.</p>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-          <a class="pill" href="https://termite.com.fr/rechercher/" target="_blank" rel="noopener">🔎 Vérifier sur termite.com.fr</a>
-          <label style="margin:0;font-weight:700;">
-            <input type="checkbox" id="termite-zone" name="zone_termites_selon_verif" />
-            Ma commune est en zone termites (selon vérification)
-          </label>
-        </div>
-
-        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
-          <button type="button" id="calculer-devis">Calculer</button>
-          <button class="secondary" type="submit">Envoyer la demande</button>
-        </div>
-
-        <div class="result" id="resultat-devis" aria-live="polite" hidden></div>
-
-        <label for="message">Message complémentaire</label>
-        <textarea id="message" name="message" rows="5" placeholder="Adresse du bien, ville, étage, accès, disponibilités…"></textarea>
-      </form>
-    </div>
-
-    <div class="card" id="contact">
-      <h2>Contact</h2>
-      <p><strong>Tél :</strong> <a href="tel:+33767076761">07 67 07 67 61</a></p>
-      <p><strong>Email :</strong> <a href="mailto:stephanr.pro@gmail.com">stephanr.pro@gmail.com</a></p>
-      <p class="note">Lun–Dim 8h–20h • Réponse rapide</p>
-    </div>
-  </main>
-
-  <footer>© SR Diagnostics Immobiliers — Mentions légales à compléter</footer>
-
-  <script>
-    const mapLabels = {
-      dpe: 'DPE',
-      amiante: 'Amiante',
-      plomb: 'Plomb (CREP)',
-      gaz: 'Gaz',
-      electricite: 'Électricité',
-      erp: 'ERP (État des risques)',
-      termites: 'État parasitaire (termites)'
-    };
-
-    function val(id){ return (document.getElementById(id)?.value || '').trim(); }
-    function checked(id){ return !!document.getElementById(id)?.checked; }
-
-    function getDiagnosticsRecommandes() {
-      const year = Number(val('annee-construction'));
-      const surface = Number(val('surface'));
-      const hasGaz = val('has-gaz') === 'oui';
-      const hasElec = val('has-elec') === 'oui';
-      const dpeDeja = val('dpe-deja') === 'oui';
-      const termitesZone = checked('termite-zone');
-
-      const billed = new Set();
-      billed.add('erp');
-      if (!dpeDeja) billed.add('dpe');
-      if (year && year < 1949) billed.add('plomb');
-      if (year && year < 1997) billed.add('amiante');
-      if (hasGaz) billed.add('gaz');
-      if (hasElec) billed.add('electricite');
-      if (termitesZone) billed.add('termites');
-
-      const list = [...billed];
-      const surDevis = (surface && surface > 200) || list.length === 0 || list.length > 6;
-      return { list, surDevis, surface };
-    }
-
-    function computeAndRender() {
-      const result = document.getElementById('resultat-devis');
-      const hiddenDiag = document.getElementById('diagnostics-a-prevoir');
-      const hiddenSurDevis = document.getElementById('sur-devis');
-      const message = document.getElementById('message');
-
-      const { list, surDevis, surface } = getDiagnosticsRecommandes();
-
-      hiddenDiag.value = list.map(d => mapLabels[d]).join(', ') || 'Aucun';
-      hiddenSurDevis.value = surDevis ? 'oui' : 'non';
-
-      const htmlList = list.length
-        ? `<ul>${list.map(d => `<li>${mapLabels[d]}</li>`).join('')}</ul>`
-        : `<p>Aucun diagnostic n’a été sélectionné. Nous vous recontactons pour établir un devis.</p>`;
-
-      result.innerHTML = `
-        <p><strong>Diagnostics à prévoir :</strong></p>
-        ${htmlList}
-        <p><strong>Surface :</strong> ${Number.isFinite(surface) ? surface + ' m²' : '—'}</p>
-        <p><strong>Statut :</strong> ${surDevis ? 'Sur devis (nous vous recontactons)' : 'Pack calculable (confirmé après échange)'}</p>
-        <p class="note">Règles : plomb avant 1949 • amiante avant 1997 • ERP inclus • gaz/élec selon présence • termites selon vérification. Sur devis si >200 m², 0 diag, ou >6 diags.</p>
-      `;
-      result.hidden = false;
-
-      const resume =
-        `Pré-sélection automatique :\n` +
-        `- Diagnostics : ${hiddenDiag.value}\n` +
-        `- Sur devis : ${hiddenSurDevis.value}\n`;
-
-      message.value = message.value.replace(/\n?Pré-sélection automatique:[\s\S]*$/m, '').trim();
-      message.value = `${message.value}\n\n${resume}`.trim();
-    }
-
-    document.getElementById('calculer-devis').addEventListener('click', computeAndRender);
-    document.getElementById('devis-form').addEventListener('submit', computeAndRender);
-  </script>
-</body>
-</html>
+  document.getElementById('calculer-devis').addEventListener('click', computeAndRender);
+  document.getElementById('devis-form').addEventListener('submit', computeAndRender);
+</script>
