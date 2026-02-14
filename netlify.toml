@@ -1,6 +1,5 @@
 [build]
-  command = "npm run build"
-  publish = ".next"
+  publish = "."
+  command = "echo 'static site - no build'"
 
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+# IMPORTANT: pas de redirects, pas de headers, pas de plugins.
