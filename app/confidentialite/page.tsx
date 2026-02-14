@@ -1,0 +1,1 @@
+export default function Page() { return <main className="container-page"><h1 className="text-3xl font-bold text-ralBlue">Politique de confidentialité</h1><p>Responsable traitement, finalités, durées de conservation et droits RGPD à compléter.</p></main>; }

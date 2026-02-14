@@ -1,0 +1,1 @@
+export default function Page() { return <main className="container-page"><h1 className="text-3xl font-bold text-ralBlue">CGV</h1><p>Template CGV à compléter juridiquement avant mise en production.</p></main>; }
