@@ -38,6 +38,7 @@
     .hr{height:1px;background:#dbe8ff;margin:14px 0}
   </style>
 </head>
+
 <body>
   <header>
     <h1>SR Diagnostics Immobiliers</h1>
@@ -216,7 +217,6 @@
       const termitesZone = checked('termite-zone');
 
       const billed = new Set();
-
       billed.add('erp');
       if (!dpeDeja) billed.add('dpe');
       if (year && year < 1949) billed.add('plomb');

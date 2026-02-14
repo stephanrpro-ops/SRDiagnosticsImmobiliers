@@ -7,13 +7,18 @@
   <style>
     body{font-family:system-ui,Arial;margin:0;line-height:1.6;background:#f4f8ff;color:#0f2744}
     header,main,footer{max-width:980px;margin:auto;padding:18px}
-    .card{background:#fff;border:1px solid #d4e3fb;border-radius:14px;padding:18px;margin:12px 0}
+    .card{background:#fff;border:1px solid #d4e3fb;border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 4px 18px rgba(32,74,135,.08)}
     a{color:#1565c0}
-    nav{display:flex;gap:10px;flex-wrap:wrap}
+    nav{margin-top:12px;display:flex;gap:10px;flex-wrap:wrap}
     nav a{padding:8px 12px;border-radius:10px;background:#e8f1ff;text-decoration:none}
     .muted{opacity:.85}
+    .news-item{padding:12px 0;border-bottom:1px solid #e4eeff}
+    .news-item:last-child{border-bottom:0}
+    h1{margin:0 0 6px}
+    h2{margin:0 0 10px}
   </style>
 </head>
+
 <body>
   <header>
     <h1>Actualités</h1>
@@ -21,21 +26,75 @@
       <a href="index.html">Accueil & devis</a>
       <a href="actualites.html">Actualités</a>
     </nav>
-    <p class="muted">Veille réglementaire et infos diagnostics (liens sources uniquement).</p>
+    <p class="muted">Veille réglementaire et infos diagnostics. Affichage auto si un flux JSON est disponible, sinon liens sources.</p>
   </header>
 
   <main>
-    <div class="card">
-      <h2>Sources</h2>
+    <section class="card" aria-labelledby="dernieres-actus">
+      <h2 id="dernieres-actus">Dernières actualités</h2>
+      <p id="last-update" class="muted">Chargement…</p>
+      <div id="news-list"></div>
+      <p id="news-fallback" class="muted" style="display:none;">
+        Impossible de charger les actualités automatiquement pour le moment. Consultez les sources ci-dessous.
+      </p>
+    </section>
+
+    <section class="card" aria-labelledby="sources">
+      <h2 id="sources">Sources</h2>
       <ul>
         <li><a href="https://www.quotidiag.fr/" target="_blank" rel="noopener">Quotidiag</a></li>
         <li><a href="https://www.diagnostiqueur-immobilier.fr/offres-abonnements/veille-reglementaire/" target="_blank" rel="noopener">Diagnostiqueur-immobilier.fr — Veille</a></li>
         <li><a href="https://infodiag.fr/mon-attestation-veille-reglementaire/" target="_blank" rel="noopener">Infodiag — Veille</a></li>
       </ul>
-      <p class="muted">Note : cette page est volontairement simple. Les articles restent sur leurs sites d’origine.</p>
-    </div>
+      <p class="muted">Note : cette page reste volontairement simple. Les articles restent sur leurs sites d’origine.</p>
+    </section>
   </main>
 
   <footer class="muted">© SR Diagnostics Immobiliers</footer>
+
+  <script>
+    async function loadNews() {
+      const lastUpdate = document.getElementById('last-update');
+      const list = document.getElementById('news-list');
+      const fallback = document.getElementById('news-fallback');
+
+      try {
+        // Si ce fichier n'existe pas, on passe en fallback.
+        const response = await fetch('data/actualites.json', { cache: 'no-store' });
+        if (!response.ok) throw new Error('No JSON feed');
+
+        const data = await response.json();
+
+        if (!data || !Array.isArray(data.items) || data.items.length === 0) {
+          throw new Error('Empty feed');
+        }
+
+        const date = data.updated_at ? new Date(data.updated_at) : null;
+        lastUpdate.textContent = date
+          ? `Dernière mise à jour : ${date.toLocaleString('fr-FR')}`
+          : 'Dernière mise à jour : inconnue';
+
+        list.innerHTML = data.items.map((item) => `
+          <article class="news-item">
+            <h3 style="margin:0 0 4px;">
+              <a href="${item.link}" target="_blank" rel="noopener">${item.title || 'Article'}</a>
+            </h3>
+            <p class="muted" style="margin:0 0 8px;">
+              ${(item.source || 'Source')} • ${(item.published || '')}
+            </p>
+            ${item.summary ? `<p style="margin:0;">${item.summary}</p>` : ''}
+          </article>
+        `).join('');
+
+        fallback.style.display = 'none';
+      } catch (e) {
+        lastUpdate.textContent = 'Actualités automatiques indisponibles.';
+        list.innerHTML = '';
+        fallback.style.display = 'block';
+      }
+    }
+
+    loadNews();
+  </script>
 </body>
 </html>
