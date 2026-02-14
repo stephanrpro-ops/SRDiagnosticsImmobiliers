@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkRateLimit, verifyTurnstile } from '@/lib/security';
+import { getSupabaseServiceClient } from '@/lib/supabase-server';
 
 export async function POST(req: NextRequest) {
   const ip = req.headers.get('x-forwarded-for') ?? 'unknown';
   if (!checkRateLimit(`quote:${ip}`)) {
-    console.warn('rate_limit_quote', { ip });
-    return NextResponse.json({ ok: false }, { status: 429 });
+    return NextResponse.json({ ok: false, message: 'Trop de requêtes.' }, { status: 429 });
   }
 
   const body = await req.json();
@@ -13,18 +13,30 @@ export async function POST(req: NextRequest) {
 
   const turnstileOk = await verifyTurnstile(body.turnstileToken);
   if (!turnstileOk) {
-    console.warn('turnstile_block_quote', { ip });
-    return NextResponse.json({ ok: false }, { status: 400 });
+    return NextResponse.json({ ok: false, message: 'Vérification anti-spam échouée.' }, { status: 400 });
   }
 
-  const consentJson = body.consent_json ?? null;
-  const quotePayload = {
-    data: body.data ?? null,
-    result: body.result ?? null,
-    consent_json: consentJson,
-    ip
-  };
+  const supabase = getSupabaseServiceClient();
 
-  console.info('quote_request_received', quotePayload);
+  if (supabase) {
+    const { error } = await supabase.from('quotes_requests').insert({
+      data_json: body.data ?? {},
+      status: 'new'
+    });
+
+    if (error) {
+      return NextResponse.json({ ok: false, message: 'Erreur DB.' }, { status: 500 });
+    }
+  }
+
+  console.info('quote_request_received', {
+    ip,
+    hasDb: Boolean(supabase),
+    data: body.data,
+    result: body.result,
+    consent_json: body.consent_json,
+    contact: body.contact
+  });
+
   return NextResponse.json({ ok: true });
 }

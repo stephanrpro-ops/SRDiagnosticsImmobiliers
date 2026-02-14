@@ -1,202 +1,188 @@
 'use client';
 
-import { FormEvent, useMemo, useState } from 'react';
-import { PricingGrid } from '@/src/components/PricingGrid';
-import { BilledDiagnostic, formatPriceEUR, getPackPrice, isOver200m2 } from '@/src/lib/pricing';
+import { useMemo, useState } from 'react';
+import { computeRecommendations, type WizardInput } from '@/lib/packs';
 
-type QuoteForm = {
-  transaction: 'vente' | 'location';
-  propertyType: 'maison' | 'appartement' | 'immeuble' | 'local pro';
-  address: string;
-  year: number;
-  surface: number;
-  hasElectricity: boolean;
-  hasGas: boolean;
-  hasValidDpe: boolean;
-  termitesConfirmed: boolean;
-  mesurage: boolean;
-  prelevement: boolean;
-  smsOptIn: boolean;
-};
+type Step = 'A' | 'B' | 'C' | 'D' | 'E';
 
-const init: QuoteForm = {
+type Suggestion = { label: string; postcode: string; city: string };
+
+const initialData: WizardInput = {
   transaction: 'vente',
-  propertyType: 'maison',
-  address: '',
-  year: 2000,
-  surface: 100,
-  hasElectricity: true,
-  hasGas: false,
-  hasValidDpe: false,
-  termitesConfirmed: false,
-  mesurage: false,
-  prelevement: false,
-  smsOptIn: false
+  property_type: 'maison',
+  is_copro: false,
+  address_label: '',
+  postcode: '',
+  city: '',
+  surface: undefined,
+  year_built: 2000,
+  has_gas: false,
+  has_electricity: true,
+  heating: '',
+  termites_known: 'inconnu'
 };
-
-function getResults(form: QuoteForm) {
-  const recommended = new Set<BilledDiagnostic>(['erp', 'dpe']);
-  const billed = new Set<BilledDiagnostic>(['erp']);
-
-  if (form.year < 1997) {
-    recommended.add('amiante');
-    billed.add('amiante');
-  }
-  if (form.year < 1949) {
-    recommended.add('plomb');
-    billed.add('plomb');
-  }
-  if (!form.hasValidDpe) billed.add('dpe');
-  if (form.hasElectricity) {
-    recommended.add('electricite');
-    billed.add('electricite');
-  }
-  if (form.hasGas) {
-    recommended.add('gaz');
-    billed.add('gaz');
-  }
-  if (form.termitesConfirmed) {
-    recommended.add('termites');
-    billed.add('termites');
-  }
-
-  const packCount = billed.size;
-  const over200 = isOver200m2(form.surface);
-  const packPrice = getPackPrice(packCount);
-  const surDevis = over200 || packCount === 0 || packCount > 6 || packPrice === null;
-
-  return { recommended: [...recommended], billed: [...billed], packCount, packPrice, surDevis };
-}
-
-function isValidGoogleAppointmentUrl(url?: string) {
-  return Boolean(url && /^https:\/\/calendar\.google\.com\/calendar\/appointments\/schedules\//.test(url));
-}
 
 export default function DevisPage() {
-  const [form, setForm] = useState<QuoteForm>(init);
-  const [done, setDone] = useState(false);
-  const result = useMemo(() => getResults(form), [form]);
+  const [step, setStep] = useState<Step>('A');
+  const [data, setData] = useState<WizardInput>(initialData);
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [slot, setSlot] = useState('');
+  const [consent, setConsent] = useState(false);
+  const [status, setStatus] = useState('');
+  const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
 
-  async function submit(e: FormEvent) {
-    e.preventDefault();
-    await fetch('/api/quote', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        hp: '',
-        data: form,
-        result,
-        consent_json: {
-          acceptedCgv: true,
-          acceptedPrivacy: true,
-          smsOptIn: form.smsOptIn,
-          timestamp: new Date().toISOString()
-        }
-      })
-    });
-    setDone(true);
+  const result = useMemo(() => computeRecommendations(data), [data]);
+
+  async function fetchAddress(value: string) {
+    setData({ ...data, address_label: value });
+    if (value.length < 4) return setSuggestions([]);
+
+    const res = await fetch(`https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(value)}&limit=5`);
+    const json = await res.json();
+    const next = (json.features ?? []).map((f: any) => ({
+      label: f.properties.label,
+      postcode: f.properties.postcode,
+      city: f.properties.city
+    }));
+    setSuggestions(next);
   }
 
-  const googleLink = process.env.NEXT_PUBLIC_GOOGLE_APPOINTMENT_URL;
-  const hasPublicGoogleLink = isValidGoogleAppointmentUrl(googleLink);
+  async function submit() {
+    if (!consent) {
+      setStatus('Veuillez accepter le traitement RGPD avant envoi.');
+      return;
+    }
+
+    const payload = {
+      data,
+      result,
+      consent_json: {
+        accepted_rgpd: consent,
+        slot,
+        timestamp: new Date().toISOString()
+      },
+      contact: { name, email, phone }
+    };
+
+    const res = await fetch('/api/quote', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    setStatus(res.ok ? 'Demande envoyée. Nous revenons vers vous rapidement.' : 'Erreur lors de l’envoi.');
+  }
 
   return (
-    <main className="container-page space-y-6">
+    <main className="container-page space-y-5">
       <h1 className="text-3xl font-bold text-ralBlue">Devis en ligne</h1>
+      <p className="text-sm text-slate-600">Wizard en 5 étapes — moteur configurable via <code>/config/packs.json</code>.</p>
 
-      <PricingGrid compact />
+      <div className="rounded-2xl border bg-white p-6 shadow-sm">
+        <p className="text-sm font-semibold text-slate-500">Étape {step} / A→E</p>
 
-      <form onSubmit={submit} className="grid gap-4 rounded-xl border bg-white p-6 md:grid-cols-2">
-        <label>
-          Transaction
-          <select className="mt-1 w-full border p-2" value={form.transaction} onChange={(e) => setForm({ ...form, transaction: e.target.value as QuoteForm['transaction'] })}>
-            <option value="vente">Vente</option>
-            <option value="location">Location</option>
-          </select>
-        </label>
-        <label>
-          Type de bien
-          <select className="mt-1 w-full border p-2" value={form.propertyType} onChange={(e) => setForm({ ...form, propertyType: e.target.value as QuoteForm['propertyType'] })}>
-            <option>maison</option>
-            <option>appartement</option>
-            <option>immeuble</option>
-            <option>local pro</option>
-          </select>
-        </label>
-        <label className="md:col-span-2">
-          Adresse
-          <input required className="mt-1 w-full border p-2" value={form.address} onChange={(e) => setForm({ ...form, address: e.target.value })} placeholder="Adresse (autocomplétion api-adresse.data.gouv.fr à brancher)" />
-        </label>
-        <label>
-          Année de construction
-          <input type="number" required className="mt-1 w-full border p-2" value={form.year} onChange={(e) => setForm({ ...form, year: Number(e.target.value) })} />
-        </label>
-        <label>
-          Surface (m²)
-          <input type="number" required className="mt-1 w-full border p-2" value={form.surface} onChange={(e) => setForm({ ...form, surface: Number(e.target.value) })} />
-        </label>
-
-        <label><input type="checkbox" checked={form.hasElectricity} onChange={(e) => setForm({ ...form, hasElectricity: e.target.checked })} /> Présence d’une installation électrique</label>
-        <label><input type="checkbox" checked={form.hasGas} onChange={(e) => setForm({ ...form, hasGas: e.target.checked })} /> Présence d’une installation de gaz fixe</label>
-        <label className="md:col-span-2"><input type="checkbox" checked={form.hasValidDpe} onChange={(e) => setForm({ ...form, hasValidDpe: e.target.checked })} /> J’ai déjà un DPE valide (validité à vérifier)</label>
-
-        <div className="md:col-span-2 rounded border p-3 text-sm">
-          <a href="https://termite.com.fr/rechercher/" target="_blank" className="font-semibold text-ralBlue underline" rel="noreferrer">
-            Vérifier termites (indicatif)
-          </a>
-          <p>Vérification indicative. La référence officielle reste l’arrêté préfectoral / mairie.</p>
-          <label><input type="checkbox" checked={form.termitesConfirmed} onChange={(e) => setForm({ ...form, termitesConfirmed: e.target.checked })} /> Ma commune est en zone termites (selon vérification)</label>
-        </div>
-
-        <label><input type="checkbox" checked={form.mesurage} onChange={(e) => setForm({ ...form, mesurage: e.target.checked })} /> Mesurage (hors-pack)</label>
-        <label><input type="checkbox" checked={form.prelevement} onChange={(e) => setForm({ ...form, prelevement: e.target.checked })} /> Prélèvement (hors-pack)</label>
-
-        <label className="md:col-span-2"><input type="checkbox" required /> J’accepte les <a className="text-ralBlue underline" href="/cgv">CGV</a></label>
-        <label className="md:col-span-2"><input type="checkbox" required /> J’ai lu la <a className="text-ralBlue underline" href="/confidentialite">politique de confidentialité</a></label>
-        <label className="md:col-span-2"><input type="checkbox" checked={form.smsOptIn} onChange={(e) => setForm({ ...form, smsOptIn: e.target.checked })} /> J’accepte d’être contacté par SMS</label>
-
-        <button className="rounded bg-ralBlue px-4 py-2 font-bold text-white md:col-span-2">Envoyer la demande</button>
-      </form>
-
-      <section className="rounded-xl border bg-white p-6">
-        <h2 className="text-2xl font-bold text-ralBlue">Résultat</h2>
-        <p>Diagnostics recommandés : {result.recommended.join(', ') || '—'}</p>
-        <p>Diagnostics facturés ({result.packCount}) : {result.billed.join(', ') || '—'}</p>
-        <p>
-          {result.surDevis
-            ? 'SUR DEVIS (surface > 200 m², aucun diag facturé, ou plus de 6 diagnostics).'
-            : `Pack ${result.packCount} — ${formatPriceEUR(result.packPrice as number)} TTC`}
-        </p>
-        <p>
-          Options hors-pack : {[form.mesurage && 'Mesurage', form.prelevement && 'Prélèvement'].filter(Boolean).join(', ') || 'Aucune'}
-        </p>
-
-        {result.surDevis ? (
-          <a href="/contact" className="mt-3 inline-block rounded bg-ralBlue px-4 py-2 font-bold text-white">
-            Nous contacter pour un devis personnalisé
-          </a>
-        ) : null}
-
-        {hasPublicGoogleLink ? (
-          <a className="mt-3 ml-3 inline-block rounded border border-ralBlue px-4 py-2 font-bold text-ralBlue" href={googleLink} target="_blank" rel="noreferrer">
-            Demander un créneau
-          </a>
-        ) : (
-          <div className="mt-3 rounded border p-3 text-sm">
-            <p className="font-semibold">Demander un créneau (fallback)</p>
-            <p>Choisissez 2 créneaux préférés, nous revenons vers vous :</p>
-            <div className="mt-2 grid gap-2 md:grid-cols-2">
-              <input type="date" className="border p-2" aria-label="Créneau 1 date" />
-              <input type="text" className="border p-2" placeholder="Créneau 1 plage horaire" />
-              <input type="date" className="border p-2" aria-label="Créneau 2 date" />
-              <input type="text" className="border p-2" placeholder="Créneau 2 plage horaire" />
-            </div>
-            <textarea className="mt-2 w-full border p-2" placeholder="Commentaire" />
+        {step === 'A' && (
+          <div className="mt-3 grid gap-4 md:grid-cols-2">
+            <label>Type de demande
+              <select className="mt-1 w-full rounded border p-2" value={data.transaction} onChange={(e) => setData({ ...data, transaction: e.target.value as WizardInput['transaction'] })}>
+                <option value="vente">Vente</option>
+                <option value="location">Location</option>
+                <option value="travaux">Travaux</option>
+                <option value="copropriete">Copropriété</option>
+              </select>
+            </label>
+            <label>Type de bien
+              <select className="mt-1 w-full rounded border p-2" value={data.property_type} onChange={(e) => setData({ ...data, property_type: e.target.value as WizardInput['property_type'] })}>
+                <option value="maison">Maison</option>
+                <option value="appartement">Appartement</option>
+              </select>
+            </label>
+            <label className="md:col-span-2"><input type="checkbox" checked={data.is_copro} onChange={(e) => setData({ ...data, is_copro: e.target.checked })} /> Bien en copropriété</label>
           </div>
         )}
-      </section>
 
-      {done && <p className="font-semibold text-green-700">Demande enregistrée.</p>}
+        {step === 'B' && (
+          <div className="mt-3 grid gap-4 md:grid-cols-2">
+            <label className="md:col-span-2">Adresse
+              <input className="mt-1 w-full rounded border p-2" value={data.address_label} onChange={(e) => fetchAddress(e.target.value)} placeholder="Saisissez une adresse" />
+            </label>
+            {suggestions.length > 0 && (
+              <div className="md:col-span-2 rounded border p-2 text-sm">
+                {suggestions.map((s) => (
+                  <button key={s.label} type="button" className="block w-full rounded px-2 py-1 text-left hover:bg-slate-100" onClick={() => {
+                    setData({ ...data, address_label: s.label, postcode: s.postcode, city: s.city });
+                    setSuggestions([]);
+                  }}>{s.label}</button>
+                ))}
+              </div>
+            )}
+            <label>Surface (option)
+              <input type="number" className="mt-1 w-full rounded border p-2" value={data.surface ?? ''} onChange={(e) => setData({ ...data, surface: e.target.value ? Number(e.target.value) : undefined })} />
+            </label>
+            <label>Année de construction
+              <input type="number" className="mt-1 w-full rounded border p-2" value={data.year_built} onChange={(e) => setData({ ...data, year_built: Number(e.target.value) })} />
+            </label>
+          </div>
+        )}
+
+        {step === 'C' && (
+          <div className="mt-3 grid gap-4 md:grid-cols-2">
+            <label><input type="checkbox" checked={data.has_gas} onChange={(e) => setData({ ...data, has_gas: e.target.checked })} /> Installation gaz</label>
+            <label><input type="checkbox" checked={data.has_electricity} onChange={(e) => setData({ ...data, has_electricity: e.target.checked })} /> Installation électrique</label>
+            <label>Chauffage (placeholder)
+              <input className="mt-1 w-full rounded border p-2" value={data.heating} onChange={(e) => setData({ ...data, heating: e.target.value })} placeholder="Ex: individuel gaz" />
+            </label>
+            <label>Zone termites
+              <select className="mt-1 w-full rounded border p-2" value={data.termites_known} onChange={(e) => setData({ ...data, termites_known: e.target.value as WizardInput['termites_known'] })}>
+                <option value="inconnu">Je ne sais pas</option>
+                <option value="oui">Oui</option>
+                <option value="non">Non</option>
+              </select>
+            </label>
+          </div>
+        )}
+
+        {step === 'D' && (
+          <div className="mt-3 space-y-3">
+            <article className="rounded-xl bg-slate-50 p-4">
+              <h2 className="font-semibold">Diagnostics recommandés</h2>
+              <p className="mt-1">{result.diagnostics.join(', ')}</p>
+              <p className="mt-2 text-sm text-slate-600">Prix: <strong>{result.pricing}</strong> (pas de grille fournie).</p>
+            </article>
+            <div className="grid gap-3 md:grid-cols-2">
+              {result.packs.map((pack: any) => (
+                <article key={pack.id} className="rounded-xl border p-4">
+                  <h3 className="font-semibold text-ralBlue">{pack.name}</h3>
+                  <p className="text-sm text-slate-600">{pack.description}</p>
+                  <p className="mt-1 text-sm">Inclut: {pack.includes.join(', ')}</p>
+                </article>
+              ))}
+            </div>
+            <ul className="list-disc pl-6 text-sm text-slate-600">
+              {result.reasons.map((reason) => <li key={reason}>{reason}</li>)}
+            </ul>
+          </div>
+        )}
+
+        {step === 'E' && (
+          <div className="mt-3 grid gap-4 md:grid-cols-2">
+            <label>Nom<input className="mt-1 w-full rounded border p-2" value={name} onChange={(e) => setName(e.target.value)} /></label>
+            <label>Email<input type="email" className="mt-1 w-full rounded border p-2" value={email} onChange={(e) => setEmail(e.target.value)} /></label>
+            <label>Téléphone<input className="mt-1 w-full rounded border p-2" value={phone} onChange={(e) => setPhone(e.target.value)} /></label>
+            <label>Préférence créneau<input className="mt-1 w-full rounded border p-2" value={slot} onChange={(e) => setSlot(e.target.value)} placeholder="Ex: matin semaine" /></label>
+            <label className="md:col-span-2"><input type="checkbox" checked={consent} onChange={(e) => setConsent(e.target.checked)} /> J’accepte le traitement de mes données (RGPD).</label>
+            <button type="button" className="rounded bg-ralBlue px-4 py-2 font-bold text-white md:col-span-2" onClick={submit}>Envoyer la demande</button>
+            {status && <p className="md:col-span-2 text-sm">{status}</p>}
+          </div>
+        )}
+
+        <div className="mt-6 flex gap-2">
+          {step !== 'A' && <button type="button" className="rounded border px-3 py-2" onClick={() => setStep(String.fromCharCode(step.charCodeAt(0) - 1) as Step)}>Précédent</button>}
+          {step !== 'E' && <button type="button" className="rounded bg-ralBlue px-3 py-2 font-bold text-white" onClick={() => setStep(String.fromCharCode(step.charCodeAt(0) + 1) as Step)}>Suivant</button>}
+        </div>
+      </div>
     </main>
   );
 }
