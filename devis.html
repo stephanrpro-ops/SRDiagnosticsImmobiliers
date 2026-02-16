@@ -3,46 +3,127 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Diagnostics pour la vente – SR Diagnostics Immobiliers</title>
-  <meta name="description" content="Diagnostics obligatoires pour vendre : DPE, amiante, plomb, gaz, électricité, ERP, mesurage. Intervention rapide, rapport sous 24h." />
-  <link rel="stylesheet" href="assets/styles.css" />
+  <title>Devis en ligne – SR Diagnostics Immobiliers</title>
+  <meta name="description" content="Devis automatique diagnostics immobiliers : packs 1 à 6, recommandations selon l’année du bien et les installations." />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <header class="site-header">
     <a class="brand" href="index.html">SR Diagnostics Immobiliers</a>
-
     <nav class="nav">
-      <a class="active" href="vente.html">Vente</a>
+      <a href="index.html">Accueil</a>
+      <a href="vente.html">Vente</a>
       <a href="location.html">Location</a>
-      <a href="diagnostics.html">Diagnostics</a>
+      <a href="prestations.html">Prestations</a>
       <a href="copropriete.html">Copropriété (PPT/DTG)</a>
       <a href="audit.html">Audit</a>
-      <a class="btn" href="devis.html">Devis</a>
+      <a class="active" href="devis.html">Devis</a>
       <a href="a-propos.html">À propos</a>
       <a href="contact.html">Contact</a>
     </nav>
-
     <a class="phone" href="tel:+33767076761">07 67 07 67 61</a>
   </header>
 
   <main class="container">
     <section class="hero">
-      <h1>Diagnostics obligatoires pour vendre</h1>
-      <p class="lead">Selon l’année du bien et ses installations (gaz fixe, électricité…), certains diagnostics sont obligatoires. On vous guide et on vous remet un dossier clair et complet.</p>
+      <h1>Devis en ligne (calcul automatique)</h1>
+      <p class="lead">Renseignez votre bien : on recommande les diagnostics utiles et on calcule le prix (packs 1 à 6). Ensuite, un mail prêt à envoyer se génère automatiquement.</p>
       <div class="badges">
         <span>Intervention sous 48 h</span>
-        <span>Rapport sous 24 h</span>
-        <span>Arras • Lens • Hénin • Douai • Béthune</span>
-      </div>
-      <div class="cta">
-        <a class="btn" href="devis.html">Demander un devis</a>
-        <a class="link" href="contact.html">Me contacter</a>
+        <span>Rapport sous 24 h après visite</span>
+        <span>Lun–Dim 8h–20h</span>
       </div>
     </section>
 
     <section class="card">
-      <h2>Page en construction</h2>
-      <p>On remplit cette page juste après avoir posé la structure complète du site.</p>
+      <h2>Votre bien</h2>
+
+      <div class="form-grid">
+        <label>
+          Contexte
+          <select id="contexte">
+            <option value="vente">Vente</option>
+            <option value="location">Location</option>
+          </select>
+        </label>
+
+        <label>
+          Type de bien
+          <select id="typeBien">
+            <option value="Appartement">Appartement</option>
+            <option value="Maison">Maison</option>
+            <option value="Immeuble">Immeuble</option>
+            <option value="Local commercial">Local commercial</option>
+          </select>
+        </label>
+
+        <label>
+          Surface (m²)
+          <input id="surface" type="number" min="0" placeholder="ex : 78" />
+          <small class="muted">Au-delà de 200 m² : sur devis.</small>
+        </label>
+
+        <label>
+          Année du bien (ou permis)
+          <input id="year" type="number" min="1800" max="2100" placeholder="ex : 1978" />
+          <small class="muted">Amiante recommandé si &lt; 1997, Plomb si &lt; 1949.</small>
+        </label>
+      </div>
+
+      <div class="checks">
+        <label><input id="gazFixe" type="checkbox" /> Installation de <strong>gaz fixe</strong></label>
+        <label><input id="elec" type="checkbox" /> Installation électrique (présente)</label>
+      </div>
+
+      <div class="cta">
+        <a class="btn" href="#" id="autoBtn">Recommander automatiquement</a>
+        <span class="muted">Vous pouvez aussi cocher/décocher manuellement.</span>
+      </div>
+
+      <p id="warn" class="warn"></p>
+    </section>
+
+    <section class="card">
+      <h2>Diagnostics (pack 1 à 6)</h2>
+
+      <div class="checks">
+        <label><input id="dpe" type="checkbox" checked /> DPE</label>
+        <label><input id="amiante" type="checkbox" /> Amiante</label>
+        <label><input id="plomb" type="checkbox" /> Plomb (CREP)</label>
+        <label><input id="gaz" type="checkbox" /> Gaz</label>
+        <label><input id="electricite" type="checkbox" /> Électricité</label>
+        <label><input id="erp" type="checkbox" checked /> ERP</label>
+      </div>
+
+      <p class="muted">Packs TTC : 1 diag 150€ • 2 diags 230€ • 3 diags 300€ • 4 diags 360€ • 5 diags 420€ • 6 diags 470€</p>
+    </section>
+
+    <section class="card">
+      <h2>Options (hors pack)</h2>
+      <div class="checks">
+        <label><input id="mesurage" type="checkbox" /> Mesurage surface habitable (+80€)</label>
+        <label><input id="termites" type="checkbox" /> État parasitaire / termites (+80€) <span class="muted">(vérification indicative)</span></label>
+        <label><input id="prelevement" type="checkbox" /> Forfait prélèvement (+60€)</label>
+      </div>
+
+      <p class="muted">Termites : pour une indication, vous pouvez vérifier votre commune ici (info indicative) : <a href="https://termite.com.fr/rechercher/" target="_blank" rel="noopener">termite.com.fr/rechercher</a></p>
+    </section>
+
+    <section class="card">
+      <h2>Résultat</h2>
+      <p id="price" style="font-weight:800;"></p>
+
+      <label style="display:block;margin-top:12px;">
+        Votre nom (facultatif)
+        <input id="nom" type="text" placeholder="Stephan / Nom du client…" style="width:100%;max-width:520px;" />
+      </label>
+
+      <div class="cta" style="margin-top:12px;">
+        <a class="btn" id="sendMail" href="mailto:stephanr.pro@gmail.com">Envoyer la demande (mail prêt)</a>
+        <a class="link" href="tel:+33767076761">Ou appeler</a>
+      </div>
+
+      <p class="muted" style="margin-top:10px;">Estimation indicative. Le tarif final peut varier selon l’accès, la complexité et la surface (notamment &gt; 200 m² : sur devis).</p>
     </section>
   </main>
 
@@ -51,13 +132,14 @@
       <div>
         <strong>SR Diagnostics Immobiliers</strong><br>
         07 67 07 67 61 • <a href="mailto:stephanr.pro@gmail.com">stephanr.pro@gmail.com</a><br>
-        Lun–Dim 8h–20h • Rayon 50 km
+        Lun–Dim 8h–20h • Arras, Lens, Hénin, Beaumont, Douai, Béthune (50 km)
       </div>
       <div>
-        <a href="contact.html">Contact</a> •
-        <a href="a-propos.html">À propos</a>
+        <a href="a-propos.html">À propos</a> • <a href="contact.html">Contact</a>
       </div>
     </div>
   </footer>
+
+  <script src="devis.js"></script>
 </body>
 </html>
