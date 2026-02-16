@@ -172,3 +172,14 @@ footer {
     padding: 16px;
   }
 }
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:10px}
+@media (max-width:800px){.form-grid{grid-template-columns:1fr}}
+label{font-weight:700}
+input,select{margin-top:6px;width:100%;max-width:520px;padding:10px 12px;border:1px solid var(--border);border-radius:12px;background:#fff}
+small{display:block;margin-top:6px;font-weight:500}
+.checks{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}
+.checks label{font-weight:600}
+.warn{margin-top:10px;color:#8a2d2d;font-weight:700}
+.btn.ghost{background:#e8f1ff;color:var(--ink)!important;border:1px solid var(--border)}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.badges span{background:#e8f1ff;border:1px solid var(--border);padding:6px 10px;border-radius:999px;font-size:14px}
