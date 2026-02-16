@@ -22,29 +22,79 @@
   <main class="container">
     <section class="hero">
       <h1>Demande de devis</h1>
-      <p>Expliquez votre besoin (vente, location ou copropriété) et recevez une proposition adaptée.</p>
-    </section>
-
-    <section class="grid">
-      <article class="card">
-        <h2>1. Décrivez votre bien</h2>
-        <p>Type de bien, surface, année approximative et commune d'intervention.</p>
-      </article>
-      <article class="card">
-        <h2>2. Précisez votre contexte</h2>
-        <p>Vente, location, ou mission copropriété (PPT/DTG).</p>
-      </article>
-      <article class="card">
-        <h2>3. Recevez votre devis</h2>
-        <p>Retour rapide avec périmètre des diagnostics et estimation tarifaire.</p>
-      </article>
+      <p>Renseignez votre bien pour obtenir une estimation automatique basée sur les packs diagnostics.</p>
+      <p>Zone : Hénin-Beaumont • Arras • Douai • Lens • Béthune (rayon 50 km)</p>
     </section>
 
     <section class="card">
-      <h2>Envoyer votre demande</h2>
-      <p>Contactez-nous directement pour obtenir un devis personnalisé.</p>
-      <a class="btn" href="contact.html">Passer par la page contact</a>
+      <h2>Votre bien</h2>
+      <div class="grid">
+        <label class="card">Contexte
+          <select id="contexte">
+            <option value="vente">Vente</option>
+            <option value="location">Location</option>
+          </select>
+        </label>
+
+        <label class="card">Type de bien
+          <select id="typeBien">
+            <option value="Appartement">Appartement</option>
+            <option value="Maison">Maison</option>
+            <option value="Immeuble">Immeuble</option>
+            <option value="Local commercial">Local commercial</option>
+          </select>
+        </label>
+
+        <label class="card">Surface (m²)
+          <input id="surface" type="number" min="0" placeholder="ex : 78">
+        </label>
+
+        <label class="card">Année du bien
+          <input id="year" type="number" min="1800" max="2100" placeholder="ex : 1978">
+        </label>
+      </div>
+
+      <div class="grid">
+        <label class="card"><input id="gazFixe" type="checkbox"> Installation de gaz fixe</label>
+        <label class="card"><input id="elec" type="checkbox"> Installation électrique présente</label>
+      </div>
+
+      <p><a class="btn" href="#" id="autoBtn">Recommandation automatique</a></p>
+      <p id="warn"></p>
+    </section>
+
+    <section class="card">
+      <h2>Diagnostics principaux (pack)</h2>
+      <div class="grid">
+        <label class="card"><input id="dpe" type="checkbox" checked> DPE</label>
+        <label class="card"><input id="amiante" type="checkbox"> Amiante</label>
+        <label class="card"><input id="plomb" type="checkbox"> Plomb (CREP)</label>
+        <label class="card"><input id="gaz" type="checkbox"> Gaz</label>
+        <label class="card"><input id="electricite" type="checkbox"> Électricité</label>
+        <label class="card"><input id="erp" type="checkbox" checked> ERP</label>
+      </div>
+      <p>Packs TTC : 1 diag 150€ • 2 diags 230€ • 3 diags 300€ • 4 diags 360€ • 5 diags 420€ • 6 diags 470€</p>
+    </section>
+
+    <section class="card">
+      <h2>Options hors pack</h2>
+      <div class="grid">
+        <label class="card"><input id="mesurage" type="checkbox"> Mesurage (+80€)</label>
+        <label class="card"><input id="termites" type="checkbox"> Termites indicatif (+80€)</label>
+        <label class="card"><input id="prelevement" type="checkbox"> Forfait prélèvement (+60€)</label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Résultat</h2>
+      <p id="price"></p>
+      <label>Votre nom (facultatif)
+        <input id="nom" type="text" placeholder="Nom">
+      </label>
+      <p><a class="btn" id="sendMail" href="mailto:stephanr.pro@gmail.com">Envoyer la demande</a></p>
     </section>
   </main>
+
+  <script src="devis.js"></script>
 </body>
 </html>
