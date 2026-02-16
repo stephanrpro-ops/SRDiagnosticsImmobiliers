@@ -1,162 +1,76 @@
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>SR Diagnostics Immobiliers</title>
-  <meta name="description" content="Diagnostics immobiliers pour vente & location : DPE, amiante, plomb, électricité, gaz, ERP, termites. Arras, Lens, Hénin, Beaumont, Douai, Béthune." />
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <header>
+<main>
+  <section class="hero">
+    <p class="hero-pill">Diagnostics immobiliers • Vente & location</p>
     <h1>SR Diagnostics Immobiliers</h1>
-    <p class="muted">Diagnostics immobiliers pour vente & location — DPE, amiante, plomb, électricité, gaz, ERP, termites.</p>
+    <p class="muted">Arras • Lens • Hénin • Beaumont • Douai • Béthune (rayon 50 km)</p>
 
-    <p class="muted">
-      <span class="pill">📞 <a href="tel:+33767076761">07 67 07 67 61</a></span>
-      <span class="pill">✉️ <a href="mailto:stephanr.pro@gmail.com">stephanr.pro@gmail.com</a></span>
-      <span class="pill">🕒 Lun–Dim 8h–20h</span>
-    </p>
-
-    <nav aria-label="Navigation principale">
-      <a href="index.html">Accueil & devis</a>
-      <a href="prestations.html">Prestations</a>
-      <a href="actualites.html">Actualités</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
-
-  <main>
-    <div class="grid">
-      <section class="card" aria-labelledby="presta-home-title">
-        <h2 id="presta-home-title">Prestations</h2>
-        <ul>
-          <li>DPE</li>
-          <li>Amiante</li>
-          <li>Plomb (CREP)</li>
-          <li>Électricité</li>
-          <li>Gaz</li>
-          <li>ERP</li>
-          <li>Termites (état parasitaire selon zonage)</li>
-        </ul>
-        <a class="btn" href="prestations.html">Voir le détail des prestations</a>
-        <p class="note">Copropriété : PPT / DTG sur devis (formulaire de contact).</p>
-      </section>
-
-      <section class="card" aria-labelledby="zone-title">
-        <h2 id="zone-title">Zone d’intervention</h2>
-        <p>Arras • Lens • Hénin • Beaumont • Douai • Béthune (rayon max. 50 km)</p>
-        <div class="hr"></div>
-        <p class="note">Valeurs : confiance • transparence • honnêteté • efficacité • engagement</p>
-      </section>
+    <div class="badges">
+      <span>Intervention sous 48 h</span>
+      <span>Rapport sous 24 h</span>
+      <span>Lun–Dim 8h–20h</span>
     </div>
 
-    <section class="card" aria-labelledby="devis-title">
-      <h2 id="devis-title">Devis en ligne</h2>
-      <p class="note">
-        Sélection indicative basée sur l’année du bien et vos réponses. Validation finale après échange.<br>
-        ERP est inclus par défaut.
-      </p>
+    <div class="cta">
+      <a class="btn" href="devis.html">Demander un devis</a>
+      <a class="btn ghost" href="tel:+33767076761">Appeler 07 67 07 67 61</a>
+    </div>
+  </section>
 
-      <form name="devis" method="POST" action="/merci.html" data-netlify="true" netlify-honeypot="bot-field" id="devis-form">
-        <input type="hidden" name="form-name" value="devis" />
-        <p class="hidden"><label>Ne pas remplir ce champ: <input name="bot-field" /></label></p>
+  <section class="grid" aria-label="Engagements">
+    <article class="card">
+      <h2>Confiance</h2>
+      <p>Diagnostics fiables, conformes, impartiaux. Objectif : sécuriser votre vente ou votre location.</p>
+    </article>
+    <article class="card">
+      <h2>Transparence</h2>
+      <p>Rapports clairs + explication des résultats. Vous comprenez ce que vous recevez.</p>
+    </article>
+    <article class="card">
+      <h2>Efficacité</h2>
+      <p>Organisation et réactivité pour tenir vos délais (RDV rapide, rapport sous 24 h).</p>
+    </article>
+  </section>
 
-        <input type="hidden" name="diagnostics_a_prevoir" id="diagnostics-a-prevoir" />
-        <input type="hidden" name="sur_devis" id="sur-devis" value="non" />
+  <section class="grid" aria-label="Votre situation">
+    <article class="card">
+      <h2>Vous vendez ?</h2>
+      <p>Voir les diagnostics obligatoires et obtenir un devis rapide.</p>
+      <p><a class="btn" href="vente.html">Diagnostics vente</a></p>
+    </article>
+    <article class="card">
+      <h2>Vous louez ?</h2>
+      <p>Diagnostics requis en location et validités : on vous guide.</p>
+      <p><a class="btn" href="location.html">Diagnostics location</a></p>
+    </article>
+    <article class="card">
+      <h2>Copropriété</h2>
+      <p>PPT & DTG : prestations dédiées aux syndics et copropriétés (sur devis).</p>
+      <p><a class="btn" href="copropriete.html">PPT & DTG</a></p>
+    </article>
+  </section>
 
-        <div class="form-grid">
-          <div><label for="nom">Nom</label><input id="nom" name="nom" required /></div>
-          <div><label for="email">Email</label><input id="email" name="email" type="email" required /></div>
-          <div><label for="telephone">Téléphone</label><input id="telephone" name="telephone" /></div>
+  <section class="card">
+    <h2>Nos diagnostics</h2>
+    <p class="muted">DPE • Amiante • Plomb • Gaz • Électricité • ERP • Mesurage</p>
+    <p><a class="btn" href="prestations.html">Voir les prestations</a></p>
+  </section>
 
-          <div>
-            <label for="type-projet">Type de projet</label>
-            <select id="type-projet" name="type_projet" required>
-              <option value="">Sélectionner</option>
-              <option value="vente">Vente</option>
-              <option value="location">Location</option>
-            </select>
-          </div>
+  <section class="card">
+    <h2>Comment ça se passe</h2>
+    <ol>
+      <li>Prise de rendez-vous rapide (téléphone ou devis en ligne)</li>
+      <li>Intervention et contrôles sur place</li>
+      <li>Analyse + rédaction du dossier</li>
+      <li>Remise du rapport + explications si besoin</li>
+    </ol>
+  </section>
 
-          <div>
-            <label for="type-bien">Type de bien</label>
-            <select id="type-bien" name="type_bien" required>
-              <option value="">Sélectionner</option>
-              <option value="maison">Maison</option>
-              <option value="appartement">Appartement</option>
-              <option value="immeuble">Immeuble</option>
-              <option value="local_pro">Local professionnel</option>
-            </select>
-          </div>
-
-          <div>
-            <label for="annee-construction">Année de construction / permis</label>
-            <input id="annee-construction" name="annee_construction" type="number" min="1600" max="2100" placeholder="Ex : 1930" required />
-          </div>
-
-          <div>
-            <label for="surface">Surface (m²)</label>
-            <input id="surface" name="surface" type="number" min="1" placeholder="Ex : 85" required />
-            <p class="note">Au-delà de 200 m² : sur devis.</p>
-          </div>
-        </div>
-
-        <h3>Options</h3>
-        <div class="form-grid">
-          <div>
-            <label for="has-gaz">Installation de gaz fixe</label>
-            <select id="has-gaz" name="installation_gaz_fixe" required>
-              <option value="">Sélectionner</option>
-              <option value="oui">Oui</option>
-              <option value="non">Non</option>
-            </select>
-          </div>
-          <div>
-            <label for="has-elec">Installation électrique</label>
-            <select id="has-elec" name="installation_electrique" required>
-              <option value="">Sélectionner</option>
-              <option value="oui">Oui</option>
-              <option value="non">Non</option>
-            </select>
-          </div>
-          <div>
-            <label for="dpe-deja">J’ai déjà un DPE valide</label>
-            <select id="dpe-deja" name="dpe_deja_valide" required>
-              <option value="">Sélectionner</option>
-              <option value="oui">Oui</option>
-              <option value="non">Non</option>
-            </select>
-          </div>
-        </div>
-
-        <h3>Termites (auto-check indicatif)</h3>
-        <p class="note">Vérification indicative : la référence officielle reste l’arrêté préfectoral / mairie.</p>
-        <div class="cta-group">
-          <a class="pill" href="https://termite.com.fr/rechercher/" target="_blank" rel="noopener">🔎 Vérifier sur termite.com.fr</a>
-          <label style="margin:0;font-weight:700;">
-            <input type="checkbox" id="termite-zone" name="zone_termites_selon_verif" />
-            Ma commune est en zone termites (selon vérification)
-          </label>
-        </div>
-
-        <div class="cta-group">
-          <button type="button" id="calculer-devis">Calculer</button>
-          <button class="secondary" type="submit">Envoyer la demande</button>
-        </div>
-
-        <div class="result" id="resultat-devis" aria-live="polite" hidden></div>
-
-        <label for="message">Message complémentaire</label>
-        <textarea id="message" name="message" rows="5" placeholder="Adresse du bien, ville, étage, accès, disponibilités…"></textarea>
-      </form>
-    </section>
-  </main>
-
-  <footer id="contact" class="muted">
-    <p><strong>SR Diagnostics Immobiliers</strong> — Bâtir votre confiance dans les règles de l’art.</p>
-    <p><strong>Téléphone :</strong> <a href="tel:+33767076761">07 67 07 67 61</a> • <strong>Email :</strong> <a href="mailto:stephanr.pro@gmail.com">stephanr.pro@gmail.com</a></p>
-    <p><strong>Horaires :</strong> Lundi–Dimanche 8h–20h</p>
-  </footer>
-</body>
-</html>
+  <section class="card">
+    <h2>Besoin d’un devis ?</h2>
+    <p>Décrivez votre bien (type, surface, année, gaz/électricité) et je vous réponds rapidement.</p>
+    <p>
+      <a class="btn" href="devis.html">Devis en ligne</a>
+      <a class="btn ghost" href="contact.html">Contact</a>
+    </p>
+  </section>
+</main>
