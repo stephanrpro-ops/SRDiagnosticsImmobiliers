@@ -183,3 +183,7 @@ small{display:block;margin-top:6px;font-weight:500}
 .btn.ghost{background:#e8f1ff;color:var(--ink)!important;border:1px solid var(--border)}
 .badges{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
 .badges span{background:#e8f1ff;border:1px solid var(--border);padding:6px 10px;border-radius:999px;font-size:14px}
+.hero-pill{font-weight:700;color:var(--blue);margin-bottom:6px}
+.muted{opacity:.8}
+ol{padding-left:18px}
+ol li{margin:6px 0}
