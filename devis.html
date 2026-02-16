@@ -7,40 +7,105 @@
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
+
   <header class="topbar">
-    <nav class="container menu">
+    <nav class="container menu" aria-label="Menu principal">
       <a href="index.html">Accueil</a>
       <a href="vente.html">Vente</a>
       <a href="location.html">Location</a>
       <a href="copropriete.html">Copropriété</a>
       <a href="prestations.html">Prestations</a>
-      <a href="contact.html">Contact</a>
       <a href="devis.html">Devis</a>
+      <a href="contact.html">Contact</a>
     </nav>
   </header>
 
   <main class="container">
+
     <section class="hero">
-      <h1>Demande de devis en ligne</h1>
-      <p>Indiquez votre type de bien et votre besoin principal pour recevoir une estimation rapide avant intervention.</p>
+      <h1>Demande de devis</h1>
+      <p>Renseignez votre bien pour obtenir une estimation automatique basée sur les packs diagnostics.</p>
+      <p class="muted">Zone : Hénin-Beaumont • Arras • Douai • Lens • Béthune (rayon 50 km)</p>
     </section>
 
-    <section class="grid">
-      <article class="card">
-        <h2>Étape 1</h2>
-        <p>Précisez si votre demande concerne une vente, une location ou une copropriété.</p>
-      </article>
-      <article class="card">
-        <h2>Étape 2</h2>
-        <p>Communiquez la surface, l'année du bien et les diagnostics déjà disponibles.</p>
-      </article>
-      <article class="card">
-        <h2>Étape 3</h2>
-        <p>Recevez un retour avec le périmètre conseillé et une proposition tarifaire.</p>
-      </article>
+    <section class="card">
+      <h2>Votre bien</h2>
+
+      <div class="grid">
+        <label class="card">Contexte
+          <select id="contexte">
+            <option value="vente">Vente</option>
+            <option value="location">Location</option>
+          </select>
+        </label>
+
+        <label class="card">Type de bien
+          <select id="typeBien">
+            <option value="Appartement">Appartement</option>
+            <option value="Maison">Maison</option>
+            <option value="Immeuble">Immeuble</option>
+            <option value="Local commercial">Local commercial</option>
+          </select>
+        </label>
+
+        <label class="card">Surface (m²)
+          <input id="surface" type="number" min="0" placeholder="ex : 78">
+        </label>
+
+        <label class="card">Année du bien
+          <input id="year" type="number" min="1800" max="2100" placeholder="ex : 1978">
+        </label>
+      </div>
+
+      <div class="grid">
+        <label class="card"><input id="gazFixe" type="checkbox"> Installation de gaz fixe</label>
+        <label class="card"><input id="elec" type="checkbox"> Installation électrique présente</label>
+      </div>
+
+      <p><a class="btn" href="#" id="autoBtn">Recommandation automatique</a></p>
+      <p id="warn"></p>
     </section>
 
-    <p><a class="btn" href="contact.html">Envoyer ma demande</a></p>
+    <section class="card">
+      <h2>Diagnostics principaux (pack)</h2>
+      <div class="grid">
+        <label class="card"><input id="dpe" type="checkbox" checked> DPE</label>
+        <label class="card"><input id="amiante" type="checkbox"> Amiante</label>
+        <label class="card"><input id="plomb" type="checkbox"> Plomb (CREP)</label>
+        <label class="card"><input id="gaz" type="checkbox"> Gaz</label>
+        <label class="card"><input id="electricite" type="checkbox"> Électricité</label>
+        <label class="card"><input id="erp" type="checkbox" checked> ERP</label>
+      </div>
+      <p>Packs TTC : 1 diag 150€ • 2 diags 230€ • 3 diags 300€ • 4 diags 360€ • 5 diags 420€ • 6 diags 470€</p>
+    </section>
+
+    <section class="card">
+      <h2>Options hors pack</h2>
+      <div class="grid">
+        <label class="card"><input id="mesurage" type="checkbox"> Mesurage (+80€)</label>
+        <label class="card"><input id="termites" type="checkbox"> Termites indicatif (+80€)</label>
+        <label class="card"><input id="prelevement" type="checkbox"> Forfait prélèvement (+60€)</label>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Résultat</h2>
+      <p id="price"></p>
+
+      <label>Votre nom (facultatif)
+        <input id="nom" type="text" placeholder="Nom">
+      </label>
+
+      <p>
+        <a class="btn" id="sendMail" href="mailto:stephanr.pro@gmail.com">
+          Envoyer la demande
+        </a>
+      </p>
+    </section>
+
   </main>
+
+  <script src="devis.js"></script>
+
 </body>
 </html>
