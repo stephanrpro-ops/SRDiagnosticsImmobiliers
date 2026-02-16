@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
+
   <header class="topbar">
     <nav class="container menu" aria-label="Menu principal">
       <a href="index.html">Accueil</a>
@@ -20,14 +21,16 @@
   </header>
 
   <main class="container">
+
     <section class="hero">
       <h1>Demande de devis</h1>
       <p>Renseignez votre bien pour obtenir une estimation automatique basée sur les packs diagnostics.</p>
-      <p>Zone : Hénin-Beaumont • Arras • Douai • Lens • Béthune (rayon 50 km)</p>
+      <p class="muted">Zone : Hénin-Beaumont • Arras • Douai • Lens • Béthune (rayon 50 km)</p>
     </section>
 
     <section class="card">
       <h2>Votre bien</h2>
+
       <div class="grid">
         <label class="card">Contexte
           <select id="contexte">
@@ -88,13 +91,21 @@
     <section class="card">
       <h2>Résultat</h2>
       <p id="price"></p>
+
       <label>Votre nom (facultatif)
         <input id="nom" type="text" placeholder="Nom">
       </label>
-      <p><a class="btn" id="sendMail" href="mailto:stephanr.pro@gmail.com">Envoyer la demande</a></p>
+
+      <p>
+        <a class="btn" id="sendMail" href="mailto:stephanr.pro@gmail.com">
+          Envoyer la demande
+        </a>
+      </p>
     </section>
+
   </main>
 
   <script src="devis.js"></script>
+
 </body>
 </html>
