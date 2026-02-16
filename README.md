@@ -99,3 +99,56 @@ Principales:
   - email: `admin@example.com`
   - rôle: `admin`
 - Remplacer en production.
+
+## Guide simple: mise en place GitHub Pages (avec ou sans Codex)
+
+### A. Principe
+Pour éviter le piège “one-page”, la solution la plus fiable sur GitHub Pages est un **site statique multi-pages**:
+`index.html`, `vente.html`, `location.html`, `diagnostics.html`, etc.
+
+### B. Arborescence recommandée (racine)
+```text
+index.html
+vente.html
+location.html
+diagnostics.html
+copropriete.html
+audit.html
+devis.html
+a-propos.html
+contact.html
+assets/
+  styles.css
+  app.js
+  img/
+```
+
+Utiliser des liens **relatifs** dans le menu (`href="vente.html"`) pour éviter les 404 sur GitHub Pages.
+
+### C. Activer GitHub Pages
+1. GitHub → `Settings`
+2. `Pages`
+3. `Deploy from a branch`
+4. Branch: `main`
+5. Folder: `/ (root)`
+6. Save
+
+### D. Nom de domaine personnalisé
+- Côté GitHub Pages: `Settings → Pages → Custom domain`
+- Côté DNS: créer un `CNAME` pour `www` vers `<user>.github.io` (valeur fournie par GitHub)
+
+### E. Devis sans backend
+GitHub Pages est statique. Pour recevoir les demandes:
+- Formspree / Getform / Google Forms
+- Ou Netlify Forms si l’hébergement est déplacé sur Netlify
+
+### F. Workflows
+- **Sans Codex**: modifier → commit/push → publication GitHub Pages.
+- **Avec Codex**: travailler en PR et valider les fichiers créés/modifiés.
+
+### G. Check-list anti-galère
+- ✅ Une page = un fichier `.html`
+- ✅ Liens relatifs (`vente.html`, pas `/vente.html`)
+- ✅ Assets dans `/assets`
+- ✅ Publication depuis `main / root`
+- ✅ Formulaire via service externe
