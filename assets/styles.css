@@ -1,63 +1,23 @@
-<!doctype html>
-<html lang="fr">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Diagnostics pour la vente – SR Diagnostics Immobiliers</title>
-  <meta name="description" content="Diagnostics obligatoires pour vendre : DPE, amiante, plomb, gaz, électricité, ERP, mesurage. Intervention rapide, rapport sous 24h." />
-  <link rel="stylesheet" href="assets/styles.css" />
-</head>
-<body>
-  <header class="site-header">
-    <a class="brand" href="index.html">SR Diagnostics Immobiliers</a>
+:root{--blue:#0a4ea3;--ink:#0f2744;--bg:#f4f8ff;--card:#fff;--border:#d4e3fb}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.55;background:var(--bg);color:var(--ink)}
+a{color:inherit}
+.container{max-width:1100px;margin:0 auto;padding:20px}
+.site-header{position:sticky;top:0;z-index:10;background:#fff;border-bottom:1px solid var(--border);display:flex;gap:14px;align-items:center;justify-content:space-between;padding:12px 16px}
+.brand{font-weight:900;text-decoration:none}
+.nav{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.nav a{padding:8px 10px;border-radius:10px;text-decoration:none}
+.nav a:hover{background:#e8f1ff}
+.nav a.active{background:#e8f1ff}
+.btn{background:var(--blue);color:#fff!important;padding:10px 12px;border-radius:12px;text-decoration:none;font-weight:700}
+.phone{text-decoration:none;font-weight:700}
+.hero{background:#fff;border:1px solid var(--border);border-radius:18px;padding:18px}
+.lead{margin-top:6px}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}
+.badges span{background:#e8f1ff;border:1px solid var(--border);padding:6px 10px;border-radius:999px;font-size:14px}
+.cta{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.link{text-decoration:underline}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:18px;margin-top:16px}
+.site-footer{background:#fff;border-top:1px solid var(--border);margin-top:22px}
+.footer-grid{display:flex;gap:18px;justify-content:space-between;flex-wrap:wrap}
 
-    <nav class="nav">
-      <a class="active" href="vente.html">Vente</a>
-      <a href="location.html">Location</a>
-      <a href="diagnostics.html">Diagnostics</a>
-      <a href="copropriete.html">Copropriété (PPT/DTG)</a>
-      <a href="audit.html">Audit</a>
-      <a class="btn" href="devis.html">Devis</a>
-      <a href="a-propos.html">À propos</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-
-    <a class="phone" href="tel:+33767076761">07 67 07 67 61</a>
-  </header>
-
-  <main class="container">
-    <section class="hero">
-      <h1>Diagnostics obligatoires pour vendre</h1>
-      <p class="lead">Selon l’année du bien et ses installations (gaz fixe, électricité…), certains diagnostics sont obligatoires. On vous guide et on vous remet un dossier clair et complet.</p>
-      <div class="badges">
-        <span>Intervention sous 48 h</span>
-        <span>Rapport sous 24 h</span>
-        <span>Arras • Lens • Hénin • Douai • Béthune</span>
-      </div>
-      <div class="cta">
-        <a class="btn" href="devis.html">Demander un devis</a>
-        <a class="link" href="contact.html">Me contacter</a>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>Page en construction</h2>
-      <p>On remplit cette page juste après avoir posé la structure complète du site.</p>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div>
-        <strong>SR Diagnostics Immobiliers</strong><br>
-        07 67 07 67 61 • <a href="mailto:stephanr.pro@gmail.com">stephanr.pro@gmail.com</a><br>
-        Lun–Dim 8h–20h • Rayon 50 km
-      </div>
-      <div>
-        <a href="contact.html">Contact</a> •
-        <a href="a-propos.html">À propos</a>
-      </div>
-    </div>
-  </footer>
-</body>
-</html>
