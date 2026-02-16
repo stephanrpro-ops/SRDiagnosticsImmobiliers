@@ -3,6 +3,7 @@ import { Logo } from '@/components/brand/logo';
 
 const nav = [
   ['Accueil', '/'],
+  ['Tarifs', '/tarifs'],
   ['Prestations', '/prestations'],
   ['Devis', '/devis'],
   ['Actualités', '/actualites'],

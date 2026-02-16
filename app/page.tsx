@@ -1,6 +1,15 @@
 import Link from 'next/link';
+import { PricingGrid } from '@/components/pricing-grid';
 
 const services = ['DPE', 'Amiante', 'Plomb', 'Électricité', 'Gaz', 'Termites', 'ERP', 'PPT', 'DTG'];
+
+const pages = [
+  { label: 'Accueil', href: '/' },
+  { label: 'Devis', href: '/devis' },
+  { label: 'Prestations', href: '/prestations' },
+  { label: 'Actualités', href: '/actualites' },
+  { label: 'Tarifs', href: '/tarifs' }
+];
 
 export default function HomePage() {
   return (
@@ -12,8 +21,27 @@ export default function HomePage() {
           Accompagnement diagnostic immobilier à Rouvroy et dans le secteur Arras, Lens, Hénin-Beaumont, Douai, Béthune.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <Link href="/devis" className="rounded-lg bg-white px-5 py-3 font-bold text-ralBlue">Demander un devis</Link>
-          <Link href="/client" className="rounded-lg border border-white px-5 py-3 font-bold">Espace client</Link>
+          <Link href="/devis" className="rounded-lg bg-white px-5 py-3 font-bold text-ralBlue">
+            Demander un devis
+          </Link>
+          <Link href="/tarifs" className="rounded-lg border border-white px-5 py-3 font-bold">
+            Voir la grille tarifaire
+          </Link>
+        </div>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-bold text-ralBlue">Pages principales</h2>
+        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+          {pages.map((page) => (
+            <Link
+              key={page.href}
+              href={page.href}
+              className="rounded-xl border bg-white p-4 text-center font-semibold shadow-sm hover:border-ralBlue"
+            >
+              {page.label}
+            </Link>
+          ))}
         </div>
       </section>
 
@@ -29,25 +57,14 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-2">
-        <article className="rounded-2xl border bg-white p-6 shadow-sm">
-          <h2 className="text-xl font-bold text-ralBlue">Zones d’intervention</h2>
-          <p className="mt-2 text-slate-700">Rouvroy et alentours (placeholder): Arras, Lens, Hénin-Beaumont, Douai, Béthune.</p>
-        </article>
-        <article className="rounded-2xl border bg-white p-6 shadow-sm">
-          <h2 className="text-xl font-bold text-ralBlue">Pourquoi nous choisir</h2>
-          <ul className="mt-2 list-disc space-y-1 pl-6 text-slate-700">
-            <li>Qualité de mesure et restitution pédagogique</li>
-            <li>Matériel professionnel et méthodologie claire</li>
-            <li>Délai cible de remise: 24h (placeholder)</li>
-            <li>Suivi de vos questions après intervention</li>
-          </ul>
-        </article>
-      </section>
-
-      <section className="rounded-2xl border bg-white p-6 shadow-sm">
-        <h2 className="text-xl font-bold text-ralBlue">Avis clients</h2>
-        <p className="mt-2 text-slate-600">Section placeholder: intégration de témoignages vérifiés à venir.</p>
+      <section className="space-y-4">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h2 className="text-2xl font-bold text-ralBlue">Grille tarifaire</h2>
+          <Link href="/tarifs" className="rounded-lg bg-ralBlue px-4 py-2 text-sm font-semibold text-white">
+            Ouvrir la page tarifs complète
+          </Link>
+        </div>
+        <PricingGrid compact />
       </section>
     </main>
   );
