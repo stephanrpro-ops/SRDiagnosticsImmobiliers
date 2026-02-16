@@ -5,43 +5,8 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>SR Diagnostics Immobiliers</title>
   <meta name="description" content="Diagnostics immobiliers pour vente & location : DPE, amiante, plomb, électricité, gaz, ERP, termites. Arras, Lens, Hénin, Beaumont, Douai, Béthune." />
-  <style>
-    :root{
-      --blue:#1c7df0;
-      --ink:#0f2744;
-      --bg:#f4f8ff;
-      --card:#ffffff;
-      --border:#d4e3fb;
-      --chip:#e8f1ff;
-    }
-    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;margin:0;line-height:1.55;background:var(--bg);color:var(--ink)}
-    header{padding:42px 18px;max-width:980px;margin:auto}
-    main{max-width:980px;margin:auto;padding:0 18px 40px}
-    footer{padding:24px 18px;opacity:.85;max-width:980px;margin:auto}
-
-    .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px;margin:12px 0;box-shadow:0 4px 18px rgba(32,74,135,.08)}
-    h1{margin:0 0 10px;font-size:34px;letter-spacing:-.3px}
-    h2{margin:0 0 10px}
-    a{color:#1565c0}
-    nav{margin:16px 0 0;display:flex;gap:10px;flex-wrap:wrap}
-    nav a{padding:8px 12px;border-radius:10px;background:var(--chip);text-decoration:none}
-
-    .grid{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
-    .form-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-    label{display:block;margin:10px 0 6px;font-weight:600}
-    input,textarea,select{width:100%;padding:10px;border-radius:10px;border:1px solid #b9d1f3;background:#fff;color:var(--ink)}
-    button{padding:12px 14px;border-radius:10px;border:0;background:var(--blue);color:#fff;font-weight:800;cursor:pointer}
-    button.secondary{background:#0f2744}
-
-    .result{margin-top:14px;padding:14px;border-radius:12px;background:#eff6ff;border:1px solid #b7d2fb}
-    .note{font-size:.95rem;opacity:.9}
-    .muted{opacity:.85}
-    .hidden{display:none}
-    .pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:#eaf2ff;border:1px solid #cfe2ff;font-weight:700}
-    .hr{height:1px;background:#dbe8ff;margin:14px 0}
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
   <header>
     <h1>SR Diagnostics Immobiliers</h1>
@@ -49,14 +14,13 @@
 
     <p class="muted">
       <span class="pill">📞 <a href="tel:+33767076761">07 67 07 67 61</a></span>
-      &nbsp;
       <span class="pill">✉️ <a href="mailto:stephanr.pro@gmail.com">stephanr.pro@gmail.com</a></span>
-      &nbsp;
       <span class="pill">🕒 Lun–Dim 8h–20h</span>
     </p>
 
-    <nav>
+    <nav aria-label="Navigation principale">
       <a href="index.html">Accueil & devis</a>
+      <a href="prestations.html">Prestations</a>
       <a href="actualites.html">Actualités</a>
       <a href="#contact">Contact</a>
     </nav>
@@ -64,8 +28,8 @@
 
   <main>
     <div class="grid">
-      <div class="card">
-        <h2>Prestations</h2>
+      <section class="card" aria-labelledby="presta-home-title">
+        <h2 id="presta-home-title">Prestations</h2>
         <ul>
           <li>DPE</li>
           <li>Amiante</li>
@@ -73,24 +37,25 @@
           <li>Électricité</li>
           <li>Gaz</li>
           <li>ERP</li>
-          <li>Termites (état parasitaire)</li>
+          <li>Termites (état parasitaire selon zonage)</li>
         </ul>
+        <a class="btn" href="prestations.html">Voir le détail des prestations</a>
         <p class="note">Copropriété : PPT / DTG sur devis (formulaire de contact).</p>
-      </div>
+      </section>
 
-      <div class="card">
-        <h2>Zone d’intervention</h2>
-        <p>Arras • Lens • Hénin • Beaumont • Douai • Béthune (rayon 50 km)</p>
+      <section class="card" aria-labelledby="zone-title">
+        <h2 id="zone-title">Zone d’intervention</h2>
+        <p>Arras • Lens • Hénin • Beaumont • Douai • Béthune (rayon max. 50 km)</p>
         <div class="hr"></div>
         <p class="note">Valeurs : confiance • transparence • honnêteté • efficacité • engagement</p>
-      </div>
+      </section>
     </div>
 
-    <div class="card">
-      <h2>Devis en ligne</h2>
+    <section class="card" aria-labelledby="devis-title">
+      <h2 id="devis-title">Devis en ligne</h2>
       <p class="note">
-        Sélection indicative basée sur l’année du bien et vos réponses. Validation finale après échange.
-        <br>ERP est inclus par défaut.
+        Sélection indicative basée sur l’année du bien et vos réponses. Validation finale après échange.<br>
+        ERP est inclus par défaut.
       </p>
 
       <form name="devis" method="POST" action="/merci.html" data-netlify="true" netlify-honeypot="bot-field" id="devis-form">
@@ -167,7 +132,7 @@
 
         <h3>Termites (auto-check indicatif)</h3>
         <p class="note">Vérification indicative : la référence officielle reste l’arrêté préfectoral / mairie.</p>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+        <div class="cta-group">
           <a class="pill" href="https://termite.com.fr/rechercher/" target="_blank" rel="noopener">🔎 Vérifier sur termite.com.fr</a>
           <label style="margin:0;font-weight:700;">
             <input type="checkbox" id="termite-zone" name="zone_termites_selon_verif" />
@@ -175,7 +140,7 @@
           </label>
         </div>
 
-        <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+        <div class="cta-group">
           <button type="button" id="calculer-devis">Calculer</button>
           <button class="secondary" type="submit">Envoyer la demande</button>
         </div>
@@ -185,4 +150,13 @@
         <label for="message">Message complémentaire</label>
         <textarea id="message" name="message" rows="5" placeholder="Adresse du bien, ville, étage, accès, disponibilités…"></textarea>
       </form>
+    </section>
+  </main>
 
+  <footer id="contact" class="muted">
+    <p><strong>SR Diagnostics Immobiliers</strong> — Bâtir votre confiance dans les règles de l’art.</p>
+    <p><strong>Téléphone :</strong> <a href="tel:+33767076761">07 67 07 67 61</a> • <strong>Email :</strong> <a href="mailto:stephanr.pro@gmail.com">stephanr.pro@gmail.com</a></p>
+    <p><strong>Horaires :</strong> Lundi–Dimanche 8h–20h</p>
+  </footer>
+</body>
+</html>
