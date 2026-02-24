@@ -89,12 +89,25 @@ body {
   width: 100%;
   border-collapse: collapse;
   margin-top: 14px;
+  table-layout: fixed;
 }
 
 .tarif-table th,
 .tarif-table td {
   border: 1px solid #b2c1d9;
-  padding: 10px;
+  padding: 10px 14px;
+}
+
+.tarif-table th:first-child,
+.tarif-table td:first-child {
+  width: 72%;
+  padding-right: 28px;
+}
+
+.tarif-table th:last-child,
+.tarif-table td:last-child {
+  width: 28%;
+  white-space: nowrap;
 }
 
 .tarif-table thead th {
