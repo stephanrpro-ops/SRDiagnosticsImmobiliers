@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900">
+  <defs><linearGradient id="sky2" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#d8e5f3"/><stop offset="1" stop-color="#fff"/></linearGradient></defs>
+  <rect width="900" height="900" fill="url(#sky2)"/>
+  <rect y="710" width="900" height="190" fill="#e2ddd9"/>
+  <polygon points="150,700 760,700 760,190 300,130 150,220" fill="#e3c8c2" stroke="#465569" stroke-width="4"/>
+  <g fill="#7690a6">
+    <rect x="210" y="250" width="75" height="85"/><rect x="330" y="265" width="95" height="60"/><rect x="470" y="275" width="95" height="60"/><rect x="610" y="285" width="95" height="60"/>
+    <rect x="210" y="370" width="75" height="85"/><rect x="330" y="385" width="95" height="60"/><rect x="470" y="395" width="95" height="60"/><rect x="610" y="405" width="95" height="60"/>
+    <rect x="210" y="490" width="75" height="85"/><rect x="330" y="505" width="95" height="60"/><rect x="470" y="515" width="95" height="60"/><rect x="610" y="525" width="95" height="60"/>
+  </g>
+  <text x="36" y="54" fill="#0d3f77" font-family="Arial" font-size="28">SR Diagnostics Immobiliers</text>
+</svg>

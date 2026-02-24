@@ -1,6 +1,6 @@
 // SR Diagnostics - Devis auto (site statique)
 // Packs TTC (diags principaux : DPE, Amiante, Plomb, Gaz, Électricité, ERP)
-const PACK_PRICES = { 1: 150, 2: 230, 3: 300, 4: 360, 5: 420, 6: 470 };
+const PACK_PRICES = { 1: 120, 2: 230, 3: 300, 4: 360, 5: 420, 6: 470 };
 
 // Seuils (règles simples de recommandation)
 function recommendDiagnostics({ year, gazFixe, elec, contexte }) {
@@ -42,9 +42,11 @@ function computePrice(mainCount, surface, options) {
   if (mainCount >= 1 && mainCount <= 6) total += PACK_PRICES[mainCount];
   if (mainCount === 0) total += 0;
 
-  if (options.mesurage) total += 80;
-  if (options.termites) total += 80;
-  if (options.prelevement) total += 60;
+  if (mainCount === 1 && options.erpSeul) total = 25;
+
+  if (options.mesurage) total += 50;
+  if (options.termites) total += 60;
+  if (options.prelevement) total += 30;
 
   return { total, note: "" };
 }
@@ -134,6 +136,8 @@ function applyRecommendations() {
 function updatePrice() {
   const data = readForm();
   const mainCount = countMainDiags(data.diags);
+
+  data.options.erpSeul = data.diags.erp && !data.diags.dpe && !data.diags.amiante && !data.diags.plomb && !data.diags.gaz && !data.diags.elec;
 
   const price = computePrice(mainCount, data.surface, data.options);
   const out = document.getElementById("price");

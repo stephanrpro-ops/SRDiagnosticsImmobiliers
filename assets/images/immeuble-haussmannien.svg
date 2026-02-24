@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1300">
+  <defs><linearGradient id="sky" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#dbeaf8"/><stop offset="1" stop-color="#f8fbff"/></linearGradient></defs>
+  <rect width="900" height="1300" fill="url(#sky)"/>
+  <rect y="1030" width="900" height="270" fill="#d8d6b4"/>
+  <rect x="220" y="180" width="460" height="900" rx="16" fill="#f1e3c7" stroke="#42556c" stroke-width="6"/>
+  <g fill="#2e3f53"><rect x="275" y="250" width="70" height="80"/><rect x="415" y="250" width="70" height="80"/><rect x="555" y="250" width="70" height="80"/></g>
+  <g fill="#6d869d">
+    <rect x="280" y="255" width="60" height="70"/><rect x="420" y="255" width="60" height="70"/><rect x="560" y="255" width="60" height="70"/>
+    <rect x="280" y="390" width="60" height="70"/><rect x="420" y="390" width="60" height="70"/><rect x="560" y="390" width="60" height="70"/>
+    <rect x="280" y="525" width="60" height="70"/><rect x="420" y="525" width="60" height="70"/><rect x="560" y="525" width="60" height="70"/>
+    <rect x="280" y="660" width="60" height="70"/><rect x="420" y="660" width="60" height="70"/><rect x="560" y="660" width="60" height="70"/>
+    <rect x="280" y="795" width="60" height="70"/><rect x="420" y="795" width="60" height="70"/><rect x="560" y="795" width="60" height="70"/>
+  </g>
+  <rect x="410" y="935" width="80" height="145" fill="#9f6a2a"/>
+  <text x="36" y="54" fill="#0d3f77" font-family="Arial" font-size="28">SR Diagnostics Immobiliers</text>
+</svg>
