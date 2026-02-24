@@ -47,6 +47,16 @@ body {
   margin-top: 20px;
 }
 
+.hero-image,
+.page-image,
+.tarif-image {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid #dbe4f1;
+  margin-top: 14px;
+}
+
 /* Grilles cartes */
 .grid {
   display: grid;
@@ -60,6 +70,37 @@ body {
   border: 1px solid #dbe4f1;
   border-radius: 12px;
   padding: 18px;
+}
+
+.pack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.pack-item {
+  background: #e7edf5;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.tarif-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 14px;
+}
+
+.tarif-table th,
+.tarif-table td {
+  border: 1px solid #b2c1d9;
+  padding: 10px;
+}
+
+.tarif-table thead th {
+  background: #0d3f77;
+  color: #fff;
+  text-align: left;
 }
 
 /* Boutons */
