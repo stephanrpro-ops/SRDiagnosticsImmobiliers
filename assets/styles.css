@@ -47,16 +47,6 @@ body {
   margin-top: 20px;
 }
 
-.hero-image,
-.page-image,
-.tarif-image {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  border: 1px solid #dbe4f1;
-  margin-top: 14px;
-}
-
 /* Grilles cartes */
 .grid {
   display: grid;
