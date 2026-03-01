@@ -28,7 +28,7 @@
       "id": "pack-copro",
       "name": "Pack Copropriété – Orientation",
       "when": { "is_copro": true },
-      "includes": ["dpe", "erp", "ppt", "dtg"],
+      "includes": ["dpe", "erp"],
       "price": { "mode": "sur_devis", "amount": 0 },
       "description": "Pré-orientation copropriété avec prestations complémentaires sur étude."
     }

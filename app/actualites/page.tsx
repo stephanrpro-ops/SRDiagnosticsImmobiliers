@@ -1,11 +1,9 @@
-import Link from 'next/link';
-
 const items = [
   { title: 'Évolutions DPE : points de vigilance', source: 'ADEME', date: '2026-02-01', tag: 'DPE', url: 'https://www.ademe.fr/', summary: 'Résumé généré automatiquement : vérifiez les mises à jour et impacts opérationnels avant application.' },
   { title: 'Cadre ERP : rappels pratiques', source: 'Service-Public', date: '2026-01-15', tag: 'ERP', url: 'https://www.service-public.fr/', summary: '' }
 ];
 
-const tags = ['Tous', 'DPE', 'Audit', 'Amiante', 'Plomb', 'Élec', 'Gaz', 'ERP', 'Copro', 'PPT/DTG'];
+const tags = ['Tous', 'DPE', 'Audit', 'Amiante', 'Plomb', 'Élec', 'Gaz', 'ERP', 'Copro'];
 
 export default function ActualitesPage() {
   return (
@@ -27,7 +25,7 @@ export default function ActualitesPage() {
                 {item.summary} <span className="font-semibold">(Résumé généré automatiquement)</span>
               </p>
             )}
-            <Link className="mt-3 inline-block text-ralBlue underline" href={item.url} target="_blank" rel="noopener">Lire la source</Link>
+            <a className="mt-3 inline-block text-ralBlue underline" href={item.url} target="_blank" rel="noopener">Lire la source</a>
           </article>
         ))}
       </div>

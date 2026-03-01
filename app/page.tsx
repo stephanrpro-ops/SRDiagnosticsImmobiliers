@@ -106,14 +106,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="rounded-2xl border bg-white p-6 shadow-sm">
-        <h2 className="text-2xl font-bold text-ralBlue">Copropriété : PPT & DTG</h2>
-        <p className="mt-2 text-slate-700">Prestations dédiées syndics et copropriétés. Devis sur demande.</p>
-        <Link href="/copropriete" className="mt-4 inline-block rounded-lg bg-ralBlue px-4 py-2 font-semibold text-white">
-          PPT & DTG
-        </Link>
-      </section>
-
       <section>
         <h2 className="text-2xl font-bold text-ralBlue">Comment ça se passe</h2>
         <div className="mt-4 grid gap-4 md:grid-cols-4">

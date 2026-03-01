@@ -22,7 +22,7 @@ Plateforme full-stack en **Next.js App Router + TypeScript** pour SR Diagnostics
 ## Pages publiques
 - `/` Accueil
 - `/prestations`
-- Détails: `/prestations/dpe`, `/amiante`, `/plomb`, `/electricite`, `/gaz`, `/termites`, `/erp`, `/ppt`, `/dtg`
+- Détails: `/prestations/dpe`, `/amiante`, `/plomb`, `/electricite`, `/gaz`, `/termites`, `/erp`
 - `/devis` Wizard multi-étapes (A→E) + moteur packs JSON
 - `/actualites` veille RSS (liens sources + résumés originaux)
 - `/valeurs`, `/contact`
