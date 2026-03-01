@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 220" role="img" aria-labelledby="title desc">
+  <title id="title">Copropriété</title>
+  <desc id="desc">Illustration moderne sur le thème immobilier.</desc>
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#E8F1FF"/>
+      <stop offset="1" stop-color="#E8FCFA"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="220" rx="26" fill="url(#g1)"/>
+  <g stroke="#1F4F95" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x='54' y='62' width='66' height='122' rx='8'/> <rect x='128' y='42' width='66' height='142' rx='8'/> <rect x='202' y='72' width='64' height='112' rx='8'/> <path d='M54 184h212M72 88h28M72 116h28M146 68h30M146 96h30M146 124h30M220 98h26M220 126h26'/>
+  </g>
+  <circle cx="42" cy="38" r="10" fill="#14B8A6" opacity="0.55"/>
+</svg>

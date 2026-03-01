@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 220" role="img" aria-labelledby="title desc">
+  <title id="title">Plan de logement</title>
+  <desc id="desc">Illustration moderne sur le thème immobilier.</desc>
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#E8F1FF"/>
+      <stop offset="1" stop-color="#E8FCFA"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="220" rx="26" fill="url(#g1)"/>
+  <g stroke="#1F4F95" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x='52' y='42' width='214' height='142' rx='8'/> <path d='M122 42v142M52 102h214M190 102v82'/> <circle cx='88' cy='72' r='6' fill='#1F4F95'/> <circle cx='156' cy='130' r='6' fill='#1F4F95'/>
+  </g>
+  <circle cx="42" cy="38" r="10" fill="#14B8A6" opacity="0.55"/>
+</svg>
