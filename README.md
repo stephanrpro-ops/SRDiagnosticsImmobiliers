@@ -192,3 +192,38 @@ GitHub Pages est statique. Pour recevoir les demandes:
 ### Forcer une redemande de consentement
 - Incrémenter `CONSENT_VERSION` dans `config/consent.config.js`.
 - Au prochain chargement, le consentement stocké est considéré obsolète et le bandeau est réaffiché.
+
+## Formulaire de devis (Netlify Forms)
+
+La page statique `devis.html` contient maintenant le formulaire principal avec:
+- `data-netlify="true"`
+- champ caché `form-name`
+- honeypot `netlify-honeypot="bot-field"`
+- consentement RGPD obligatoire + lien vers la politique de confidentialité.
+
+### Test local
+```bash
+python3 -m http.server 8080
+# puis ouvrir http://localhost:8080/devis.html
+```
+
+### Activation email Netlify (obligatoire)
+1. Déployer sur Netlify.
+2. Ouvrir **Netlify > Forms** et vérifier que le formulaire `devis` est détecté.
+3. Aller dans **Forms > Settings > Form notifications**.
+4. Ajouter une notification email vers `stephanr.pro@gmail.com`.
+5. Faire un envoi de test depuis `/devis.html`.
+
+## Option SMS Twilio (Netlify Function)
+
+Fonction ajoutée: `netlify/functions/send-sms.js` (appelée via `/api/send-sms`).
+
+Variables d'environnement à définir dans Netlify:
+- `TWILIO_ACCOUNT_SID`
+- `TWILIO_AUTH_TOKEN`
+- `TWILIO_FROM_NUMBER`
+- `SMS_TO_NUMBER=+33767076761`
+
+Comportement:
+- Après validation front, le formulaire tente d'appeler `/api/send-sms`.
+- En cas d'échec SMS, la soumission du devis continue (email Netlify Forms prioritaire).

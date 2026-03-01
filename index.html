@@ -3,265 +3,57 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SR Diagnostics Immobiliers — Documents à signer</title>
+  <title>SR Diagnostics Immobiliers - Accueil</title>
   <link rel="stylesheet" href="assets/styles.css">
-  <style>
-    :root {
-      --brand-blue: #1f4e79;
-      --brand-blue-dark: #173a5b;
-      --bg-light: #f4f7fb;
-      --text-main: #1f2937;
-      --text-muted: #6b7280;
-      --border: #d9e2ec;
-      --white: #ffffff;
-      --success: #1f9d55;
-      --warning: #d97706;
-      --pending: #2563eb;
-    }
-
-    body {
-      margin: 0;
-      background: linear-gradient(180deg, #eef4fb 0%, #f9fbfe 45%, #ffffff 100%);
-      color: var(--text-main);
-      font-family: "Inter", "Segoe UI", Roboto, Arial, sans-serif;
-    }
-
-    .topbar {
-      background: var(--white);
-      border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    .container {
-      width: min(1100px, 92%);
-      margin: 0 auto;
-    }
-
-    .menu {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      padding: 1rem 0;
-      align-items: center;
-    }
-
-    .menu a {
-      text-decoration: none;
-      color: var(--brand-blue-dark);
-      font-weight: 600;
-      font-size: 0.95rem;
-      transition: color 0.2s ease;
-    }
-
-    .menu a:hover,
-    .menu a:focus-visible {
-      color: var(--brand-blue);
-    }
-
-    .hero {
-      text-align: center;
-      padding: 3rem 0 1.75rem;
-    }
-
-    .hero h1 {
-      margin: 0;
-      color: var(--brand-blue-dark);
-      font-size: clamp(1.7rem, 3vw, 2.5rem);
-      letter-spacing: 0.2px;
-    }
-
-    .subtitle {
-      margin-top: 0.65rem;
-      color: var(--brand-blue);
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
-
-    .message {
-      margin: 0.8rem auto 0;
-      max-width: 760px;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-
-    .documents-section {
-      padding: 0.8rem 0 3rem;
-    }
-
-    .documents-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1rem;
-    }
-
-    .document-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 1rem;
-      box-shadow: 0 8px 22px rgba(23, 58, 91, 0.07);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .document-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 28px rgba(23, 58, 91, 0.13);
-    }
-
-    .doc-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 0.8rem;
-      margin-bottom: 0.8rem;
-    }
-
-    .doc-title {
-      margin: 0;
-      font-size: 1.05rem;
-      color: var(--brand-blue-dark);
-      line-height: 1.4;
-    }
-
-    .status-badge {
-      display: inline-flex;
-      align-items: center;
-      border-radius: 999px;
-      padding: 0.28rem 0.65rem;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--white);
-      white-space: nowrap;
-    }
-
-    .status-a-signer {
-      background: var(--pending);
-    }
-
-    .status-signe {
-      background: var(--success);
-    }
-
-    .status-en-attente {
-      background: var(--warning);
-    }
-
-    .actions {
-      display: grid;
-      gap: 0.55rem;
-    }
-
-    .btn {
-      appearance: none;
-      border: 1px solid transparent;
-      border-radius: 10px;
-      background: var(--brand-blue);
-      color: var(--white);
-      font-weight: 600;
-      font-size: 0.92rem;
-      text-decoration: none;
-      text-align: center;
-      cursor: pointer;
-      padding: 0.62rem 0.88rem;
-      transition: background-color 0.2s ease, transform 0.2s ease;
-    }
-
-    .btn:hover,
-    .btn:focus-visible {
-      background: var(--brand-blue-dark);
-      transform: translateY(-1px);
-    }
-
-    .btn-secondary {
-      background: #e9f0f8;
-      color: var(--brand-blue-dark);
-      border-color: #cfe0f1;
-    }
-
-    .btn-secondary:hover,
-    .btn-secondary:focus-visible {
-      background: #dbe8f4;
-    }
-
-    .legal-note {
-      background: var(--bg-light);
-      border-left: 4px solid var(--brand-blue);
-      border-radius: 10px;
-      padding: 0.95rem 1rem;
-      color: var(--text-main);
-      margin: 1.4rem 0 0;
-      font-size: 0.95rem;
-    }
-
-    .site-footer {
-      margin-top: 2.1rem;
-      border-top: 1px solid var(--border);
-      background: var(--white);
-      color: var(--text-muted);
-      padding: 1rem 0 2rem;
-      text-align: center;
-      line-height: 1.7;
-      font-size: 0.95rem;
-    }
-
-    .site-footer a {
-      color: var(--brand-blue);
-      text-decoration: none;
-    }
-
-    @media (max-width: 680px) {
-      .menu {
-        justify-content: center;
-      }
-
-      .doc-top {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-    }
-  </style>
 </head>
 <body>
-  <!--
-    CONFIGURATION RAPIDE
-    1) Modifiez les liens de téléchargement dans documentsList[x].downloadUrl.
-    2) Remplacez les liens de signature dans documentsList[x].signUrl par vos URLs Yousign/DocuSign/Dropbox Sign.
-    3) Vous pouvez ajouter/supprimer un document en dupliquant/supprimant un objet dans le tableau documentsList.
-  -->
-
   <header class="topbar">
     <nav class="container menu" aria-label="Menu principal">
-      <a href="index.html">Signature documents</a>
+      <a href="index.html">Accueil</a>
       <a href="vente.html">Vente</a>
       <a href="location.html">Location</a>
       <a href="copropriete.html">Copropriété</a>
       <a href="prestations.html">Prestations</a>
-      <a href="devis.html">Devis</a>
+      <a href="devis.html">Devis en ligne</a>
       <a href="contact.html">Contact</a>
     </nav>
   </header>
 
   <main class="container">
     <section class="hero">
-      <h1>SR Diagnostics Immobiliers</h1>
-      <p class="subtitle">Documents &amp; signatures en ligne</p>
-      <p class="message">Cliquez sur le document concerné pour le télécharger puis signer en ligne.</p>
+      <h1>Diagnostics immobiliers fiables et rapides</h1>
+      <p>Interventions en vente, location et copropriété sur Hénin-Beaumont, Arras, Douai, Lens et Béthune.</p>
+      <p class="muted">Devis clair, accompagnement personnalisé et conformité réglementaire.</p>
+      <a class="btn" href="devis.html">Obtenir un devis en ligne</a>
     </section>
 
-    <section class="documents-section" aria-labelledby="documents-title">
-      <h2 id="documents-title" class="visually-hidden" style="position:absolute;left:-9999px;">Documents à signer</h2>
-      <div id="documentsContainer" class="documents-grid" aria-live="polite"></div>
+    <section class="grid" aria-label="Points forts">
+      <article class="card">
+        <h2>Vente</h2>
+        <p>DPE, amiante, plomb, gaz, électricité et ERP selon votre bien.</p>
+        <a class="btn" href="vente.html">Voir les diagnostics vente</a>
+      </article>
 
-      <div class="legal-note">
-        La signature est réalisée via une plateforme de signature électronique sécurisée.
-      </div>
+      <article class="card">
+        <h2>Location</h2>
+        <p>Dossier bailleur complet pour louer rapidement et en conformité.</p>
+        <a class="btn" href="location.html">Voir les diagnostics location</a>
+      </article>
+
+      <article class="card">
+        <h2>Copropriété</h2>
+        <p>PPT et DTG avec restitution pédagogique pour syndic et copropriétaires.</p>
+        <a class="btn" href="copropriete.html">Voir les prestations copropriété</a>
+      </article>
     </section>
   </main>
 
   <footer class="site-footer container">
     <p>© 2026 SR Diagnostics Immobiliers</p>
+    <p>
+      <a href="devis.html">Devis en ligne</a> •
+      <a href="signature.html">Espace signature</a>
+    </p>
     <p class="footer-legal-links">
       <a href="mentions-legales.html">Mentions légales</a> •
       <a href="politique-de-confidentialite.html">Politique de confidentialité</a> •
@@ -270,100 +62,6 @@
     </p>
     <p class="footer-cookie-links"><button type="button" class="cookie-link-button" data-open-cookie-settings>Gérer mes cookies</button></p>
   </footer>
-
-  <script>
-    // Liste centrale des documents (URLs modifiables facilement)
-    const documentsList = [
-      {
-        id: 'doc-001',
-        title: 'Mandat de diagnostic immobilier',
-        downloadUrl: 'https://example.com/documents/mandat-diagnostic.pdf',
-        signUrl: 'https://example.com/signature/yousign/mandat-diagnostic',
-        status: 'À signer'
-      },
-      {
-        id: 'doc-002',
-        title: 'Conditions générales de prestation',
-        downloadUrl: 'https://example.com/documents/cgv-prestation.pdf',
-        signUrl: 'https://example.com/signature/docusign/cgv-prestation',
-        status: 'En attente'
-      },
-      {
-        id: 'doc-003',
-        title: 'Validation du devis client',
-        downloadUrl: 'https://example.com/documents/devis-client.pdf',
-        signUrl: 'https://example.com/signature/dropbox-sign/devis-client',
-        status: 'Signé'
-      }
-    ];
-
-    // Associe un statut à une classe CSS de badge
-    function getStatusClass(status) {
-      if (status === 'Signé') return 'status-signe';
-      if (status === 'En attente') return 'status-en-attente';
-      return 'status-a-signer';
-    }
-
-    // Affiche une alerte claire si le lien de signature n'est pas défini
-    function handleSignAction(signUrl, title) {
-      if (!signUrl) {
-        window.alert('Le lien de signature est indisponible pour ce document : ' + title + '.');
-        return;
-      }
-      window.open(signUrl, '_blank', 'noopener,noreferrer');
-    }
-
-    // Copie le lien de signature dans le presse-papiers
-    async function copySignLink(signUrl, title) {
-      if (!signUrl) {
-        window.alert('Aucun lien de signature à copier pour : ' + title + '.');
-        return;
-      }
-
-      try {
-        await navigator.clipboard.writeText(signUrl);
-        window.alert('Lien de signature copié.');
-      } catch (error) {
-        window.alert('Impossible de copier le lien automatiquement.\nLien : ' + signUrl);
-      }
-    }
-
-    // Génère toutes les cartes documents depuis documentsList
-    function renderDocuments() {
-      const container = document.getElementById('documentsContainer');
-
-      if (!container) return;
-
-      container.innerHTML = '';
-
-      documentsList.forEach((doc) => {
-        const article = document.createElement('article');
-        article.className = 'document-card';
-
-        article.innerHTML = `
-          <div class="doc-top">
-            <h3 class="doc-title">${doc.title}</h3>
-            <span class="status-badge ${getStatusClass(doc.status)}">${doc.status}</span>
-          </div>
-          <div class="actions">
-            <a class="btn btn-secondary" href="${doc.downloadUrl}" target="_blank" rel="noopener noreferrer">Télécharger le document</a>
-            <button class="btn" type="button" data-role="sign">Signer en ligne</button>
-            <button class="btn btn-secondary" type="button" data-role="copy">Copier le lien de signature</button>
-          </div>
-        `;
-
-        const signButton = article.querySelector('[data-role="sign"]');
-        const copyButton = article.querySelector('[data-role="copy"]');
-
-        signButton.addEventListener('click', () => handleSignAction(doc.signUrl, doc.title));
-        copyButton.addEventListener('click', () => copySignLink(doc.signUrl, doc.title));
-
-        container.appendChild(article);
-      });
-    }
-
-    renderDocuments();
-  </script>
 
   <script src="config/consent.config.js"></script>
   <script src="assets/consent-manager.js"></script>

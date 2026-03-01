@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SR Diagnostics Immobiliers - Signature électronique</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <nav class="container menu" aria-label="Menu principal">
+      <a href="index.html">Accueil</a>
+      <a href="vente.html">Vente</a>
+      <a href="location.html">Location</a>
+      <a href="copropriete.html">Copropriété</a>
+      <a href="prestations.html">Prestations</a>
+      <a href="devis.html">Devis en ligne</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>Signature électronique</h1>
+      <p>Retrouvez ici vos documents à consulter et à signer en ligne de façon sécurisée.</p>
+      <p class="muted">En cas de doute, contactez-nous avant toute signature.</p>
+    </section>
+
+    <section class="grid" aria-label="Documents à signer" id="documentsContainer" aria-live="polite"></section>
+
+    <section class="card">
+      <p>La signature est réalisée via une plateforme de signature électronique sécurisée.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer container">
+    <p>© 2026 SR Diagnostics Immobiliers</p>
+    <p>
+      <a href="devis.html">Devis en ligne</a> •
+      <a href="signature.html">Espace signature</a>
+    </p>
+    <p class="footer-legal-links">
+      <a href="mentions-legales.html">Mentions légales</a> •
+      <a href="politique-de-confidentialite.html">Politique de confidentialité</a> •
+      <a href="politique-cookies.html">Politique cookies</a> •
+      <a href="conditions-d-utilisation.html">Conditions d’utilisation</a>
+    </p>
+    <p class="footer-cookie-links"><button type="button" class="cookie-link-button" data-open-cookie-settings>Gérer mes cookies</button></p>
+  </footer>
+
+  <script>
+    const documentsList = [
+      {
+        id: 'doc-001',
+        title: 'Mandat de diagnostic immobilier',
+        downloadUrl: 'https://example.com/documents/mandat-diagnostic.pdf',
+        signUrl: 'https://example.com/signature/yousign/mandat-diagnostic',
+        status: 'À signer'
+      },
+      {
+        id: 'doc-002',
+        title: 'Conditions générales de prestation',
+        downloadUrl: 'https://example.com/documents/cgv-prestation.pdf',
+        signUrl: 'https://example.com/signature/docusign/cgv-prestation',
+        status: 'En attente'
+      },
+      {
+        id: 'doc-003',
+        title: 'Validation du devis client',
+        downloadUrl: 'https://example.com/documents/devis-client.pdf',
+        signUrl: 'https://example.com/signature/dropbox-sign/devis-client',
+        status: 'Signé'
+      }
+    ];
+
+    function renderDocuments() {
+      const container = document.getElementById('documentsContainer');
+      container.innerHTML = '';
+
+      documentsList.forEach((doc) => {
+        const card = document.createElement('article');
+        card.className = 'card';
+
+        const badgeColor = doc.status === 'Signé' ? '#1f9d55' : doc.status === 'En attente' ? '#d97706' : '#2563eb';
+
+        card.innerHTML = `
+          <h2>${doc.title}</h2>
+          <p><strong>Statut :</strong> <span style="background:${badgeColor};color:#fff;border-radius:999px;padding:4px 10px;">${doc.status}</span></p>
+          <p>
+            <a class="btn" href="${doc.downloadUrl}" target="_blank" rel="noopener noreferrer">Télécharger</a>
+            <a class="btn" href="${doc.signUrl}" target="_blank" rel="noopener noreferrer">Signer en ligne</a>
+          </p>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    renderDocuments();
+  </script>
+  <script src="config/consent.config.js"></script>
+  <script src="assets/consent-manager.js"></script>
+</body>
+</html>

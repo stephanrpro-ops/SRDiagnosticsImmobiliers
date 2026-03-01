@@ -251,3 +251,48 @@ body {
     width: 100%;
   }
 }
+
+label,
+fieldset {
+  display: block;
+}
+
+input,
+select,
+textarea,
+button {
+  width: 100%;
+  font: inherit;
+  margin-top: 6px;
+}
+
+input,
+select,
+textarea {
+  border: 1px solid #b2c1d9;
+  border-radius: 8px;
+  padding: 10px;
+  background: #fff;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus-visible {
+  outline: 2px solid #14549d;
+  outline-offset: 1px;
+}
+
+fieldset {
+  border: 1px solid #dbe4f1;
+}
+
+.hidden-field {
+  position: absolute;
+  left: -9999px;
+}
+
+#formError {
+  color: #b91c1c;
+  font-weight: 600;
+}
