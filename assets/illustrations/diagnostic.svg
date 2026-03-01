@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 220" role="img" aria-labelledby="title desc">
+  <title id="title">Diagnostic immobilier</title>
+  <desc id="desc">Illustration moderne sur le thème immobilier.</desc>
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0" stop-color="#E8F1FF"/>
+      <stop offset="1" stop-color="#E8FCFA"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="220" rx="26" fill="url(#g1)"/>
+  <g stroke="#1F4F95" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" fill="none">
+    <rect x='72' y='36' width='132' height='150' rx='10'/> <path d='M98 76h82M98 104h62M98 132h72'/> <circle cx='232' cy='148' r='30'/> <path d='m252 168 22 22'/>
+  </g>
+  <circle cx="42" cy="38" r="10" fill="#14B8A6" opacity="0.55"/>
+</svg>
