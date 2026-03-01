@@ -152,3 +152,43 @@ GitHub Pages est statique. Pour recevoir les demandes:
 - ✅ Assets dans `/assets`
 - ✅ Publication depuis `main / root`
 - ✅ Formulaire via service externe
+
+## Conformité cookies & pages légales (FR/UE)
+
+### Fichiers ajoutés
+- Gestionnaire de consentement : `assets/consent-manager.js`
+- Configuration des services : `config/consent.config.js`
+- Pages légales :
+  - `mentions-legales.html`
+  - `politique-de-confidentialite.html`
+  - `politique-cookies.html`
+  - `conditions-d-utilisation.html`
+
+### Comportement CNIL implémenté
+- Bandeau 1er niveau avec boutons de même niveau : **Tout accepter / Tout refuser / Personnaliser**.
+- Aucune injection de script non essentiel tant qu’aucun consentement valide n’existe.
+- Lien permanent **« Gérer mes cookies »** dans le footer (toutes les pages).
+- Revalidation du choix après ~6 mois (183 jours) ou changement de version (`CONSENT_VERSION`).
+- Fonction globale : `openCookieSettings()`.
+
+### Configurer les services tiers (GA4, etc.)
+1. Ouvrir `config/consent.config.js`.
+2. Renseigner les services dans `services.analytics`, `services.marketing`, `services.social`.
+3. Chaque service peut exposer une fonction `init()` appelée uniquement si la catégorie est acceptée.
+4. Exemple GA4 fourni : remplacer `G-XXXXXXXXXX` par votre ID réel.
+
+### Modifier les textes et coordonnées légales
+- Mettre à jour les placeholders : `NOM_ENTREPRISE`, `ADRESSE`, `EMAIL`, `TELEPHONE`, SIRET/SIREN, directeur de publication, hébergeur.
+- Modifier les pages légales HTML directement à la racine.
+
+### Vérifier le bon fonctionnement
+1. Ouvrir le site en navigation privée.
+2. Vérifier que le bandeau apparaît (si au moins un service optionnel est configuré).
+3. Ouvrir les DevTools > Network et confirmer qu’aucun appel analytics/marketing n’est déclenché avant consentement.
+4. Cliquer **Tout refuser** : aucun service optionnel ne doit se charger.
+5. Cliquer **Tout accepter** : les services acceptés sont injectés.
+6. Cliquer **Gérer mes cookies** (footer) pour modifier ou retirer le consentement.
+
+### Forcer une redemande de consentement
+- Incrémenter `CONSENT_VERSION` dans `config/consent.config.js`.
+- Au prochain chargement, le consentement stocké est considéré obsolète et le bandeau est réaffiché.
