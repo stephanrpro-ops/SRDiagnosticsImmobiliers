@@ -6,7 +6,7 @@ const nav = [
   ['Vente', '/vente'],
   ['Location', '/location'],
   ['Diagnostics', '/diagnostics'],
-  ['Copropriété (PPT/DTG)', '/copropriete'],
+  ['Copropriété', '/copropriete'],
   ['Audit', '/audit'],
   ['Tarifs/Devis', '/devis'],
   ['À propos', '/a-propos'],

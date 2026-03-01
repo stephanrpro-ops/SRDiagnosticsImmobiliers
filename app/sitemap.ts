@@ -12,8 +12,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     '/prestations/gaz',
     '/prestations/termites',
     '/prestations/erp',
-    '/prestations/ppt',
-    '/prestations/dtg',
     '/devis',
     '/actualites',
     '/valeurs',

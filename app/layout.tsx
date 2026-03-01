@@ -5,7 +5,7 @@ import { SiteFooter } from '@/components/site-footer';
 
 export const metadata: Metadata = {
   title: 'SR Diagnostics Immobiliers',
-  description: 'Diagnostics immobiliers en France: DPE, amiante, plomb, électricité, gaz, termites, ERP, PPT, DTG.',
+  description: 'Diagnostics immobiliers en France: DPE, amiante, plomb, électricité, gaz, termites et ERP.',
   openGraph: {
     title: 'SR Diagnostics Immobiliers',
     description: 'Bâtir votre confiance dans les règles de l’art',
