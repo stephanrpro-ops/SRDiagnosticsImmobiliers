@@ -3,110 +3,168 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SR Diagnostics Immobiliers - Devis</title>
+  <title>SR Diagnostics Immobiliers - Devis en ligne</title>
   <link rel="stylesheet" href="assets/styles.css">
 </head>
 <body>
-
   <header class="topbar">
     <nav class="container menu" aria-label="Menu principal">
-      <a href="index.html">Signature documents</a>
+      <a href="index.html">Accueil</a>
       <a href="vente.html">Vente</a>
       <a href="location.html">Location</a>
       <a href="copropriete.html">Copropriété</a>
       <a href="prestations.html">Prestations</a>
-      <a href="devis.html">Devis</a>
+      <a href="devis.html">Devis en ligne</a>
       <a href="contact.html">Contact</a>
     </nav>
   </header>
 
   <main class="container">
-
     <section class="hero">
-      <h1>Demande de devis</h1>
-      <p>Renseignez votre bien pour obtenir une estimation automatique basée sur les packs diagnostics.</p>
+      <h1>Devis en ligne</h1>
+      <p>Complétez ce formulaire pour recevoir une estimation et être recontacté rapidement.</p>
       <p class="muted">Zone : Hénin-Beaumont • Arras • Douai • Lens • Béthune (rayon 50 km)</p>
     </section>
 
     <section class="card">
-      <h2>Votre bien</h2>
+      <form id="devisForm" name="devis" method="POST" action="merci.html" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+        <input type="hidden" name="form-name" value="devis">
+        <input type="hidden" id="smsSummary" name="smsSummary" value="">
+        <input type="hidden" id="priceEstimate" name="priceEstimate" value="">
 
-      <div class="grid">
-        <label class="card">Contexte
-          <select id="contexte">
-            <option value="vente">Vente</option>
-            <option value="location">Location</option>
-          </select>
-        </label>
+        <p class="hidden-field" aria-hidden="true">
+          <label>Ne pas remplir ce champ : <input name="bot-field" autocomplete="off"></label>
+        </p>
 
-        <label class="card">Type de bien
-          <select id="typeBien">
-            <option value="Appartement">Appartement</option>
-            <option value="Maison">Maison</option>
-            <option value="Immeuble">Immeuble</option>
-            <option value="Local commercial">Local commercial</option>
-          </select>
-        </label>
+        <div class="grid">
+          <label class="card" for="contexte">Type de demande
+            <select id="contexte" name="contexte" required>
+              <option value="">Sélectionner</option>
+              <option value="vente">Vente</option>
+              <option value="location">Location</option>
+            </select>
+          </label>
 
-        <label class="card">Surface (m²)
-          <input id="surface" type="number" min="0" placeholder="ex : 78">
-        </label>
+          <label class="card" for="typeBien">Type de bien
+            <select id="typeBien" name="typeBien" required>
+              <option value="">Sélectionner</option>
+              <option value="Maison">Maison</option>
+              <option value="Appartement">Appartement</option>
+            </select>
+          </label>
 
-        <label class="card">Année du bien
-          <input id="year" type="number" min="1800" max="2100" placeholder="ex : 1978">
-        </label>
-      </div>
+          <label class="card" for="adresse">Adresse du bien
+            <input id="adresse" name="adresse" type="text" autocomplete="street-address" required>
+          </label>
 
-      <div class="grid">
-        <label class="card"><input id="gazFixe" type="checkbox"> Installation de gaz fixe</label>
-        <label class="card"><input id="elec" type="checkbox"> Installation électrique présente</label>
-      </div>
+          <label class="card" for="cp">Code postal
+            <input id="cp" name="cp" type="text" inputmode="numeric" pattern="^[0-9]{5}$" maxlength="5" required>
+          </label>
 
-      <p><a class="btn" href="#" id="autoBtn">Recommandation automatique</a></p>
-      <p id="warn"></p>
+          <label class="card" for="ville">Ville
+            <input id="ville" name="ville" type="text" autocomplete="address-level2" required>
+          </label>
+
+          <label class="card" for="surface">Surface (m²)
+            <input id="surface" name="surface" type="number" min="1" required>
+          </label>
+
+          <label class="card" for="year">Année de construction / permis
+            <input id="year" name="year" type="number" min="1800" max="2100" required>
+          </label>
+
+          <fieldset class="card">
+            <legend>Annexes</legend>
+            <label><input type="checkbox" name="annexes" value="cave"> Cave</label><br>
+            <label><input type="checkbox" name="annexes" value="garage"> Garage</label><br>
+            <label><input type="checkbox" name="annexes" value="parking"> Parking</label><br>
+            <label><input type="checkbox" name="annexes" value="dependance"> Dépendance</label>
+          </fieldset>
+        </div>
+
+        <div class="grid">
+          <label class="card" for="gazFixe">Installation de gaz fixe ?
+            <select id="gazFixe" name="gazFixe" required>
+              <option value="">Sélectionner</option>
+              <option value="oui">Oui</option>
+              <option value="non">Non</option>
+            </select>
+          </label>
+
+          <label class="card" for="elec">Installation électrique à diagnostiquer ?
+            <select id="elec" name="elec" required>
+              <option value="">Sélectionner</option>
+              <option value="oui">Oui</option>
+              <option value="non">Non</option>
+            </select>
+          </label>
+        </div>
+
+        <section class="card">
+          <h2>Diagnostics demandés</h2>
+          <div class="grid">
+            <label><input id="dpe" name="dpe" type="checkbox" checked> DPE</label>
+            <label><input id="amiante" name="amiante" type="checkbox"> Amiante</label>
+            <label><input id="plomb" name="plomb" type="checkbox"> Plomb</label>
+            <label><input id="gaz" name="gaz" type="checkbox"> Gaz</label>
+            <label><input id="electricite" name="electricite" type="checkbox"> Électricité</label>
+            <label><input id="erp" name="erp" type="checkbox" checked> ERP</label>
+            <label><input id="mesurage" name="mesurage" type="checkbox"> Mesurage</label>
+            <label><input id="termites" name="termites" type="checkbox"> Termites</label>
+            <label><input id="prelevement" name="prelevement" type="checkbox"> Prélèvement</label>
+          </div>
+          <p><button type="button" class="btn" id="autoBtn">Recommandation automatique</button></p>
+          <p id="warn" class="muted" aria-live="polite"></p>
+          <p id="price" aria-live="polite"></p>
+        </section>
+
+        <section class="card">
+          <h2>Vos coordonnées</h2>
+          <div class="grid">
+            <label for="nom">Nom
+              <input id="nom" name="nom" type="text" autocomplete="family-name" required>
+            </label>
+            <label for="prenom">Prénom
+              <input id="prenom" name="prenom" type="text" autocomplete="given-name" required>
+            </label>
+            <label for="telephone">Téléphone
+              <input id="telephone" name="telephone" type="tel" autocomplete="tel" placeholder="06 12 34 56 78" required>
+            </label>
+            <label for="email">Email
+              <input id="email" name="email" type="email" autocomplete="email" required>
+            </label>
+            <label for="creneau">Créneau souhaité
+              <input id="creneau" name="creneau" type="text" placeholder="Ex : mercredi matin">
+            </label>
+          </div>
+
+          <label for="message">Message
+            <textarea id="message" name="message" rows="4" placeholder="Précisions utiles sur le bien ou l'accès"></textarea>
+          </label>
+
+          <p>
+            <label for="consentement">
+              <input id="consentement" name="consentement" type="checkbox" required>
+              J’accepte d’être recontacté au sujet de ma demande de devis conformément à la
+              <a href="politique-de-confidentialite.html">politique de confidentialité</a>.
+            </label>
+          </p>
+
+          <p id="formError" role="alert" aria-live="assertive"></p>
+          <p>
+            <button type="submit" class="btn" id="sendMail">Envoyer ma demande</button>
+          </p>
+        </section>
+      </form>
     </section>
-
-    <section class="card">
-      <h2>Diagnostics principaux (pack)</h2>
-      <div class="grid">
-        <label class="card"><input id="dpe" type="checkbox" checked> DPE</label>
-        <label class="card"><input id="amiante" type="checkbox"> Amiante</label>
-        <label class="card"><input id="plomb" type="checkbox"> Plomb (CREP)</label>
-        <label class="card"><input id="gaz" type="checkbox"> Gaz</label>
-        <label class="card"><input id="electricite" type="checkbox"> Électricité</label>
-        <label class="card"><input id="erp" type="checkbox" checked> ERP</label>
-      </div>
-      <p>Packs TTC : 1 diag 120€ • 2 diags 230€ • 3 diags 300€ • 4 diags 360€ • 5 diags 420€ • 6 diags 470€</p>
-      <p class="muted">ERP seul : 25€.</p>
-    </section>
-
-    <section class="card">
-      <h2>Options hors pack</h2>
-      <div class="grid">
-        <label class="card"><input id="mesurage" type="checkbox"> Mesurage (+50€)</label>
-        <label class="card"><input id="termites" type="checkbox"> État parasitaire (+60€)</label>
-        <label class="card"><input id="prelevement" type="checkbox"> Forfait prélèvement (+30€)</label>
-      </div>
-    </section>
-
-    <section class="card">
-      <h2>Résultat</h2>
-      <p id="price"></p>
-
-      <label>Votre nom (facultatif)
-        <input id="nom" type="text" placeholder="Nom">
-      </label>
-
-      <p>
-        <a class="btn" id="sendMail" href="mailto:stephanr.pro@gmail.com">
-          Envoyer la demande
-        </a>
-      </p>
-    </section>
-
   </main>
+
   <footer class="site-footer container">
     <p>© 2026 SR Diagnostics Immobiliers</p>
+    <p>
+      <a href="devis.html">Devis en ligne</a> •
+      <a href="signature.html">Espace signature</a>
+    </p>
     <p class="footer-legal-links">
       <a href="mentions-legales.html">Mentions légales</a> •
       <a href="politique-de-confidentialite.html">Politique de confidentialité</a> •
@@ -116,10 +174,7 @@
     <p class="footer-cookie-links"><button type="button" class="cookie-link-button" data-open-cookie-settings>Gérer mes cookies</button></p>
   </footer>
 
-
   <script src="devis.js"></script>
-
-
   <script src="config/consent.config.js"></script>
   <script src="assets/consent-manager.js"></script>
 </body>
