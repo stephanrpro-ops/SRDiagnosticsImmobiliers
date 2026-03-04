@@ -3,56 +3,534 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Audit - SR Diagnostics Immobiliers</title>
+  <title>Audit énergétique (vente) – 649€ TTC | SR Diagnostics Immobiliers</title>
+  <meta name="description" content="Audit énergétique vente à 649€ TTC avec SR Diagnostics Immobiliers : un seul interlocuteur, gestion administrative complète, délai maximum 1 semaine après dossier complet et visite.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="fr_FR">
+  <meta property="og:title" content="Audit énergétique (vente) – 649€ TTC">
+  <meta property="og:description" content="Prestations d'audit énergétique pour la vente : accompagnement clair, rapport PDF complet, scénarios de travaux et délai max 1 semaine.">
+  <meta property="og:url" content="https://srdiagnosticsimmobiliers.fr/audit.html">
+  <meta property="og:site_name" content="SR Diagnostics Immobiliers">
   <link rel="stylesheet" href="assets/styles.css">
+  <style>
+    :root {
+      --brand: #0057a4;
+      --brand-dark: #003a73;
+      --ink: #111;
+      --bg: #f5f8fc;
+      --card: #fff;
+      --line: #dbe4f1;
+      --ok: #0f766e;
+      --shadow: 0 10px 30px rgba(0, 46, 90, 0.1);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, "Segoe UI", Roboto, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+
+    .container { width: min(1100px, 92vw); margin: 0 auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(8px);
+    }
+
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .35rem .75rem;
+      align-items: center;
+      justify-content: center;
+      padding: .8rem 0;
+    }
+
+    .menu a {
+      text-decoration: none;
+      color: var(--brand-dark);
+      font-weight: 600;
+      font-size: .95rem;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 2rem;
+      padding: 2.6rem 0 1.4rem;
+      align-items: start;
+    }
+
+    .hero h1 { margin: 0 0 .9rem; font-size: clamp(1.8rem, 3.5vw, 2.7rem); }
+
+    .hero p { margin: .6rem 0; }
+
+    .anchors {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .55rem;
+      margin-top: 1rem;
+    }
+
+    .anchors a,
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      text-decoration: none;
+      border: 1px solid var(--brand);
+      border-radius: 999px;
+      padding: .55rem .95rem;
+      font-weight: 700;
+      color: var(--brand);
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .btn-primary { background: var(--brand); color: #fff; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .45rem;
+      background: #e7f1ff;
+      border: 1px solid #c8ddf8;
+      border-radius: 999px;
+      color: var(--brand-dark);
+      font-size: .9rem;
+      font-weight: 700;
+      padding: .35rem .8rem;
+      margin-bottom: .8rem;
+    }
+
+    .hero-card,
+    .section,
+    .form-card,
+    .sticky-tarif {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-card { padding: 1rem; }
+
+    .hero-metrics {
+      display: grid;
+      gap: .8rem;
+      margin-top: .4rem;
+    }
+
+    .metric { display: flex; gap: .7rem; align-items: flex-start; }
+
+    .icon {
+      width: 22px;
+      height: 22px;
+      color: var(--brand);
+      flex: 0 0 auto;
+    }
+
+    .section { padding: 1.4rem; margin: 1rem 0; }
+
+    h2 { margin-top: 0; font-size: clamp(1.3rem, 2.2vw, 1.8rem); }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .9rem;
+    }
+
+    .cards article { border: 1px solid var(--line); border-radius: 12px; padding: .9rem; background: #fff; }
+
+    .timeline { counter-reset: step; display: grid; gap: .75rem; }
+    .timeline li {
+      list-style: none;
+      border-left: 4px solid var(--brand);
+      padding: .5rem .9rem;
+      background: #f9fbff;
+      border-radius: 8px;
+    }
+
+    .faq details {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      margin: .55rem 0;
+      padding: .7rem .8rem;
+      background: #fff;
+    }
+
+    .faq summary { cursor: pointer; font-weight: 700; }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    .form-card { padding: 1rem; }
+
+    form { display: grid; gap: .65rem; }
+
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .65rem; }
+
+    label { font-weight: 600; font-size: .94rem; }
+
+    input, textarea, select {
+      width: 100%;
+      border: 1px solid #c8d4e3;
+      border-radius: 10px;
+      padding: .55rem .65rem;
+      font: inherit;
+      background: #fff;
+    }
+
+    textarea { min-height: 96px; }
+
+    .btn-row { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .3rem; }
+
+    .confirm {
+      margin-top: .6rem;
+      padding: .65rem .8rem;
+      border-radius: 10px;
+      border: 1px solid #9cd5ca;
+      color: #07584f;
+      background: #ebfaf7;
+      display: none;
+    }
+
+    .sticky-tarif {
+      position: fixed;
+      right: 1.1rem;
+      bottom: 1.1rem;
+      max-width: 310px;
+      padding: .9rem;
+      z-index: 60;
+    }
+
+    .sticky-tarif p { margin: .3rem 0; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity .55s ease, transform .55s ease;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .site-footer { padding: 1.6rem 0 2.1rem; text-align: center; color: #3a4f66; }
+
+    @media (max-width: 960px) {
+      .hero,
+      .contact-grid,
+      .cards,
+      .field-grid { grid-template-columns: 1fr; }
+
+      .sticky-tarif { display: none; }
+    }
+  </style>
 </head>
 <body>
   <header class="topbar">
     <nav class="container menu" aria-label="Menu principal">
-      <a href="index.html">Signature documents</a>
+      <a href="index.html">Accueil</a>
       <a href="vente.html">Vente</a>
       <a href="location.html">Location</a>
       <a href="copropriete.html">Copropriété</a>
       <a href="prestations.html">Prestations</a>
-      <a href="devis.html">Devis</a>
+      <a href="devis.html">Devis en ligne</a>
       <a href="contact.html">Contact</a>
     </nav>
   </header>
 
   <main class="container">
-    <section class="hero">
-      <h1>Audit énergétique</h1>
-      <figure class="hero-visual">
-        <img src="assets/illustrations/dpe-energie.svg" alt="Illustration bâtiment" loading="lazy" width="320" height="220">
-      </figure>
-      <p>Présentation de la prestation d’audit énergétique réglementaire.</p>
+    <section class="hero reveal" id="top">
+      <div>
+        <span class="badge">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12h16M12 4v16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Audit réglementaire vente
+        </span>
+        <h1>Audit énergétique (vente) – 649€ TTC</h1>
+        <p>L’audit énergétique permet d’aller plus loin qu’un simple constat. Il explique l’état thermique du logement, propose des scénarios de travaux concrets, estime les gains possibles et aide à projeter un budget réaliste. C’est utile pour vendre avec transparence, rassurer l’acquéreur et structurer un projet de rénovation.</p>
+        <p>Chez SR Diagnostics Immobiliers, vous avancez avec un cadre clair : un interlocuteur unique, des informations compréhensibles et un accompagnement sérieux du premier appel jusqu’à la remise du rapport.</p>
+        <div class="anchors" aria-label="Navigation interne">
+          <a href="#pourquoi">Pourquoi</a>
+          <a href="#deroule">Déroulé</a>
+          <a href="#documents">Documents</a>
+          <a href="#tarif">Tarif</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+      <aside class="hero-card" aria-label="Informations clés">
+        <div class="hero-metrics">
+          <p class="metric"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 7v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg><span><strong>Délai maximum 1 semaine</strong><br>après réception du dossier complet + visite.</span></p>
+          <p class="metric"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 17h16M7 13h10M9 9h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><strong>Tarif unique : 649€ TTC</strong><br>déplacement inclus dans un rayon de 50 km.</span></p>
+          <p class="metric"><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4Z" stroke="currentColor" stroke-width="2"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span><strong>Valeurs clés</strong><br>Confiance, transparence, honnêteté, efficacité, engagement.</span></p>
+        </div>
+        <p><strong>Zone d’intervention :</strong> Arras, Lens, Hénin-Beaumont, Beaumont, Douai, Béthune (rayon max 50 km).</p>
+        <p><strong>Horaires :</strong> lundi–dimanche, 8h–20h.</p>
+      </aside>
     </section>
-    <section class="card">
-      <h2>Page en construction</h2>
-      <p>Le contenu détaillé sera publié prochainement.</p>
+
+    <section class="section reveal" id="pourquoi">
+      <h2>Pourquoi faire un audit énergétique avant la vente ?</h2>
+      <div class="cards">
+        <article>
+          <h3>Vendre avec des informations solides</h3>
+          <p>Vous montrez à l’acheteur des scénarios chiffrés et hiérarchisés, pas seulement une note énergétique.</p>
+        </article>
+        <article>
+          <h3>Faciliter la décision</h3>
+          <p>L’acquéreur comprend les travaux possibles, l’ordre de priorité et les gains énergétiques estimés.</p>
+        </article>
+        <article>
+          <h3>Préparer les aides et le budget</h3>
+          <p>Le rapport aide à cadrer un plan de rénovation réaliste et à anticiper les dispositifs disponibles.</p>
+        </article>
+        <article>
+          <h3>Rassurer et fluidifier la transaction</h3>
+          <p>Vous avancez avec un dossier clair, utile pour la vente et exploitable pour le projet du futur acquéreur.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reveal" id="deroule">
+      <h2>Déroulé de la prestation</h2>
+      <ol class="timeline">
+        <li><strong>Qualification (téléphone) :</strong> vérification du contexte de vente, du type de bien et des besoins.</li>
+        <li><strong>Collecte des documents :</strong> factures d’énergie, plans si disponibles, DPE existant, informations chaudière/chauffage, etc.</li>
+        <li><strong>Visite technique complète :</strong> relevés sur place, analyse de l’enveloppe, des systèmes et des points d’amélioration.</li>
+        <li><strong>Analyse et scénarios :</strong> proposition de scénarios de travaux, gains estimés, priorités techniques et budgétaires.</li>
+        <li><strong>Remise du rapport :</strong> envoi du PDF et explication claire des résultats, avec disponibilité pour vos questions.</li>
+      </ol>
+    </section>
+
+    <section class="section reveal" aria-labelledby="administratif-title">
+      <h2 id="administratif-title">Process administratif</h2>
+      <ul>
+        <li>Prise de rendez-vous rapide selon vos disponibilités.</li>
+        <li>Collecte et vérification des informations utiles au dossier.</li>
+        <li>Organisation de la visite et suivi des pièces manquantes.</li>
+        <li>Rédaction, contrôle qualité et remise du rapport PDF.</li>
+        <li>Si besoin : échanges complémentaires et corrections justifiées.</li>
+      </ul>
+      <p><strong>Gestion administrative :</strong> un seul interlocuteur, prise en charge des pièces et relances si nécessaire, traçabilité et archivage des éléments transmis.</p>
+      <p><strong>Sous-traitance encadrée :</strong> si l’audit est réalisé par un partenaire sous-traitant, l’organisation est entièrement gérée par SR Diagnostics Immobiliers. Vous gardez un interlocuteur unique et recevez une facture claire, avec un audit à <strong>649€ TTC</strong>.</p>
+    </section>
+
+    <section class="section reveal" id="documents">
+      <h2>Documents à préparer</h2>
+      <div class="cards">
+        <article>
+          <h3>Avant la visite</h3>
+          <ul>
+            <li>Factures d’énergie (électricité, gaz, fioul, bois…).</li>
+            <li>DPE existant (si disponible).</li>
+            <li>Plans/croquis du bien (si vous les avez).</li>
+            <li>Informations sur les équipements (chaudière, PAC, ventilation…).</li>
+            <li>Année de construction ou permis de construire.</li>
+          </ul>
+        </article>
+        <article>
+          <h3>Ce que vous recevez</h3>
+          <ul>
+            <li>Rapport d’audit énergétique complet.</li>
+            <li>Minimum 2 scénarios de travaux avec priorités.</li>
+            <li>Recommandations claires, concrètes et argumentées.</li>
+            <li>Synthèse exploitable pour la vente et/ou le projet.</li>
+            <li>Remise en format PDF, facile à partager.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section reveal" id="tarif">
+      <h2>Tarif et délais</h2>
+      <p><strong>Audit énergétique : 649€ TTC.</strong></p>
+      <p>Ce prix inclut la qualification, la collecte du dossier, la visite technique, l’analyse, les scénarios de travaux, la rédaction et la remise du rapport.</p>
+      <p><strong>Frais de déplacement :</strong> inclus dans un rayon de 50 km (Arras, Lens, Hénin-Beaumont, Beaumont, Douai, Béthune). Au-delà : sur demande.</p>
+      <p><strong>Délai :</strong> délai maximum 1 semaine à partir de la réception du dossier complet et de la visite.</p>
+    </section>
+
+    <section class="section faq reveal" id="faq">
+      <h2>FAQ – Questions fréquentes</h2>
+      <details><summary>L’audit énergétique est-il obligatoire pour vendre ?</summary><p>Selon le type de bien et sa performance énergétique, l’audit peut être obligatoire. Nous validons votre situation dès l’appel pour vous éviter les erreurs.</p></details>
+      <details><summary>Quelle différence entre DPE et audit énergétique ?</summary><p>Le DPE donne une étiquette et une vision globale. L’audit va plus loin avec des scénarios de travaux détaillés, des priorités et des gains estimés.</p></details>
+      <details><summary>Quels biens sont concernés ?</summary><p>Maisons individuelles et certains biens mis en vente selon la réglementation en vigueur. Nous vérifions votre cas précisément par téléphone.</p></details>
+      <details><summary>Combien de temps dure la visite technique ?</summary><p>La durée dépend de la surface et de la complexité du bien. En pratique, comptez généralement entre 1h30 et 3h.</p></details>
+      <details><summary>Quels documents dois-je préparer ?</summary><p>Factures d’énergie, DPE existant, plans si vous les avez, informations sur le chauffage et l’année de construction/permis.</p></details>
+      <details><summary>Combien de temps l’audit reste-t-il utile ?</summary><p>L’audit est lié au cadre réglementaire et à l’état du bien au moment de sa réalisation. Nous vous indiquons les points de vigilance selon votre dossier.</p></details>
+      <details><summary>Et si l’audit est réalisé par un partenaire ?</summary><p>SR Diagnostics Immobiliers pilote l’organisation de bout en bout : vous gardez un interlocuteur unique et une facturation transparente (649€ TTC).</p></details>
+      <details><summary>Comment se passe le paiement ?</summary><p>Le montant est annoncé clairement à l’avance. Les modalités de règlement vous sont précisées lors de la prise de rendez-vous, sans surprise.</p></details>
+      <details><summary>Pouvez-vous intervenir rapidement ?</summary><p>Oui, nous proposons des créneaux larges du lundi au dimanche de 8h à 20h, selon disponibilité et complétude de votre dossier.</p></details>
+    </section>
+
+    <section class="section reveal" id="contact">
+      <h2>Prise de contact rapide</h2>
+      <div class="contact-grid">
+        <article>
+          <p>Un projet de vente ? Nous vous guidons de façon claire et efficace.</p>
+          <p><strong>Téléphone :</strong> <a href="tel:+33767076761">07 67 07 67 61</a></p>
+          <p><strong>Email :</strong> <a href="mailto:stephanr.pro@gmail.com">stephanr.pro@gmail.com</a></p>
+          <p><strong>Horaires :</strong> lundi–dimanche, 8h–20h.</p>
+        </article>
+        <article class="form-card">
+          <form id="auditForm" novalidate>
+            <div class="field-grid">
+              <div><label for="nom">Nom</label><input id="nom" name="nom" required></div>
+              <div><label for="telephone">Téléphone</label><input id="telephone" name="telephone" required></div>
+            </div>
+            <div class="field-grid">
+              <div><label for="email">Email</label><input id="email" name="email" type="email" required></div>
+              <div><label for="adresse">Adresse du bien</label><input id="adresse" name="adresse" required></div>
+            </div>
+            <div class="field-grid">
+              <div>
+                <label for="typeBien">Type de bien</label>
+                <select id="typeBien" name="typeBien" required>
+                  <option value="">Choisir</option>
+                  <option>Maison</option>
+                  <option>Appartement</option>
+                  <option>Immeuble</option>
+                  <option>Autre</option>
+                </select>
+              </div>
+              <div><label for="annee">Année de construction / permis</label><input id="annee" name="annee"></div>
+            </div>
+            <div class="field-grid">
+              <div><label for="surface">Surface (m²)</label><input id="surface" name="surface"></div>
+              <div><label for="chauffage">Chauffage principal</label><input id="chauffage" name="chauffage"></div>
+            </div>
+            <div>
+              <label for="commentaires">Commentaires</label>
+              <textarea id="commentaires" name="commentaires" placeholder="Précisez votre besoin, vos délais, les contraintes d'accès, etc."></textarea>
+            </div>
+            <div class="btn-row">
+              <button class="btn btn-primary" type="button" data-action="rappel">Être rappelé</button>
+              <button class="btn" type="button" data-action="devis">Recevoir un devis</button>
+              <a class="btn" href="tel:+33767076761">Appeler maintenant</a>
+              <a class="btn" href="mailto:stephanr.pro@gmail.com?subject=Demande%20audit%20%C3%A9nerg%C3%A9tique">Envoyer un email</a>
+            </div>
+            <p id="confirm" class="confirm" role="status" aria-live="polite"></p>
+          </form>
+        </article>
+      </div>
     </section>
   </main>
 
+  <aside class="sticky-tarif" aria-label="Rappel tarifaire">
+    <p><strong>Audit énergétique – 649€ TTC</strong></p>
+    <p>Délai max 1 semaine</p>
+    <a class="btn btn-primary" href="#contact">Prendre contact</a>
+  </aside>
+
   <footer class="site-footer container">
-    <p>© 2026 SR Diagnostics Immobiliers</p>
-    <p class="footer-social-links">
-      <a href="https://maps.app.goo.gl/qXSa2rFXNcXRYQs4A" target="_blank" rel="noopener noreferrer">Google Maps</a> •
-      <a href="https://www.societe.com/societe/101171270-101171270.html#__establishments" target="_blank" rel="noopener noreferrer">Societe.com</a> •
-      <a href="https://www.facebook.com/profile.php?id=61577812663735" target="_blank" rel="noopener noreferrer">Facebook (messagerie ouverte, réponse rapide)</a> •
-      <a href="https://www.linkedin.com/in/stephan-raspado-b998b637b/" target="_blank" rel="noopener noreferrer">LinkedIn (messagerie ouverte, réponse rapide)</a>
-    </p>
-    <p class="footer-legal-links">
-      <a href="mentions-legales.html">Mentions légales</a> •
-      <a href="politique-de-confidentialite.html">Politique de confidentialité</a> •
-      <a href="politique-cookies.html">Politique cookies</a> •
-      <a href="conditions-d-utilisation.html">Conditions d’utilisation</a>
-    </p>
-    <p class="footer-cookie-links"><button type="button" class="cookie-link-button" data-open-cookie-settings>Gérer mes cookies</button></p>
-      <p class="footer-illustration"><img src="assets/illustrations/maison.svg" alt="Illustration habitation" loading="lazy" width="110" height="76"></p>
+    <p>© 2026 SR Diagnostics Immobiliers — Clarté, rigueur, accompagnement.</p>
   </footer>
 
-  <script src="assets/site.js"></script>
-  <script src="config/consent.config.js"></script>
-  <script src="assets/consent-manager.js"></script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "LocalBusiness",
+          "name": "SR Diagnostics Immobiliers",
+          "telephone": "+33767076761",
+          "email": "stephanr.pro@gmail.com",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Hénin-Beaumont",
+            "addressCountry": "FR"
+          },
+          "areaServed": ["Arras", "Lens", "Hénin-Beaumont", "Beaumont", "Douai", "Béthune"],
+          "openingHours": "Mo-Su 08:00-20:00",
+          "url": "https://srdiagnosticsimmobiliers.fr/audit.html"
+        },
+        {
+          "@type": "Service",
+          "serviceType": "Audit énergétique (vente)",
+          "provider": {
+            "@type": "LocalBusiness",
+            "name": "SR Diagnostics Immobiliers"
+          },
+          "areaServed": "50 km autour d'Arras, Lens, Hénin-Beaumont, Beaumont, Douai, Béthune",
+          "offers": {
+            "@type": "Offer",
+            "price": "649",
+            "priceCurrency": "EUR",
+            "description": "Audit énergétique vente avec gestion administrative et remise de rapport PDF"
+          }
+        }
+      ]
+    }
+  </script>
+
+  <script>
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+      anchor.addEventListener('click', function(event) {
+        var targetId = anchor.getAttribute('href');
+        if (!targetId || targetId === '#') return;
+        var target = document.querySelector(targetId);
+        if (!target) return;
+        event.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+
+    var form = document.getElementById('auditForm');
+    var confirmBox = document.getElementById('confirm');
+
+    function checkRequired() {
+      var requiredFields = form.querySelectorAll('[required]');
+      for (var i = 0; i < requiredFields.length; i += 1) {
+        if (!requiredFields[i].value.trim()) {
+          requiredFields[i].focus();
+          return false;
+        }
+      }
+      var email = document.getElementById('email').value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('email').focus();
+        return false;
+      }
+      return true;
+    }
+
+    form.querySelectorAll('button[data-action]').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        if (!checkRequired()) {
+          confirmBox.style.display = 'block';
+          confirmBox.textContent = 'Merci de compléter les champs obligatoires (nom, téléphone, email, adresse, type de bien).';
+          return;
+        }
+        var action = btn.getAttribute('data-action') === 'rappel' ? 'rappel téléphonique' : 'devis';
+        confirmBox.style.display = 'block';
+        confirmBox.textContent = 'Merci, votre demande de ' + action + ' est bien enregistrée. Nous vous recontactons rapidement.';
+        form.reset();
+      });
+    });
+  </script>
 </body>
 </html>
