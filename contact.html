@@ -59,7 +59,7 @@
 
     <section class="card">
       <h2>Écrivez-nous</h2>
-      <form name="contact" method="POST" action="/merci.html" data-netlify="true" netlify-honeypot="bot-field">
+      <form id="contactForm" name="contact" method="POST" action="/merci.html" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="contact">
         <p class="hidden-field" aria-hidden="true">
           <label>Ne pas remplir ce champ : <input name="bot-field" autocomplete="off"></label>
@@ -111,6 +111,7 @@
 
 
 
+  <script src="assets/contact-form.js"></script>
   <script src="assets/site.js"></script>
   <script src="config/consent.config.js"></script>
   <script src="assets/consent-manager.js"></script>
