@@ -122,6 +122,28 @@ function validateForm() {
   return errors;
 }
 
+
+function encodeNetlifyPayload(data) {
+  return Object.keys(data)
+    .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(data[key])}`)
+    .join("&");
+}
+
+async function submitToNetlifyForms(form) {
+  const formData = new FormData(form);
+  const payload = Object.fromEntries(formData.entries());
+
+  const response = await fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: encodeNetlifyPayload(payload),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Netlify Forms error: ${response.status}`);
+  }
+}
+
 async function sendSmsSummary(payload) {
   try {
     await fetch('/api/send-sms', {
@@ -167,7 +189,14 @@ document.addEventListener("DOMContentLoaded", () => {
     errorEl.textContent = "";
     const payload = readForm();
     await sendSmsSummary(payload);
-    HTMLFormElement.prototype.submit.call(form);
+
+    try {
+      await submitToNetlifyForms(form);
+      window.location.href = form.getAttribute("action") || "/merci.html";
+    } catch (error) {
+      errorEl.textContent = "Une erreur est survenue lors de l’envoi. Merci de réessayer.";
+      console.error(error);
+    }
   });
 
   updatePrice();
