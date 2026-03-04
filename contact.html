@@ -55,6 +55,37 @@
         <p>Hénin-Beaumont • Arras • Douai • Lens • Béthune (rayon 50 km)</p>
       </article>
     </section>
+
+
+    <section class="card">
+      <h2>Écrivez-nous</h2>
+      <form name="contact" method="POST" action="/merci.html" data-netlify="true" netlify-honeypot="bot-field">
+        <input type="hidden" name="form-name" value="contact">
+        <p class="hidden-field" aria-hidden="true">
+          <label>Ne pas remplir ce champ : <input name="bot-field" autocomplete="off"></label>
+        </p>
+
+        <div class="grid">
+          <label class="card" for="contactNom">Nom
+            <input id="contactNom" name="nom" type="text" required>
+          </label>
+
+          <label class="card" for="contactEmail">Email
+            <input id="contactEmail" name="email" type="email" required>
+          </label>
+
+          <label class="card" for="contactTelephone">Téléphone
+            <input id="contactTelephone" name="telephone" type="tel">
+          </label>
+
+          <label class="card" for="contactMessage">Message
+            <textarea id="contactMessage" name="message" rows="5" required></textarea>
+          </label>
+        </div>
+
+        <button class="btn" type="submit">Envoyer le message</button>
+      </form>
+    </section>
   </main>
   <footer class="site-footer container">
     <p>© 2026 SR Diagnostics Immobiliers</p>
