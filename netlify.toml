@@ -6,6 +6,21 @@
   directory = "netlify/functions"
 
 [[redirects]]
+  from = "/contact/"
+  to = "/contact.html"
+  status = 200
+
+[[redirects]]
+  from = "/devis/"
+  to = "/devis.html"
+  status = 200
+
+[[redirects]]
+  from = "/merci/"
+  to = "/merci.html"
+  status = 200
+
+[[redirects]]
   from = "/api/send-sms"
   to = "/.netlify/functions/send-sms"
   status = 200

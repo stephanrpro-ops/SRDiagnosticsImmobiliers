@@ -15,8 +15,8 @@
       <a href="location.html">Location</a>
       <a href="copropriete.html">Copropriété</a>
       <a href="prestations.html">Prestations</a>
-      <a href="devis.html">Devis en ligne</a>
-      <a href="contact.html">Contact</a>
+      <a href="/devis/">Devis en ligne</a>
+      <a href="/contact/">Contact</a>
     </nav>
   </header>
 
@@ -59,7 +59,7 @@
 
     <section class="card">
       <h2>Écrivez-nous</h2>
-      <form id="contactForm" name="contact" method="POST" action="/merci.html" data-netlify="true" netlify-honeypot="bot-field">
+      <form id="contactForm" name="contact" method="POST" action="/merci/" data-netlify="true" netlify-honeypot="bot-field">
         <input type="hidden" name="form-name" value="contact">
         <p class="hidden-field" aria-hidden="true">
           <label>Ne pas remplir ce champ : <input name="bot-field" autocomplete="off"></label>
@@ -81,6 +81,12 @@
           <label class="card" for="contactMessage">Message
             <textarea id="contactMessage" name="message" rows="5" required></textarea>
           </label>
+
+          <label class="card" for="contactConsentement">
+            <input id="contactConsentement" name="consentement" type="checkbox" value="oui">
+            J’accepte d’être recontacté conformément à la
+            <a href="politique-de-confidentialite.html">politique de confidentialité</a>.
+          </label>
         </div>
 
         <button class="btn" type="submit">Envoyer le message</button>
@@ -90,7 +96,7 @@
   <footer class="site-footer container">
     <p>© 2026 SR Diagnostics Immobiliers</p>
     <p>
-      <a href="devis.html">Devis en ligne</a> •
+      <a href="/devis/">Devis en ligne</a> •
       <a href="signature.html">Espace signature</a>
     </p>
     <p class="footer-social-links">
